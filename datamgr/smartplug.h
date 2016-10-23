@@ -1,23 +1,21 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
 
-enum Status{on, off};
 class SmartPlug
 {
 private:
-	string idSmartPlug;
-	string addressIP;
-	Status status;
+	string id;
+	string ;
+	str status;
 public:
 	SmartPlug();
-	SmartPlug(string idSmartPlug, string addressIP, Status status);
-	string getIdSmartPlug();
-	void setIdSmartPlug(string idSmartPlug);
-	string getAddressIP();
-	void setAddressIP(string addressIP);
-	Status getStatus();
-	void setStatus(Status status);
+	SmartPlug(string id, string , str status);
+	string getId();
+	void setId(string id);
+	string getIP();
+	void setIP(string IP);
+	str getStatus();
+	void setStatus(str status);
 	
 };
