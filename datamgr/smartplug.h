@@ -7,7 +7,7 @@ class SmartPlug
 private:
 	string id;
 	string ;
-	str status;
+	string status;
 public:
 	SmartPlug();
 	SmartPlug(string id, string , str status);
