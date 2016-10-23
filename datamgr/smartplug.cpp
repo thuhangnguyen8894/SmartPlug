@@ -1,41 +1,48 @@
+#include <iostream>
+#include <string>
 #include "smartplug.h"
 
-using namespace std;
-
-SmartPlug::SmartPlug(): idSmartPlug(""), addressIP(""), status(off)
-{ }
-
-
-SmartPlug::SmartPlug(string idSmartPlug, string addressIP, Status status): this->idSmartPlug(idSmartPlug), this->addressIP(addressIP), this->status(status)
-{ }
-
-
-string SmartPlug::getIdSmartPlug()
+SmartPlug::SmartPlug()
 {
-	return this->idSmartPlug;
+	this->id = "";
+    	this->ip = "";
+    	this->status = "";
 }
 
-void SmartPlug::setIdSmartPlug(string idSmartPlug)
+
+SmartPlug::SmartPlug(string id, string ip, string status)
 {
-	this->idSmartPlug = idSmartPlug;
+	this->id = id;
+	this->ip = ip;
+	this->status = status;
 }
 
-string SmartPlug::getAddressIP()
+
+string SmartPlug::getId()
 {
-	return this->addressIP;
+	return this->id;
 }
 
-void SmartPlug::setAddressIP(string addressIP)
+void SmartPlug::setId(string id)
 {
-	this->addressIP = addressIP;
+	this->id = id;
 }
 
-Status SmartPlug::getStatus()
+string SmartPlug::getIP()
+{
+	return this->ip;
+}
+
+void SmartPlug::setIP(string ip)
+{
+	this->ip = ip;
+}
+string SmartPlug::getStatus()
 {
 	return this->status;
 }
 
-void SmartPlug::setStatus(Status status)
+void SmartPlug::setStatus(string status)
 {
 	this->status = status;
 }
