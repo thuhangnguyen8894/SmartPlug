@@ -3,9 +3,14 @@
  * @file CommonTest.cpp
  * @brief Unittest for CommonTest class
  *
- * Copyright (c) Tien Nguyen Anh 2016 
+ * Copyright (c) Trang Tran 2016 
  *
  * @detail The testing file of the implementation of CommonTest class
+ *
+ * Modified History
+ * ---------------
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 

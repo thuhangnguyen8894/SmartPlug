@@ -1,12 +1,12 @@
 #-----------------------------------------------------------------------------
 # Makefile - make/Makefile.poco
 #
-# Copyright (c) Tien Nguyen Anh
+# Copyright (c) Hang Nguyen 2016
 #
 # Modified History
 # ----------------
-#    Created: 2016-Dec-04 
-#    Modified: 2016-Dec-07
+#    Created: 2016-Dec-04 thuhang.nguyen8894@gmail.com 
+#    Modified: 2016-Dec-07 thuhang.nguyen8894@gmail.com
 #-----------------------------------------------------------------------------
 
 ifndef make_poco

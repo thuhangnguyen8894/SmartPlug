@@ -1,3 +1,12 @@
+------------------------------------------------------------------------------------------------------------
+ setup_enviroment - document/setup_enviroment
+ Copyright (c) Trang Tran 2017
+ Modification history
+    Created: 2017-Jan-05 tn-trang.tran@outlook.com 
+    Modified: 2017-Jan-07 tn-trang.tran@outlook.com
+-----------------------------------------------------------------------------------------------------------
+
+
 0. export LIDT_ROOT=/data/projects/SmartPlug/
    source /data/projects/SmartPlug/evn/source_env
 

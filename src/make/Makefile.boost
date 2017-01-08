@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------
 # Makefile - make/Makefile.boost
-# Copyright Tien Nguyen Anh
+# Copyright Hang Nguyen 2016
 # Modified history
-#    Created: 2016-Dec-03 
+#    Created: 2016-Dec-03 thuhang.nguyen8894@gmail.com
 #-----------------------------------------------------------------------------
 
 ifndef make_boost

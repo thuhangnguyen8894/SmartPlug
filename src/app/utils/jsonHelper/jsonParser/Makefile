@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------------
 #Makefile - src/app/utils/jsonParser/Makefile
-# Copyright (c) Tien Nguyen Anh
+# Copyright (c) Trang Tran 2017
 # Modification history
 # --------------------
-#    Created: 2017-Jan-03 tien.nguyenanh94@gmail.com
+#    Created: 2017-Jan-05 tn-trang.tran@outlook.com
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)

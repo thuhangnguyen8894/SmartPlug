@@ -3,14 +3,14 @@
  * @file JsonCommon.h
  * @brief The declaration which is used in JsonBuilder and JsonParser
  *
- * Copyright (c) Tien Nguyen Anh
+ * Copyright (c) Trang Tran 2017
  *
  * @detail
  *
  * Modified History
  * ---------------
- * 2016-Dec-21 Created tien.nguyenanh94@gmail.com
- * 2016-Dec-22 Modified tien.nguyenanh94@gmail.com
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  */
 /***************************************************************************/
 
@@ -30,8 +30,6 @@
 #define IP_PORT_TOKEN_SIZE 2
 
 #define SMART_PLUG_MESSAGE_TYPE 'S'
-#define IP_PORT_REGEX_SPLITTER ":"
-#define SENSOR_MESSAGE_SPLITTER ";"
 
 #define SMART_PLUG_MESSAGE_VALUE_ON 'N'
 #define SMART_PLUG_MESSAGE_VALUE_OFF 'F'
@@ -43,9 +41,7 @@
 #define ATTR_JSON_MOMENT "moment"
 #define LIGHT_INTENSITY_TOPIC "SMART_PLUG_STATUS"
 #define CONTROL_SMART_PLUG_TOPIC "LIGHT_CONTROL_SMART_PLUG_TOPIC"
-#define ATTR_JSON_IP "IP"
-#define ATTR_JSON_PORT "Port"
-#define ATTR_JSON_SENDER "Sender"
+
 #define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF "OFF"
 #define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON "ON"
 #define MESSAGE_TYPE_SMART_PLUG_STATUS_STR "SMART_PLUG_STATUS"

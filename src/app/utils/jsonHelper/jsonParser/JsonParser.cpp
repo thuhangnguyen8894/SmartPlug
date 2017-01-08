@@ -1,6 +1,6 @@
 #include "JsonParser.h"
 
-bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info)
+bool parseSmartPlugJson(const char* jsonString, smartplugInfo* info)
 {
     boost::property_tree::ptree pTree;
     
@@ -15,18 +15,28 @@ bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info)
     }
 
     /*!
-     * Parse Information of Sender
+     * Parse Information of Sender, include IP and Port
      */
-    std::string ipStr = pTree.get<std::string>("Sender.IP");
+
+
+    std::string ipStr = "192.168.1.177"
+    /*std::string ipStr = pTree.get<std::string>("Sender.IP");
+    if(ipStr == NULL)
+    {
+        std::string err = "error";
+    }*/
+
     std::string portStr = pTree.get<std::string>("Sender.Port");
 
     /*!
-     * Parse Light Intensity
+     * Parse SmartPlug Status
      */
-    std::string lightIntenStr = 
-                        pTree.get<std::string>("data.LIGHT_INTENSITY_VALUE");
+    std::string smartPlugStr = 
+                        pTree.get<std::string>("data.SMART_PLUG_STATUS");
 
-    info->data.lightIntensity = std::stol(lightIntenStr);
+    info->data.smartplug = std::stol(smartPlugStr);
     info->sender.port = std::stol(portStr);
     strcpy(info->sender.ip, ipStr.c_str());
+
+    return true;
 }
