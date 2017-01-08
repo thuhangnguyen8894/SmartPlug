@@ -3,14 +3,15 @@
  * @file JsonBuilder.h
  * @brief The declaration of JsonBuilder.
  *
- * Copyright (c) Tien Nguyen Anh
+ * Copyright (c) Trang Tran 2017
  *
  * @detail The JsonBuilder can convert a array format message to JSON format.
  *             It's duty is convert a message of Arduino to JSON.
  *
  * Modified History
  * ---------------
- * 2016-Dec-21 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 

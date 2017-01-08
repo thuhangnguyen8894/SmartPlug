@@ -3,9 +3,14 @@
  * @file JsonBuilderTest.cpp
  * @brief Unittest for JsonBuilderTest class
  *
- * Copyright (c) Tien Nguyen Anh 2016 
+ * Copyright (c) Trang Tran 2017
  *
  * @detail The testing file of the implementation of JsonBuilderTest class
+ *
+ * Modified History
+ * ---------------
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2016-Dec-22 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 #include <cstdlib>

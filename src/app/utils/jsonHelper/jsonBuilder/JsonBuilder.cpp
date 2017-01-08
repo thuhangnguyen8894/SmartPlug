@@ -3,14 +3,14 @@
  * @file JsonBuilder.cpp
  * @brief The implementation of JsonBuilder.
  *
- * Copyright (c) Tien Nguyen Anh
+ * Copyright (c) Trang Tran 2017
  *
  * @detail
  *
  * Modified History
  * ---------------
- * 2016-Dec-21 Created tien.nguyenanh94@gmail.com
- * 2016-Dec-22 Modified tien.nguyenanh94@gmail.com
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
