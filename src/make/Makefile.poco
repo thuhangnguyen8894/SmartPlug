@@ -14,7 +14,7 @@ make_poco = once_only
 
 #-----------------------------------------------------------------------------
 ifndef POCO_ROOT
-    POCO_ROOT = /development/poco-1.7.6-all
+    POCO_ROOT = /development/poco-1.7.5-all
 endif
 
 ifndef POCO_LIB

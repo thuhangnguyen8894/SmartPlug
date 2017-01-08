@@ -1,0 +1,21 @@
+export LIDT_ROOT=/data/projects/LightDetector/
+source /data/projects/LightDetector/evn/source_env
+
+0. cd /data/project/SmartPlug/src/app/utils/jsonHelper/common
+   make
+
+1. cd /data/project/SmartPlug/src/app/utils/jsonHelper/common/test
+
+2. echo $PATH
+   export PATH=/development/python-3.5.2/bin:/home/trang/bin:/home/trang/.local
+/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/trang/android-sdk-linux/tools:/home/trang/android-sdk-linux/platform-tools
+   export PATH=/development/lcov-1.13/bin:$PATH
+
+3. which gcc
+/usr/bin/gcc
+
+4. make ut -n 
+
+5. make ut
+
+6. firefox  REPORT_COVERAGE/index.html

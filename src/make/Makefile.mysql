@@ -9,7 +9,7 @@ ifndef make_mysql
 make_mysql = once_only
 
 ifndef MYSQL_CONN_ROOT
-	MYSQL_CONN_ROOT = /development/mysql-connector
+	MYSQL_CONN_ROOT = /development/mysql-connector-c++
 endif
 
 IEXTRA += $(MYSQL_CONN_ROOT)

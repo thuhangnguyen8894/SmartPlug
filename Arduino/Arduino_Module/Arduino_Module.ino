@@ -53,7 +53,12 @@ unsigned long lastMoment = 0;
 /*!
  * Delay time
  */
-const unsigned long delayInterval = 500L;
+const unsigned long delayInterval = 1000L;
+
+/*!
+ * Power pin Relay
+ */
+int power = 8;
 
 void setup()
 {
@@ -66,6 +71,8 @@ void setup()
      * Setup Ethernet Shield
      */
     Ethernet.begin(mac, ip);
+
+    pinMode(power,OUTPUT);
 
     udp.begin(internalPort);
     lightMeter.begin();
@@ -123,74 +130,125 @@ void loop()
          * Reading the signal from Sensor
          * Send the data to server
          */
-        
-//        if ((millis() - lastMoment) > delayInterval)
-//        {
-//            Serial.println("I am here 02");
-//            sendLightIntensity();
-//        }
-       
-       
        if (millis() - delayInterval > delayInterval)
        {
-            Serial.print("result interval 01: ");
-            Serial.println(millis() - delayInterval);
             sendLightIntensity();
-            
-//            uint16_t lux = lightMeter.readLightLevel();
-////            uint16_t moment = now();
-////            Serial.print(lux);
-////            Serial.print(";");
-////            Serial.println(moment);
-       }
-       else
-       {
-            Serial.print("result interval 02: ");
-            Serial.println(millis() - delayInterval);
        }
 
        delay(500);
     }
 }
 
+void convertInt16ToHexStr(uint16_t value, char* msg)
+{
+    uint16_t tmp = 0;
+    char message[256];
+    memset(message, 0, sizeof(message));
+
+    while (value > 0)
+    {
+        tmp = value % 16;
+        switch (tmp)
+        {
+        case 0:
+            strcat(message, "0");
+            break;
+        case 1:
+            strcat(message, "1");
+            break;
+        case 2:
+            strcat(message, "2");
+            break;
+        case 3:
+            strcat(message, "3");
+            break;
+        case 4:
+            strcat(message, "4");
+            break;
+        case 5:
+            strcat(message, "5");
+            break;
+        case 6:
+            strcat(message, "6");
+            break;
+        case 7:
+            strcat(message, "7");
+            break;
+        case 8:
+            strcat(message, "8");
+            break;
+        case 9:
+            strcat(message, "9");
+            break;
+        case 10:
+            strcat(message, "A");
+            break;
+        case 11:
+            strcat(message, "B");
+            break;
+        case 12:
+            strcat(message, "C");
+            break;
+        case 13:
+            strcat(message, "D");
+            break;
+        case 14:
+            strcat(message, "E");
+            break;
+        case 15:
+            strcat(message, "F");
+            break;
+        }
+        value = value / 16;
+    }
+    strcat(message, '\0');
+    strcat(msg, message);
+}
+
 void sendLightIntensity()
 {
-    Serial.println("Begin Reading the Light Intensity");
-    
     uint16_t lux = lightMeter.readLightLevel();
-    uint16_t time = now();
+    uint16_t moment = now();
 
     /*!
      * Print data to Serial for debugging
      */
     Serial.print(lux);
     Serial.print(";");
-    Serial.println(time);
-
-    /*!
-     * Convert the lux's value to char
-     */
-    char first_part = lux & 0xFF;
-    char second_part = lux >> 8;
-
-    Serial.print("first_part: ");
-    Serial.println(first_part);
-    Serial.print("second_part: ");
-    Serial.println(second_part);
+    Serial.println(moment);
+    
     /*!
      * Create the message
-     */
-    char message[3] = {'L', first_part, second_part};
+     */    
+    char* msg = new char[10];
+    memset(msg, 0, 10 * sizeof(char));
 
+    /*!
+     * Determine the category of message
+     */
+    strcat(msg, "L");
+    
+    /*!
+     * Convert message to array of digit of hex numbers.
+     */
+    convertInt16ToHexStr(lux, msg);
+    Serial.println(msg);
     /*!
      * Send the message
      */
     udp.beginPacket(server, serverPort);
-    udp.write(message, sizeof(message));
+    udp.write(msg, strlen(msg) * sizeof(msg));
     udp.endPacket();
 
     /*!
      * Update the lastMoment value
      */
     lastMoment = millis();
+
+    if (msg != NULL)
+    {
+        delete msg;
+    }
 }
+
+

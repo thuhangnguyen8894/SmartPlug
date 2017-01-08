@@ -11,6 +11,7 @@ make_tidy = once_only
 .PHONY: cleanall
 
 cleanall:
+	$(RM) $(LIDT_ROOT)/obj/$(OBJS).o
 ifneq   ($(wildcard $(CLEAN) $(TARGET_CLEAN) $(ARCHIVES_CLEAN)), )
 	$(ECHO) Removing all target files for $(PWD) ...; \
 	$(RM) -r $(wildcard $(CLEAN) $(TARGET_CLEAN) $(ARCHIVES_CLEAN));

@@ -3,13 +3,11 @@
  * @file MessageReceiver.cpp
  * @brief The implementation of MessageReceive class
  *
- * Copyright (c) Tien Nguyen Anh
  *
  * @detail Using Poco library to implement a UDP server
  *
  * Modified History
- * ---------------
- * 2016-Dec-08 Created Tien Anh Nguyen 
+ * --------------- 
  */
 /*****************************************************************************/
 
