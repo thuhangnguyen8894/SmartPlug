@@ -4,10 +4,17 @@
  * @brief The implementation of MessageReceive class
  *
  *
- * @detail Using Poco library to implement a UDP server
+ * @detail Using Poco library to implement a UDP server.
+ *         Using ZeroMQ to implement a publisher who
+ *               publish the message to subscribers.
  *
  * Modified History
+<<<<<<< HEAD
+ * ---------------
+ * 2016-Dec-08 Created tien.nguyenanh94@gmail.com
+=======
  * --------------- 
+>>>>>>> 99f4bb5125d03795b404ea33de9f234e54bbf551
  */
 /*****************************************************************************/
 
@@ -38,6 +45,9 @@ MessageReceiver::~MessageReceiver()
 {
     this->stop = true;
     this->thread.join();
+    
+    zmq_close(this->publisher);
+    zmq_ctx_destroy(this->zmq_context);
 }
 
 Poco::UInt16 MessageReceiver::port() const
@@ -47,10 +57,14 @@ Poco::UInt16 MessageReceiver::port() const
 
 void MessageReceiver::run()
 {
-    std::cout << "Starting here!!!" << std::endl;
     this->ready.set();
     Poco::Timespan span(250000);
     char* pBuffer = new char[this->bufferSize];
+
+    void *context = zmq_ctx_new ();
+    void *publisher = zmq_socket (context, ZMQ_PUB);
+    zmq_bind(publisher, "tcp://*:5563");
+
     while(!this->stop)
     {
         if (this->socket.poll(span, Poco::Net::Socket::SELECT_READ))
@@ -59,17 +73,28 @@ void MessageReceiver::run()
             {
                 Poco::Net::SocketAddress sender;
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
-                std::cout << "Message is: " << pBuffer << std::endl;
 
-                if (strlen(pBuffer) > 0 && strlen(pBuffer) < 4)
+                char* jsonString = NULL;
+
+                /*!
+                 * Appending IP of Sender to message
+                 */
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, sender.toString().c_str());
+
+                if (isSensorMessage(pBuffer))
                 {
-                    char typeOfMessage = pBuffer[0];
-                    char LSB = pBuffer[1];
-                    char MSB = pBuffer[2];
+                    if (!buildJson(pBuffer, &jsonString))
+                    {
+                        continue;
+                    }
 
-                    uint16_t lightIntensity = LSB | uint16_t(MSB) << 8;
-
-                    std::cout << "Light Intensity is: " << lightIntensity << std::endl;
+                    MESSAGE_TYPE messageType = getJSONMessageType(pBuffer);
+                    
+                    std::string topic = convertMessageTypeToStr(messageType);
+                    s_sendmore (publisher, (char*)topic.c_str());
+                    s_send (publisher, jsonString);
+                    sleep (1);
                 }
 
             }
