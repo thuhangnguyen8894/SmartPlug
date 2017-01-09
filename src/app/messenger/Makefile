@@ -10,8 +10,8 @@
 
 ifneq ($(APP), unittest)
     override APP = messenger
-    TARGET = messenger
-    PROGRAM = 
+    TARGET = #none
+    PROGRAM = messenger
 endif
 
 #-----------------------------------------------------------------------------
@@ -22,11 +22,19 @@ OBJS = $(SRCS:.cpp=.o)
 USING_LANGUAGE = CPP
 
 #-----------------------------------------------------------------------------
-INCS_DIRS += src/app/messenger/messageReceiver
+INCS_DIRS += src/app/messenger/messageReceiver \
+			 src/app/utils/jsonHelper/common \
+			 src/app/utils/jsonHelper/jsonBuilder
 
 #-----------------------------------------------------------------------------
-LIBDIRS_messageReceiver  = $(LIDT_ROOT)/src/app/messenger/messageReceiver
-LIBRARY                  = messageReceiver
+LIBDIRS_jsonCommon  += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
+LIBRARY             += jsonCommon
+LIBDIRS_jsonBuilder += $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/
+LIBRARY             += jsonBuilder
+LIBDIRS_messageReceiver  += $(LIDT_ROOT)/src/app/messenger/messageReceiver
+LIBRARY                  += messageReceiver			
+#-----------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/messenger/messageReceiver \
