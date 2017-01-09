@@ -193,6 +193,9 @@ II. Setup:
       - Step 6: python3 setup.py build
       - Step 7: python3 setup.py install
 
+    f. Setup zmq
+      - pip3 install pyzmq
+
 
   3. Setup boost_1_62_0
     a. Prepare for setup:
