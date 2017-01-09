@@ -5,4 +5,5 @@ export LD_LIBRARY_PATH=/development/boost_1_62_0/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/development/mysql-connector-c++/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/development/zeromq-4.1.6/lib:$LD_LIBRARY_PATH
 PATH=/development/python-3.5.2/bin:$PATH
-export PATH=/development/gcc-5.4.0/bin:$PATH
+export BOOST_ROOT=/development/boost_1_62_0
+export POCO_ROOT=/development/poco-1.7.5-all
