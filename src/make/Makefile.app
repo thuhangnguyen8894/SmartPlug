@@ -21,7 +21,11 @@ endif
 # Definition
 
 ifndef OBJ_DIR
-	OBJ_DIR = $(APP_OBJ)/$(APP)
+	OBJ_DIR = $(APP_OBJ)/
+endif
+
+ifndef RUN_TIME
+	RUN_TIME = $(LIDT_ROOT)/runtime
 endif
 
 ifneq ($(APP),unittest)
@@ -37,7 +41,11 @@ CFLAGS += -ansi
 
 CC = gcc
 
-COMMON_FLAGS = -ansi -g
+COMMON_FLAGS = -ansi -g -std=c++11
+
+ifeq ($(APP),unittest)
+	COMMON_FLAGS += -DUNITTEST
+endif
 
 INC_FLAGS = -I $(INCS_DIRS)
 
@@ -54,6 +62,9 @@ include $(LIDT_MAKEDIR)/Makefile.poco
 
 #-----------------------------------------------------------------------------
 include $(LIDT_MAKEDIR)/Makefile.mysql
+
+#-----------------------------------------------------------------------------
+include $(LIDT_MAKEDIR)/Makefile.zmq
 
 #-----------------------------------------------------------------------------
 ifeq ($(APP),unittest)
