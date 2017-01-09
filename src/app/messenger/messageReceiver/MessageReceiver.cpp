@@ -3,15 +3,18 @@
  * @file MessageReceiver.cpp
  * @brief The implementation of MessageReceive class
  *
- * Copyright (c) Tien Nguyen Anh
  *
  * @detail Using Poco library to implement a UDP server.
  *         Using ZeroMQ to implement a publisher who
  *               publish the message to subscribers.
  *
  * Modified History
+<<<<<<< HEAD
  * ---------------
  * 2016-Dec-08 Created tien.nguyenanh94@gmail.com
+=======
+ * --------------- 
+>>>>>>> 99f4bb5125d03795b404ea33de9f234e54bbf551
  */
 /*****************************************************************************/
 

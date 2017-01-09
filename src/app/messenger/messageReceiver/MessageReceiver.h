@@ -4,15 +4,12 @@
  * @brief The declaration of MessageReceiver.
  *        The class has ability to receiver a message from a client.
  *
- * Copyright (c) Tien Nguyen Anh
- *
  * @detail The class is expected to receive a message from a Arduino client
  *             or another one. The class also be able to redirect the message
  *             to another component for the next process.
  *
  * Modified History
  * ----------------
- * 2016-Dec-08 Created Tien Nguyen Anh
  */
 /*****************************************************************************/
 

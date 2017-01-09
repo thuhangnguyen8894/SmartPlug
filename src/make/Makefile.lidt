@@ -1,11 +1,11 @@
 #------------------------------------------------------------------------------
 # Makefile - make/Makefile.lidt
 #
-# Copyright Tien Nguyen Anh
+# Copyright Hang Nguyen 2016
 #
 # Modification history
 # -------------------
-#     Created: 2016-Dec-3
+#     Created: 2016-Dec-3 thuhang.nguyen8894@gmail.com
 #------------------------------------------------------------------------------
 
 .PHONY: all

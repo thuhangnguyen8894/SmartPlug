@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------------
 #Makefile - src/app/dataConverter
-# Copyright (c) 
+# Copyright (c) Hang Nguyen 2016
 # Modification history
 # --------------------
-#    Created: 
+#    Created: 2016-Dec-04 thuhang.nguyen8894@gmail.com
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)

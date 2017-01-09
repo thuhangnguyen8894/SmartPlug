@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------
 # Makefile - make/Makefile.app
-# Copyright (c) Tien Nguyen Anh
+# Copyright (c) Hang Nguyen 2016
 # Modification history
-#    Created: 2016-Dec-03 
+#    Created: 2016-Dec-03 thuhang.nguyen8894@gmail.com 
 #-----------------------------------------------------------------------------
 
 ifndef make_app
