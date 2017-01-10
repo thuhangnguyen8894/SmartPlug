@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2017-01-10 10:39:38</td>
+            <td class="headerValue">2017-01-10 14:02:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -134,11 +134,10 @@
 <span class="lineNum">      72 </span>            :     std::string smartPlugStatusStr = 
 <span class="lineNum">      73 </span><span class="lineCov">          2 :                         pTree.get&lt;std::string&gt;(jsonSmartPlugIntPath);</span>
 <span class="lineNum">      74 </span>            : 
-<span class="lineNum">      75 </span>            :     //info.data.smartPlugStatus = std::stol(smartPlugStatusStr);
-<span class="lineNum">      76 </span><span class="lineCov">          1 :     strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());</span>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          1 :     info.sender.port = std::stol(portStr);</span></a>
-<span class="lineNum">      78 </span><span class="lineCov">          1 :     strcpy(info.sender.ip, ipStr.c_str());</span>
-<span class="lineNum">      79 </span><span class="lineCov">          4 : }</span>
+<span class="lineNum">      75 </span><span class="lineCov">          1 :     strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());</span>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          1 :     info.sender.port = std::stol(portStr);</span></a>
+<span class="lineNum">      77 </span><span class="lineCov">          1 :     strcpy(info.sender.ip, ipStr.c_str());</span>
+<span class="lineNum">      78 </span><span class="lineCov">          4 : }</span>
 </pre>
       </td>
     </tr>
