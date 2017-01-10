@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2017-01-10 22:19:27</td>
+            <td class="headerValue">2017-01-10 23:55:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -107,7 +107,7 @@
 <span class="lineNum">      45 </span>            : /*!
 <a name="46"><span class="lineNum">      46 </span>            :  * @internal</a>
 <span class="lineNum">      47 </span>            :  */
-<span class="lineNum">      48 </span><span class="lineCov">          4 : STATIC bool buildLightIntensityJson(const char* message,</span>
+<span class="lineNum">      48 </span><span class="lineCov">          4 : STATIC bool buildSmartPlugStatusJson(const char* message,</span>
 <span class="lineNum">      49 </span>            :                                     boost::property_tree::ptree&amp; dataTree)
 <span class="lineNum">      50 </span>            : {
 <span class="lineNum">      51 </span><span class="lineCov">          4 :     if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)</span>
@@ -206,7 +206,7 @@
 <span class="lineNum">     144 </span><span class="lineCov">          3 :         return false;</span>
 <span class="lineNum">     145 </span>            :     }
 <span class="lineNum">     146 </span>            : 
-<span class="lineNum">     147 </span><span class="lineCov">          1 :     if (!buildLightIntensityJson(token[0].c_str(), dataTree))</span>
+<span class="lineNum">     147 </span><span class="lineCov">          1 :     if (!buildSmartPlugStatusJson(token[0].c_str(), dataTree))</span>
 <span class="lineNum">     148 </span>            :     {
 <span class="lineNum">     149 </span><span class="lineNoCov">          0 :         return false;</span>
 <span class="lineNum">     150 </span>            :     }

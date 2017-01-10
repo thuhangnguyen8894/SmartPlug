@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="9" failures="0" disabled="0" errors="0" timestamp="2017-01-10T22:19:18" time="0.011" name="AllTests">
-  <testsuite name="JsonBuilderTest" tests="9" failures="0" disabled="0" errors="0" time="0.011">
+<testsuites tests="9" failures="0" disabled="0" errors="0" timestamp="2017-01-10T23:54:54" time="0.002" name="AllTests">
+  <testsuite name="JsonBuilderTest" tests="9" failures="0" disabled="0" errors="0" time="0.002">
     <testcase name="TestbuildJsonMessageType_RESULT_OK" status="run" time="0" classname="JsonBuilderTest" />
     <testcase name="TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT" status="run" time="0" classname="JsonBuilderTest" />
-    <testcase name="TestbuildLightIntensityJson_RESULT_OK" status="run" time="0" classname="JsonBuilderTest" />
-    <testcase name="TestbuildLightIntensityJson_NOT_SENSOR_MESSAGE" status="run" time="0.001" classname="JsonBuilderTest" />
-    <testcase name="TestbuildLightIntensityJson_NOT_LIGHT_MESSAGE" status="run" time="0" classname="JsonBuilderTest" />
-    <testcase name="TestbuildJson_RESULT_OK" status="run" time="0.009" classname="JsonBuilderTest" />
+    <testcase name="TestbuildSmartPlugStatusJson_RESULT_OK" status="run" time="0" classname="JsonBuilderTest" />
+    <testcase name="TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE" status="run" time="0" classname="JsonBuilderTest" />
+    <testcase name="TestbuildSmartPlugStatusJson_NOT_LIGHT_MESSAGE" status="run" time="0" classname="JsonBuilderTest" />
+    <testcase name="TestbuildJson_RESULT_OK" status="run" time="0.002" classname="JsonBuilderTest" />
     <testcase name="TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1" status="run" time="0" classname="JsonBuilderTest" />
     <testcase name="TestbuildJson_RESULT_FAILURE_2" status="run" time="0" classname="JsonBuilderTest" />
     <testcase name="TestbuildJson_RESULT_FAILURE_3" status="run" time="0" classname="JsonBuilderTest" />

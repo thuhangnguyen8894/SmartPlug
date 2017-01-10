@@ -20,7 +20,7 @@
 
 extern bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree);
-extern bool buildLightIntensityJson(const char* message,
+extern bool buildSmartPlugStatusJson(const char* message,
                                     boost::property_tree::ptree& dataTree);
 
 class JsonBuilderTest : public ::testing::Test
@@ -60,7 +60,7 @@ TEST_F(JsonBuilderTest, TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT)
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildLightIntensityJson_RESULT_OK)
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
     std::string message("SON"); //L0820
@@ -68,28 +68,28 @@ TEST_F(JsonBuilderTest, TestbuildLightIntensityJson_RESULT_OK)
     boost::property_tree::ptree expectedTree;
     expectedTree.put("SMART_PLUG_STATUS", "ON");
 
-    bool status = buildLightIntensityJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
 }
 
-TEST_F(JsonBuilderTest, TestbuildLightIntensityJson_NOT_SENSOR_MESSAGE)
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
     std::string message("RL");
 
-    bool status = buildLightIntensityJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
 
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildLightIntensityJson_NOT_LIGHT_MESSAGE)
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_LIGHT_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
     std::string message("CCBDA");
 
-    bool status = buildLightIntensityJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
 
     EXPECT_FALSE(status);
 }

@@ -45,7 +45,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
 /*!
  * @internal
  */
-STATIC bool buildLightIntensityJson(const char* message,
+STATIC bool buildSmartPlugStatusJson(const char* message,
                                     boost::property_tree::ptree& dataTree)
 {
     if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)
@@ -144,7 +144,7 @@ bool buildJson(const char* message, char** jsonString)
         return false;
     }
 
-    if (!buildLightIntensityJson(token[0].c_str(), dataTree))
+    if (!buildSmartPlugStatusJson(token[0].c_str(), dataTree))
     {
         return false;
     }
