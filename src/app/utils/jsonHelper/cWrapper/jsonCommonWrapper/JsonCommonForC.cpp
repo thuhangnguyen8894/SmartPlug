@@ -21,7 +21,17 @@
  */
 void getJSONMessageTypeForC(const char* message, MESSAGE_TYPE* messageType)
 {
-
+	switch(message[0]) 
+    {
+    case SMART_PLUG_MESSAGE_TYPE:
+        return MESSAGE_TYPE_SMART_PLUG_STATUS;
+    case SMART_PLUG_MESSAGE_VALUE_ON:
+        return MESSAGE_TYPE_SMART_PLUG_STATUS;
+    case SMART_PLUG_MESSAGE_VALUE_OFF:
+        return MESSAGE_TYPE_SMART_PLUG_STATUS;
+    default:
+        return MESSAGE_TYPE_DEFAULT;
+    }
 }
 
 /*!
@@ -29,7 +39,15 @@ void getJSONMessageTypeForC(const char* message, MESSAGE_TYPE* messageType)
  */
 char* convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType)
 {
-    
+	switch(messageType)
+    {
+    case MESSAGE_TYPE_SMART_PLUG_STATUS:
+        return MESSAGE_TYPE_SMART_PLUG_STATUS_STR;
+    case MESSAGE_TYPE_CONTROL_SMART_PLUG:
+        return MESSAGE_TYPE_CONTROL_SMART_PLUG_STR;
+    default:
+        return "MESSAGE_TYPE_DEFAULT";
+    }
 }
 
 /*!
@@ -37,13 +55,11 @@ char* convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType)
  */
 bool isSensorMessageForC(const char* message)
 {
+    if (strlen(message) > MAX_SENSOR_MESSAGE_LENGTH
+        || strlen(message) <= 0)
+    {
+        return false;
+    }
 
-}
-
-/*!
- * @internal
- */
-bool convertArduinoMsgToInt16ForC(const char* msg, uint16_t* value)
-{
-
+    return true;
 }

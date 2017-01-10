@@ -26,7 +26,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-#include <DataDef.h>
+#include </data/projects/SmartPlug/src/app/dataManager/DataDef.h>
 
 /*!
  * @brief

@@ -50,7 +50,6 @@ bool isSensorMessageForC(const char* message);
  * param[in] message
  * return
  */
-bool convertArduinoMsgToInt16ForC(const char* msg, uint16_t* value);
 
 #ifdef __cplusplus
 }

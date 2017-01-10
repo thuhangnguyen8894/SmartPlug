@@ -72,7 +72,6 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
     std::string smartPlugStatusStr = 
                         pTree.get<std::string>(jsonSmartPlugIntPath);
 
-    //info.data.smartPlugStatus = std::stol(smartPlugStatusStr);
     strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());
     info.sender.port = std::stol(portStr);
     strcpy(info.sender.ip, ipStr.c_str());

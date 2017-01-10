@@ -54,7 +54,6 @@ TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
     status = parseSmartPlugStatusJson(jsonStrStream.str(), info);
 
     EXPECT_TRUE(status);
-    //EXPECT_TRUE(info.data.lightIntensity == 33);
     EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);
     EXPECT_TRUE(info.sender.port == 5600);
     EXPECT_TRUE(strcmp(info.sender.ip, "192.168.1.177") == 0);
