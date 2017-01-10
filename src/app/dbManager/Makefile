@@ -17,7 +17,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 #------------------------------------------------------------------------------
 #include source code
-INCS_DIRS += src/app/dataConverter
+INCS_DIRS += src/app/dataManager
 
 #------------------------------------------------------------------------------
 #include makefile
