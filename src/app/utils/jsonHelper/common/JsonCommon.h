@@ -26,14 +26,14 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-#include "DataDef.h"
+#include <DataDef.h>
 
 /*!
  * @brief
  * param[in] message
  * return
  */
-MESSAGE_TYPE getJSONMessageType(const char* message);
+MESSAGE_TYPE getJSONMessageType(const std::string& message);
 
 /*!
  * @brief
@@ -47,7 +47,7 @@ std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType);
  * param[in] message
  * return
  */
-bool isSensorMessage(const char* message);
+bool isSensorMessage(const std::string& message);
 
 
 /*!
@@ -55,7 +55,7 @@ bool isSensorMessage(const char* message);
  * param[in] message
  * return
  */
-bool convertJsonStrToPtree(const char* jsonString,
+bool convertJsonStrToPtree(const std::string& jsonString,
                                     boost::property_tree::ptree& dataTree);
 
 #endif

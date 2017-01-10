@@ -19,7 +19,7 @@
 /*!
  * @internal
  */
-bool isSensorMessage(const char* message)
+bool isSensorMessage(const std::string& message)
 {
     std::string messageStr(message);
 
@@ -32,7 +32,7 @@ bool isSensorMessage(const char* message)
     return true;
 }
 
-MESSAGE_TYPE getJSONMessageType(const char* message)
+MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
     switch(message[0]) 
     {
@@ -63,7 +63,7 @@ std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType)
     }
 }
 
-bool convertJsonStrToPtree(const char* jsonString,
+bool convertJsonStrToPtree(const std::string& jsonString,
                                     boost::property_tree::ptree& dataTree)
 {
     std::istringstream buffer(jsonString);
