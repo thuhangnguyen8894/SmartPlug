@@ -4,6 +4,8 @@
 #define MAX_SENSOR_MESSAGE_LENGTH 5
 #define IP_PORT_TOKEN_SIZE 2
 
+#define JSON_PATH_SPLITTER "."
+
 #define SMART_PLUG_MESSAGE_TYPE 'S'
 #define SMART_PLUG_MESSAGE_VALUE_ON 'N'
 #define SMART_PLUG_MESSAGE_VALUE_OFF 'F'
@@ -41,13 +43,13 @@ typedef struct
 
 typedef struct
 {
-    long smartplug;
-}smartplug;
+    char smartPlugStatus[5];
+}SmartPlug;
 
 typedef struct
 {
-    smartplug data;
+    SmartPlug data;
     Sender sender;
-}smartplugInfo;
+}SmartPlugInfo;
 
 #endif

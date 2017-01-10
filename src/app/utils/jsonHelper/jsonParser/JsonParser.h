@@ -29,7 +29,7 @@
  * param[in] message
  * return
  */
-bool parseLightInteJson(const std::string& jsonString,
-                                                LightIntensityInfo& info);
+bool parseSmartPlugStatusJson(const std::string& jsonString,
+                                                SmartPlugInfo& info);
 
 #endif

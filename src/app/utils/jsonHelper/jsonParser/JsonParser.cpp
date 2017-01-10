@@ -41,8 +41,8 @@ STATIC std::string getJsonPath(const std::string& source,
 /*!
  * @internal
  */
-bool parseLightInteJson(const std::string& jsonString,
-                                                smartplugInfo& info)
+bool parseSmartPlugStatusJson(const std::string& jsonString,
+                                                SmartPlugInfo& info)
 {
     boost::property_tree::ptree pTree;
     
@@ -67,12 +67,13 @@ bool parseLightInteJson(const std::string& jsonString,
     /*!
      * Parse Light Intensity
      */
-    std::string jsonLightIntPath = getJsonPath(ATTR_JSON_DATA,
+    std::string jsonSmartPlugIntPath = getJsonPath(ATTR_JSON_DATA,
                                                 ATTR_JSON_SMART_PLUG_STATUS);
-    std::string lightIntenStr = 
-                        pTree.get<std::string>(jsonLightIntPath);
+    std::string smartPlugStatusStr = 
+                        pTree.get<std::string>(jsonSmartPlugIntPath);
 
-    info.data.lightIntensity = std::stol(lightIntenStr);
+    //info.data.smartPlugStatus = std::stol(smartPlugStatusStr);
+    strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());
     info.sender.port = std::stol(portStr);
     strcpy(info.sender.ip, ipStr.c_str());
 }

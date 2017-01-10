@@ -1,14 +1,9 @@
-#-----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 # Makefile - make/Makefile.boost
-<<<<<<< HEAD
 # Copyright Tien Nguyen Anh
 # Modified history
-#    Created: 2016-Dec-19 
-=======
-# Copyright (c) Hang Nguyen 2016
-# Modified history
+#    Created: 2016-Dec-19 tien.nguyenanh94@gmail.com
 #    Created: 2016-Dec-19 thuhang.nguyen8894@gmail.com
->>>>>>> 99f4bb5125d03795b404ea33de9f234e54bbf551
 #-----------------------------------------------------------------------------
 
 ifndef make_zmq
