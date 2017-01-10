@@ -31,13 +31,13 @@
             <td class="headerValue">VARBASE_TEST_RESULT</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">12</td>
-            <td class="headerCovTableEntry">22</td>
-            <td class="headerCovTableEntryLo">54.5 %</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntryLo">42.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2017-01-07 22:12:08</td>
+            <td class="headerValue">2017-01-10 23:40:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -65,14 +65,14 @@
 <span class="lineNum">       3 </span>            :  * @file JsonCommon.cpp
 <span class="lineNum">       4 </span>            :  * @brief The implementation of JsonCommon.h
 <span class="lineNum">       5 </span>            :  *
-<span class="lineNum">       6 </span>            :  * Copyright (c) Tien Nguyen Anh
+<span class="lineNum">       6 </span>            :  * Copyright (c) Trang Tran 2017
 <span class="lineNum">       7 </span>            :  *
 <span class="lineNum">       8 </span>            :  * @detail
 <span class="lineNum">       9 </span>            :  *
 <span class="lineNum">      10 </span>            :  * Modified History
 <span class="lineNum">      11 </span>            :  * ---------------
-<span class="lineNum">      12 </span>            :  * 2016-Dec-21 Created tien.nguyenanh94@gmail.com
-<span class="lineNum">      13 </span>            :  * 2016-Dec-22 Modified tien.nguyenanh94@gmail.com
+<span class="lineNum">      12 </span>            :  * 2017-Jan-05 Created tn-trang.tran@outlook.com
+<span class="lineNum">      13 </span>            :  * 2017-Jan-08 Modified tn-trang.tran@outlook.com
 <span class="lineNum">      14 </span>            :  */
 <span class="lineNum">      15 </span>            : /*****************************************************************************/
 <span class="lineNum">      16 </span>            : 
@@ -81,58 +81,68 @@
 <span class="lineNum">      19 </span>            : /*!
 <a name="20"><span class="lineNum">      20 </span>            :  * @internal</a>
 <span class="lineNum">      21 </span>            :  */
-<span class="lineNum">      22 </span><span class="lineCov">          4 : bool isSensorMessage(const char* message)</span>
+<span class="lineNum">      22 </span><span class="lineCov">          8 : bool isSensorMessage(const std::string&amp; message)</span>
 <span class="lineNum">      23 </span>            : {
-<span class="lineNum">      24 </span><span class="lineCov">          8 :     std::string messageStr(message);</span>
+<span class="lineNum">      24 </span><span class="lineCov">         16 :     std::string messageStr(message);</span>
 <span class="lineNum">      25 </span>            : 
-<span class="lineNum">      26 </span><span class="lineCov">          8 :     if (messageStr.length() &gt; MAX_SENSOR_MESSAGE_LENGTH</span>
-<span class="lineNum">      27 </span><span class="lineCov">          4 :         || messageStr.length() &lt;= 0)</span>
+<span class="lineNum">      26 </span><span class="lineCov">         16 :     if (messageStr.length() &gt; MAX_SENSOR_MESSAGE_LENGTH</span>
+<span class="lineNum">      27 </span><span class="lineCov">          8 :         || messageStr.length() &lt;= 0)</span>
 <span class="lineNum">      28 </span>            :     {
-<span class="lineNum">      29 </span><span class="lineCov">          3 :         return false;</span>
+<span class="lineNum">      29 </span><span class="lineCov">          8 :         return false;</span>
 <span class="lineNum">      30 </span>            :     }
 <span class="lineNum">      31 </span>            : 
-<span class="lineNum">      32 </span><span class="lineCov">          1 :     return true;</span>
-<a name="33"><span class="lineNum">      33 </span>            : }</a>
-<span class="lineNum">      34 </span>            : 
-<span class="lineNum">      35 </span><span class="lineCov">          3 : MESSAGE_TYPE getJSONMessageType(const char* message)</span>
-<span class="lineNum">      36 </span>            : {
-<span class="lineNum">      37 </span><span class="lineCov">          3 :     switch(message[0]) </span>
+<span class="lineNum">      32 </span><span class="lineNoCov">          0 :     if (messageStr.find(SENSOR_MESSAGE_SPLITTER) == std::string::npos)</span>
+<span class="lineNum">      33 </span>            :     {
+<span class="lineNum">      34 </span><span class="lineNoCov">          0 :         return false;</span>
+<span class="lineNum">      35 </span>            :     }
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span><span class="lineNoCov">          0 :     if (messageStr.find(IP_PORT_REGEX_SPLITTER) == std::string::npos)</span>
 <span class="lineNum">      38 </span>            :     {
-<span class="lineNum">      39 </span>            :     case SMART_PLUG_MESSAGE_TYPE:
-<span class="lineNum">      40 </span><span class="lineNoCov">          0 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
-<span class="lineNum">      41 </span>            :     case SMART_PLUG_MESSAGE_VALUE_ON:
-<span class="lineNum">      42 </span><span class="lineCov">          1 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
-<span class="lineNum">      43 </span>            :     case SMART_PLUG_MESSAGE_VALUE_OFF:
-<span class="lineNum">      44 </span><span class="lineCov">          1 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
-<span class="lineNum">      45 </span>            :     default:
-<span class="lineNum">      46 </span><span class="lineCov">          1 :         return MESSAGE_TYPE_DEFAULT;</span>
-<span class="lineNum">      47 </span>            :     }
-<span class="lineNum">      48 </span>            : }
-<span class="lineNum">      49 </span>            : 
-<span class="lineNum">      50 </span>            : /*!
-<a name="51"><span class="lineNum">      51 </span>            :  * @internal</a>
-<span class="lineNum">      52 </span>            :  */
-<span class="lineNum">      53 </span><span class="lineNoCov">          0 : std::string convertMessageTypeToStr(const MESSAGE_TYPE&amp; messageType)</span>
-<span class="lineNum">      54 </span>            : {
-<span class="lineNum">      55 </span><span class="lineNoCov">          0 :     switch(messageType)</span>
-<span class="lineNum">      56 </span>            :     {
-<span class="lineNum">      57 </span>            :     case MESSAGE_TYPE_SMART_PLUG_STATUS:
-<span class="lineNum">      58 </span><span class="lineNoCov">          0 :         return std::string(MESSAGE_TYPE_SMART_PLUG_STATUS_STR);</span>
-<span class="lineNum">      59 </span>            :     case MESSAGE_TYPE_CONTROL_SMART_PLUG:
-<span class="lineNum">      60 </span><span class="lineNoCov">          0 :         return std::string(MESSAGE_TYPE_CONTROL_SMART_PLUG_STR);</span>
-<span class="lineNum">      61 </span>            :     default:
-<span class="lineNum">      62 </span><span class="lineNoCov">          0 :         return std::string(&quot;MESSAGE_TYPE_DEFAULT&quot;);</span>
-<span class="lineNum">      63 </span>            :     }
-<a name="64"><span class="lineNum">      64 </span>            : }</a>
-<span class="lineNum">      65 </span>            : 
-<span class="lineNum">      66 </span><span class="lineNoCov">          0 : bool convertJsonStrToPtree(const char* jsonString,</span>
-<span class="lineNum">      67 </span>            :                                     boost::property_tree::ptree&amp; dataTree)
-<span class="lineNum">      68 </span>            : {
-<span class="lineNum">      69 </span><span class="lineNoCov">          0 :     std::istringstream buffer(jsonString);</span>
-<span class="lineNum">      70 </span><span class="lineNoCov">          0 :     boost::property_tree::read_json(buffer, dataTree);</span>
-<a name="71"><span class="lineNum">      71 </span>            : </a>
-<span class="lineNum">      72 </span><span class="lineNoCov">          0 :     return true;</span>
-<span class="lineNum">      73 </span><span class="lineCov">          3 : }</span>
+<span class="lineNum">      39 </span><span class="lineNoCov">          0 :         return false;</span>
+<span class="lineNum">      40 </span>            :     }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span><span class="lineNoCov">          0 :     return true;</span>
+<a name="43"><span class="lineNum">      43 </span>            : }</a>
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span><span class="lineCov">          6 : MESSAGE_TYPE getJSONMessageType(const std::string&amp; message)</span>
+<span class="lineNum">      46 </span>            : {
+<span class="lineNum">      47 </span><span class="lineCov">          6 :     switch(message[0]) </span>
+<span class="lineNum">      48 </span>            :     {
+<span class="lineNum">      49 </span>            :     case SMART_PLUG_MESSAGE_TYPE:
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
+<span class="lineNum">      51 </span>            :     case SMART_PLUG_MESSAGE_VALUE_ON:
+<span class="lineNum">      52 </span><span class="lineCov">          2 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
+<span class="lineNum">      53 </span>            :     case SMART_PLUG_MESSAGE_VALUE_OFF:
+<span class="lineNum">      54 </span><span class="lineCov">          2 :         return MESSAGE_TYPE_SMART_PLUG_STATUS;</span>
+<span class="lineNum">      55 </span>            :     default:
+<span class="lineNum">      56 </span><span class="lineCov">          2 :         return MESSAGE_TYPE_DEFAULT;</span>
+<span class="lineNum">      57 </span>            :     }
+<span class="lineNum">      58 </span>            : }
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : /*!
+<a name="61"><span class="lineNum">      61 </span>            :  * @internal</a>
+<span class="lineNum">      62 </span>            :  */
+<span class="lineNum">      63 </span><span class="lineNoCov">          0 : std::string convertMessageTypeToStr(const MESSAGE_TYPE&amp; messageType)</span>
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span><span class="lineNoCov">          0 :     switch(messageType)</span>
+<span class="lineNum">      66 </span>            :     {
+<span class="lineNum">      67 </span>            :     case MESSAGE_TYPE_SMART_PLUG_STATUS:
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :         return std::string(MESSAGE_TYPE_SMART_PLUG_STATUS_STR);</span>
+<span class="lineNum">      69 </span>            :     case MESSAGE_TYPE_CONTROL_SMART_PLUG:
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :         return std::string(MESSAGE_TYPE_CONTROL_SMART_PLUG_STR);</span>
+<span class="lineNum">      71 </span>            :     default:
+<span class="lineNum">      72 </span><span class="lineNoCov">          0 :         return std::string(&quot;MESSAGE_TYPE_DEFAULT&quot;);</span>
+<span class="lineNum">      73 </span>            :     }
+<a name="74"><span class="lineNum">      74 </span>            : }</a>
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 : bool convertJsonStrToPtree(const std::string&amp; jsonString,</span>
+<span class="lineNum">      77 </span>            :                                     boost::property_tree::ptree&amp; dataTree)
+<span class="lineNum">      78 </span>            : {
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :     std::istringstream buffer(jsonString);</span>
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :     boost::property_tree::read_json(buffer, dataTree);</span>
+<a name="81"><span class="lineNum">      81 </span>            : </a>
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 :     return true;</span>
+<span class="lineNum">      83 </span><span class="lineCov">          6 : }</span>
 </pre>
       </td>
     </tr>

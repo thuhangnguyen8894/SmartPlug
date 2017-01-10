@@ -29,6 +29,16 @@ bool isSensorMessage(const std::string& message)
         return false;
     }
 
+    if (messageStr.find(SENSOR_MESSAGE_SPLITTER) == std::string::npos)
+    {
+        return false;
+    }
+
+    if (messageStr.find(IP_PORT_REGEX_SPLITTER) == std::string::npos)
+    {
+        return false;
+    }
+
     return true;
 }
 

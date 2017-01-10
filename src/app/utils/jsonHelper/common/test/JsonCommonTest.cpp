@@ -33,7 +33,7 @@ protected:
 
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_OK)
 {
-    const char* message("ABC");
+    const char* message("ON;192.168.1.177:5600");
     bool status = isSensorMessage(message);
     EXPECT_TRUE(status);
 }
