@@ -21,8 +21,9 @@ SUBOBJS += JsonCommon.o
 
 #------------------------------------------------------------------------------
 #include source code
-INCS_DIRS = src/app/utils/jsonHelper/common \
-			src/app/utils/jsonHelper/jsonBuilder
+INCS_DIRS += src/app/utils/jsonHelper/common \
+			src/app/utils/jsonHelper/jsonBuilder \
+			src/app/dataManager
 
 #-----------------------------------------------------------------------------
 LIBDIRS_jsonCommon  = $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
