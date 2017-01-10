@@ -79,7 +79,7 @@ void MessageReceiver::run()
                 /*!
                  * Appending IP of Sender to message
                  */
-                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, JSON_PATH_SPLITTER); //edit SENSOR_MESSAGE_SPLITTER
                 strcat(pBuffer, sender.toString().c_str());
 
                 if (isSensorMessage(pBuffer))
