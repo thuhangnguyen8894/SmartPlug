@@ -3,14 +3,14 @@
  * @file CommonTest.cpp
  * @brief Unittest for CommonTest class
  *
- * Copyright (c) Trang Tran 2016 
+ * Copyright (c) 2017 Tien Anh Nguyen 
  *
  * @detail The testing file of the implementation of CommonTest class
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tn-trang.tran@outlook.com
- * 2017-Jan-07 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-05 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -35,12 +35,12 @@ protected:
 /*!
  * Test Function  : bool isSensorMessage(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "on;192.168.1.177:5600"
+ * Input          : "ON;192.168.1.177:5600"
  * Expected Result: true
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_OK)
 {
-    const char* message("on;192.168.1.177:5600");
+    std::string message("ON;192.168.1.177:5600");
     bool status = isSensorMessage(message);
     EXPECT_TRUE(status);
 }
@@ -48,12 +48,12 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_OK)
 /*!
  * Test Function  : bool isSensorMessage(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "on"
+ * Input          : "ON"
  * Expected Result: false
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_1)
 {
-    const char* message("on");
+    std::string message("ON");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -66,7 +66,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_1)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_2)
 {
-    const char* message("192.168.1.177");
+    std::string message("192.168.1.177");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -79,7 +79,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_2)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_3)
 {
-    const char* message("192.168.1.177:8800");
+    std::string message("192.168.1.177:8800");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -87,12 +87,12 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_3)
 /*!
  * Test Function  : bool isSensorMessage(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "on;192.168.1.177"
+ * Input          : "ON;192.168.1.177"
  * Expected Result: false
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_4)
 {
-    const char* message("on;192.168.1.177");
+    std::string message("ON;192.168.1.177");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -105,7 +105,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_4)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_5)
 {
-    const char* message("");
+    std::string message("");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -118,7 +118,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_5)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
 {
-    const char* message("onnnnn;192.168.1.177:5600");
+    std::string message("ONNNNN;192.168.1.177:5600");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -126,25 +126,12 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
 /*!
  * Test Function  : bool getJSONMessageType(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "o"
+ * Input          : "S"
  * Expected Result: MESSAGE_TYPE_SMART_PLUG_STATUS
  */
-TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_ON)
+TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
 {
-    const char* message("o");
-    MESSAGE_TYPE messageType = getJSONMessageType(message);
-    EXPECT_EQ(messageType, MESSAGE_TYPE_SMART_PLUG_STATUS);
-}
-
-/*!
- * Test Function  : bool getJSONMessageType(const std::string& message)
- * Test Type      : Equivalence Class Testing
- * Input          : "O"
- * Expected Result: MESSAGE_TYPE_SMART_PLUG_STATUS
- */
-TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_OFF)
-{
-    const char* message("O");
+    std::string message("PON;192.168.1.177:8800");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_SMART_PLUG_STATUS);
 }
@@ -157,7 +144,7 @@ TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_OFF)
  */
 TEST_F(JsonCommonTest, TestgetJSONMessageType_DEFAULT_TYPE)
 {
-    const char* message("W");
+    std::string message("AON;192.168.1.177:8800");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_DEFAULT);
 }

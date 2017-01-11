@@ -64,13 +64,10 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
     std::string ipStr = pTree.get<std::string>(jsonIPPath);
     std::string portStr = pTree.get<std::string>(jsonPortPath);
 
-    /*!
-     * Parse Light Intensity
-     */
-    std::string jsonSmartPlugIntPath = getJsonPath(ATTR_JSON_DATA,
-                                                ATTR_JSON_SMART_PLUG_STATUS);
+    std::string jsonSmartPlugStatusPath = getJsonPath(ATTR_JSON_DATA,
+                                                ATTR_JSON_SMART_PLUG_STATUS_VALUE);
     std::string smartPlugStatusStr = 
-                        pTree.get<std::string>(jsonSmartPlugIntPath);
+                        pTree.get<std::string>(jsonSmartPlugStatusPath);
 
     strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());
     info.sender.port = std::stol(portStr);

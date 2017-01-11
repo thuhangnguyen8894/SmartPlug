@@ -39,15 +39,15 @@ jsonCommon_cffi.cdef("""
 
     typedef struct
     {
-        long lightIntensity;
-    }LightIntensity;
+        char smartPlugStatus[5];
+    }SmartPlug;
 
     typedef struct
     {
-        LightIntensity data;
+        SmartPlug data;
         Sender sender;
 
-    }LightIntensityInfo;
+    }SmartPlugInfo;
 
     bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info);
 """)

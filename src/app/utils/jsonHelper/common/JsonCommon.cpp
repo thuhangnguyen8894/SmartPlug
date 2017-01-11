@@ -3,21 +3,22 @@
  * @file JsonCommon.cpp
  * @brief The implementation of JsonCommon.h
  *
- * Copyright (c) Trang Tran 2017
+ * Copyright (c) 2017 Tien Anh Nguyen
  *
  * @detail
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tn-trang.tran@outlook.com
- * 2017-Jan-08 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-05 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
 #include "JsonCommon.h"
 
 /*!
- * @internal
+ * Test message from Arduino.
+ * Template: "PlugStatus;IPAddress:Port"
  */
 bool isSensorMessage(const std::string& message)
 {
@@ -42,15 +43,17 @@ bool isSensorMessage(const std::string& message)
     return true;
 }
 
+/*!
+ * Test JSON Message Type.
+ * SMART_PLUG_MESSAGE_VALUE is "P".
+ * "P" define feature Plug send JSON message.
+ */
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
-    switch(message[0]) 
+    switch(message[0])  
+
     {
-    case SMART_PLUG_MESSAGE_TYPE:
-        return MESSAGE_TYPE_SMART_PLUG_STATUS;
-    case SMART_PLUG_MESSAGE_VALUE_ON:
-        return MESSAGE_TYPE_SMART_PLUG_STATUS;
-    case SMART_PLUG_MESSAGE_VALUE_OFF:
+    case SMART_PLUG_MESSAGE_VALUE:
         return MESSAGE_TYPE_SMART_PLUG_STATUS;
     default:
         return MESSAGE_TYPE_DEFAULT;
@@ -58,7 +61,7 @@ MESSAGE_TYPE getJSONMessageType(const std::string& message)
 }
 
 /*!
- * @internal
+ * Convert message type into explicit string
  */
 std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType)
 {
@@ -66,13 +69,14 @@ std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType)
     {
     case MESSAGE_TYPE_SMART_PLUG_STATUS:
         return std::string(MESSAGE_TYPE_SMART_PLUG_STATUS_STR);
-    case MESSAGE_TYPE_CONTROL_SMART_PLUG:
-        return std::string(MESSAGE_TYPE_CONTROL_SMART_PLUG_STR);
     default:
         return std::string("MESSAGE_TYPE_DEFAULT");
     }
 }
 
+/*!
+ * Convert JSON to Ptree
+ */
 bool convertJsonStrToPtree(const std::string& jsonString,
                                     boost::property_tree::ptree& dataTree)
 {

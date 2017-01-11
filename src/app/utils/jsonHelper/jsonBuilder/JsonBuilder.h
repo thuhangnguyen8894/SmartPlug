@@ -3,15 +3,15 @@
  * @file JsonBuilder.h
  * @brief The declaration of JsonBuilder.
  *
- * Copyright (c) Trang Tran 2017
+ * Copyright (c) 2017 Tien Anh Nguyen
  *
  * @detail The JsonBuilder can convert a array format message to JSON format.
  *             It's duty is convert a message of Arduino to JSON.
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tn-trang.tran@outlook.com
- * 2017-Jan-07 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-05 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -25,7 +25,7 @@
  * param[in] message
  * return
  */
-bool buildJson(const char* message, char** jsonString);
+bool buildJson(const std::string& message, std::string& jsonString);
 
 /*!
  * @brief
@@ -33,6 +33,5 @@ bool buildJson(const char* message, char** jsonString);
  * param[out] jsonString
  * return
  */
-std::string writeJsonToString(boost::property_tree::ptree& pTree);
 
 #endif

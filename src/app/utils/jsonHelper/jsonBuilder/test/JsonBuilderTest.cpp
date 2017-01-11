@@ -3,14 +3,14 @@
  * @file JsonBuilderTest.cpp
  * @brief Unittest for JsonBuilderTest class
  *
- * Copyright (c) Trang Tran 2017
+ * Copyright (c) 2017 Tien Anh Nguyen
  *
  * @detail The testing file of the implementation of JsonBuilderTest class
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tn-trang.tran@outlook.com
- * 2016-Dec-22 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-05 Created tien.nguyenanh94@ogmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 #include <cstdlib>
@@ -20,7 +20,7 @@
 
 extern bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree);
-extern bool buildSmartPlugStatusJson(const char* message,
+extern bool buildSmartPlugStatusJson(const std::string& message,
                                     boost::property_tree::ptree& dataTree);
 
 class JsonBuilderTest : public ::testing::Test
@@ -36,13 +36,14 @@ protected:
     }
 };
 
+
 TEST_F(JsonBuilderTest, TestbuildJsonMessageType_RESULT_OK)
 {
     boost::property_tree::ptree messageTypeTree;
     MESSAGE_TYPE messageType = MESSAGE_TYPE_SMART_PLUG_STATUS;
     
     boost::property_tree::ptree expectedTree;
-    expectedTree.put("MESSAGE_TYPE", MESSAGE_TYPE_SMART_PLUG_STATUS_STR);
+    expectedTree.put(ATTR_JSON_MESSAGE_TYPE, ATTR_JSON_SMART_PLUG_STATUS_VALUE);
 
     bool status = buildJsonMessageType(messageType, messageTypeTree);
 
@@ -60,15 +61,29 @@ TEST_F(JsonBuilderTest, TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT)
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_RESULT_OK)
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("SON"); //L0820
+    std::string message("PON;192.168.1.177:8800");
     
     boost::property_tree::ptree expectedTree;
-    expectedTree.put("SMART_PLUG_STATUS", "ON");
+    expectedTree.put("SMART_PLUG_STATUS_VALUE", "ON");
 
-    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message, dataTree);
+
+    EXPECT_TRUE(status);
+    EXPECT_EQ(expectedTree, dataTree);
+}
+
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_OFF_RESULT_OK)
+{
+    boost::property_tree::ptree dataTree;
+    std::string message("POFF;192.168.1.177:8800");
+    
+    boost::property_tree::ptree expectedTree;
+    expectedTree.put("SMART_PLUG_STATUS_VALUE", "OFF");
+
+    bool status = buildSmartPlugStatusJson(message, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
@@ -77,27 +92,27 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_RESULT_OK)
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("RL");
+    std::string message("");
 
-    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message, dataTree);
 
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_LIGHT_MESSAGE)
+TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("CCBDA");
+    std::string message(";192.168.1.177:8800");
 
-    bool status = buildSmartPlugStatusJson(message.c_str(), dataTree);
+    bool status = buildSmartPlugStatusJson(message, dataTree);
 
     EXPECT_FALSE(status);
 }
 
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 {
-    char* jsonString = NULL;
-    std::string message("SON;192.168.1.177:5600");
+    std::string jsonString;
+    std::string message("PON;192.168.1.177:5600");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
@@ -107,7 +122,7 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
-    bool status = buildJson(message.c_str(), &jsonString);
+    bool status = buildJson(message, jsonString);
     boost::property_tree::ptree actualTree;
     std::stringstream stringStream(jsonString);
     boost::property_tree::read_json(stringStream, actualTree);
@@ -118,30 +133,30 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 
 TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
-    char* jsonString = NULL;
-    std::string message("LON");
+    std::string jsonString;
+    std::string message("RON;192.168.1.177:5600");
 
-    bool status = buildJson(message.c_str(), &jsonString);
+    bool status = buildJson(message, jsonString);
 
     EXPECT_FALSE(status);
 }
 
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_2)
 {
-    char* jsonString = NULL;
-    std::string message("CON");
+    std::string jsonString;
+    std::string message("RON");
 
-    bool status = buildJson(message.c_str(), &jsonString);
+    bool status = buildJson(message, jsonString);
 
     EXPECT_FALSE(status);
 }
 
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_3)
 {
-    char* jsonString = NULL;
+    std::string jsonString;
     std::string message("LOFF");
 
-    bool status = buildJson(message.c_str(), &jsonString);
+    bool status = buildJson(message, jsonString);
 
     EXPECT_FALSE(status);
 }

@@ -3,14 +3,14 @@
  * @file JsonBuilder.cpp
  * @brief The implementation of JsonBuilder.
  *
- * Copyright (c) Trang Tran 2017
+ * Copyright (c) 2017 Tien Anh Nguyen
  *
  * @detail
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tn-trang.tran@outlook.com
- * 2017-Jan-07 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-05 Created tien.nguyenan94@gmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -27,7 +27,8 @@
 #endif
 
 /*!
- * @internal
+ * @internal 
+ * Build message type into name and value of JSON
  */
 STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree)
@@ -37,39 +38,14 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
         return false;
     }
 
-    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, MESSAGE_TYPE_SMART_PLUG_STATUS_STR);
+    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, ATTR_JSON_SMART_PLUG_STATUS_VALUE);
 
     return true;
 }
 
 /*!
  * @internal
- */
-STATIC bool buildSmartPlugStatusJson(const char* message,
-                                    boost::property_tree::ptree& dataTree)
-{
-    if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)
-    {
-        return false; //
-    }
-
-    if (strcmp(message + 1, ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF) == 0)
-    {
-        dataTree.put(ATTR_JSON_SMART_PLUG_STATUS, 
-                                    ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF);    
-    }
-
-    if (strcmp(message + 1, ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON) == 0)
-    {
-        dataTree.put(ATTR_JSON_SMART_PLUG_STATUS, 
-                                    ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON);    
-    }
-    
-    return true;
-}
-
-/*!
- * @internal
+ * Split the message with criterion
  */
 std::vector<std::string> splitWordRegex(const std::string& message,
                             const std::string& splitter)
@@ -91,16 +67,47 @@ std::vector<std::string> splitWordRegex(const std::string& message,
 }
 
 /*!
- * @internal
+ * @internal 
+ * Build status of Smart Plug into name and value of JSON
  */
-STATIC bool buildIPSenderJSON(const char* ipAddress,
+STATIC bool buildSmartPlugStatusJson(const std::string& message,
+                                    boost::property_tree::ptree& dataTree)
+{
+    if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)
+    {
+        return false;
+    }
+
+    std::vector<std::string> token = splitWordRegex(message,
+                                    std::string(SENSOR_MESSAGE_SPLITTER));
+    std::string statusPlug = token[0].c_str();
+
+    if (statusPlug.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON) == 0)
+    {
+        dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
+                                    ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON);
+    }
+
+    if (statusPlug.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF) == 0)
+    {
+        dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
+                                    ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF);  
+    }
+    
+    return true;
+}
+
+/*!
+ * @internal 
+ * Build IP and Port of Arduino into name and value of JSON
+ */
+STATIC bool buildIPSenderJSON(const std::string& ipAddress,
                                 boost::property_tree::ptree& senderTree)
 {
     boost::property_tree::ptree senderDataTree;
 
-    std::vector<std::string> token = splitWordRegex(std::string(ipAddress),
+    std::vector<std::string> token = splitWordRegex(ipAddress,
                                     std::string(IP_PORT_REGEX_SPLITTER));
-
     if (token.size() != IP_PORT_TOKEN_SIZE)
     {
         return false;
@@ -114,6 +121,7 @@ STATIC bool buildIPSenderJSON(const char* ipAddress,
 
 /*!
  * @internal
+ * Write JSON
  */
 std::string writeJsonToString(boost::property_tree::ptree& pTree)
 {
@@ -124,18 +132,23 @@ std::string writeJsonToString(boost::property_tree::ptree& pTree)
 }
 
 /*!
- * @internal Using Regex to break message down into two part:
- *                 Data and IP of sender
+ * @internal 
+ * Using Regex to break message down into two part:
+ * Data and IP of sender
  */
-bool buildJson(const char* message, char** jsonString)
+bool buildJson(const std::string& message, std::string& jsonString)
 {
     boost::property_tree::ptree root;
     boost::property_tree::ptree messageTypeTree;
     boost::property_tree::ptree dataTree;
     boost::property_tree::ptree senderTree;
 
-    std::vector<std::string> token = splitWordRegex(std::string(message),
+    std::vector<std::string> token = splitWordRegex(message,
                                     std::string(SENSOR_MESSAGE_SPLITTER));
+    if (token.size() < 2)
+    {
+        return false;
+    }
 
     MESSAGE_TYPE messageType = getJSONMessageType(token[0].c_str());
 
@@ -157,7 +170,7 @@ bool buildJson(const char* message, char** jsonString)
     root.add_child(ATTR_JSON_DATA, dataTree);
     root.add_child(ATTR_JSON_SENDER, senderTree);
 
-    *jsonString = strdup(writeJsonToString(root).c_str());
+    jsonString = writeJsonToString(root);
 
     return true;
 }
