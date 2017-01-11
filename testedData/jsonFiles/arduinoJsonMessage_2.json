@@ -2,7 +2,7 @@
     "MESSAGE_TYPE" : "SMART_PLUG_STATUS",
     "data" : 
     {
-        "SMART_PLUG_STATUS" : "33"
+        "SMART_PLUG_STATUS" : "OFF"
     },
     "Sender" : 
     {

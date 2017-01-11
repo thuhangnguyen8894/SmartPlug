@@ -2,11 +2,11 @@
     "MESSAGE_TYPE" : "SMART_PLUG_STATUS",
     "data" : 
     {
-        "SMART_PLUG_STATUS" : "ON"
+        "SMART_PLUG_STATUS" : "on"
     },
     "Sender" : 
     {
         "IP" : "192.168.1.177",
-        "Port" : "5600"
+        "Port" : "8800"
     }
 }
