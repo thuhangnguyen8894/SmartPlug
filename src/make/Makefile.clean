@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------
-# Makefile - make/Makefile.app
-# Copyright (c) Hang Nguyen 2016
+# Makefile - make/Makefile.clean
+# Copyright (c) Tien Nguyen Anh
 # Modification history
-#    Created: 2016-Dec-07 thuhang.nguyen8894@gmail.com
+#    Created: 2016-Dec-07 
 #-----------------------------------------------------------------------------
 
 ifndef  make_tidy
@@ -11,7 +11,7 @@ make_tidy = once_only
 .PHONY: cleanall
 
 cleanall:
-	$(RM) $(LIDT_ROOT)/obj/$(OBJS).o
+	$(RM) $(LIDT_ROOT)/obj/$(OBJS)
 ifneq   ($(wildcard $(CLEAN) $(TARGET_CLEAN) $(ARCHIVES_CLEAN)), )
 	$(ECHO) Removing all target files for $(PWD) ...; \
 	$(RM) -r $(wildcard $(CLEAN) $(TARGET_CLEAN) $(ARCHIVES_CLEAN));
@@ -19,6 +19,14 @@ endif
 
 ifdef   CLEAN_DIRS
 	$(foreach dir, $(CLEAN_DIRS), cd $(dir); $(MAKE) $@;)
+endif
+
+ifdef CFFI_SRCS
+	$(RM) -r __pycache__
+endif
+
+ifdef PY_CACHE_CLEAN
+	$(RM) -r __pycache__
 endif
 
 endif

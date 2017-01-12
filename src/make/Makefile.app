@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------
 # Makefile - make/Makefile.app
-# Copyright (c) Hang Nguyen 2016
+# Copyright (c) Tien Nguyen Anh
 # Modification history
-#    Created: 2016-Dec-03 thuhang.nguyen8894@gmail.com 
+#    Created: 2016-Dec-03 
 #-----------------------------------------------------------------------------
 
 ifndef make_app
@@ -41,7 +41,7 @@ CFLAGS += -ansi
 
 CC = gcc
 
-COMMON_FLAGS = -ansi -g -std=c++11
+COMMON_FLAGS = -ansi -g -fPIC
 
 ifeq ($(APP),unittest)
 	COMMON_FLAGS += -DUNITTEST

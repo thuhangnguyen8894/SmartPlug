@@ -1,8 +1,8 @@
 #-----------------------------------------------------------------------------
 # Makefile - make/Makefile.mysql
-# Copyright (c) Hang Nguyen 2016
+# Copyright (c) Tien Anh Nguyen
 # Modified history
-#    Created: 2016-Dec-04 thuhang.nguyen8894@gmail.com
+#    Created: 2016-Dec-04 
 #-----------------------------------------------------------------------------
 
 ifndef make_mysql

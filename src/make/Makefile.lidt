@@ -1,11 +1,11 @@
 #------------------------------------------------------------------------------
 # Makefile - make/Makefile.lidt
 #
-# Copyright Hang Nguyen 2016
+# Copyright Tien Nguyen Anh
 #
 # Modification history
 # -------------------
-#     Created: 2016-Dec-3 thuhang.nguyen8894@gmail.com
+#     Created: 2016-Dec-3
 #------------------------------------------------------------------------------
 
 .PHONY: all
@@ -24,16 +24,17 @@ RM := rm -f
 LN := ln -f
 CP := cp -f
 
-CAT := cat
-CUT := cut
-AWK := awk
-SED := sed
-ECHO := echo
-TOUCH := touch
-CHMOD := chmod
-PYTHON := python
-MAKE := make
-LD      = gcc
+CAT 	:= cat
+CUT 	:= cut
+AWK 	:= awk
+SED 	:= sed
+ECHO 	:= echo
+TOUCH 	:= touch
+CHMOD 	:= chmod
+PYTHON 	:= python
+MAKE 	:= make
+LD      := gcc
+PYTHON 	:= python3
 
 ifeq ($(USING_LANGUAGE), CPP)
     LD = g++
