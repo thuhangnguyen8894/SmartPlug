@@ -1,8 +1,8 @@
 {
-    "MESSAGE_TYPE" : "SMART_PLUG_STATUS",
+    "MESSAGE_TYPE" : "SMART_PLUG_STATUS_VALUE",
     "data" : 
     {
-        "SMART_PLUG_STATUS" : "OFF"
+        "SMART_PLUG_STATUS_VALUE" : "OFF"
     },
     "Sender" : 
     {
