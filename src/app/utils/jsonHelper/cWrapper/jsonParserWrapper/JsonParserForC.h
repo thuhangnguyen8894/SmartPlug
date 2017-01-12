@@ -31,7 +31,7 @@ extern "C"{
  * param[in] message
  * return
  */
-bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info);
+bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
 
 #ifdef __cplusplus
 }

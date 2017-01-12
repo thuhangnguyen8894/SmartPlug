@@ -10,6 +10,7 @@
  * Modified History
  * ---------------
  * 2017-Jan-07 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-12 Modified tn-trang.tran@outlook.com
  */
 /***************************************************************************/
 
@@ -19,7 +20,7 @@
 /*!
  * @internal
  */
-bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info)
+bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info)
 {
-    
+    return parseSmartPlugStatusJson(std::string(jsonString), *info);
 }

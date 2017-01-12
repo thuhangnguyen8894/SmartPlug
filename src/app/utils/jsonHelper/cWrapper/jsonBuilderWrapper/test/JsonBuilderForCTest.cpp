@@ -36,56 +36,55 @@ protected:
     }
 };
 
-
-TEST_F(JsonBuilderForCTest, TestbuildJson_RESULT_OK)
+TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
 {
     char* jsonString = NULL;
-    std::string message("L0820;192.168.1.177:5600");
+    std::string message("PON;192.168.1.177:5600");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_2.json");
+    jsonFilePath.append("arduinoJsonMessage_1.json");
 
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
-
+    
     boost::property_tree::ptree actualTree;
-
+    
     std::string str(jsonString);
     std::istringstream stringStream(str);
     boost::property_tree::read_json(stringStream, actualTree);
-
+    
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, actualTree);
 }
 
-TEST_F(JsonBuilderForCTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
+TEST_F(JsonBuilderForCTest, TestbuildJsonForC_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     char* jsonString = NULL;
-    std::string message("LCAD");
+    std::string message("RON;192.168.1.177:5600");
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
 
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderForCTest, TestbuildJson_RESULT_FAILURE_2)
+TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_FAILURE_2)
 {
     char* jsonString = NULL;
-    std::string message("CCBDA");
+    std::string message("RON");
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
 
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderForCTest, TestbuildJson_RESULT_FAILURE_3)
+TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_FAILURE_3)
 {
     char* jsonString = NULL;
-    std::string message("LBDA");
+    std::string message("LOFF");
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
 

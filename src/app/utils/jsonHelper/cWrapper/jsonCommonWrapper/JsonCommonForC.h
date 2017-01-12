@@ -10,6 +10,7 @@
  * Modified History
  * ---------------
  * 2017-Jan-06 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-12 Modified tn-trang.tran@outlook.com
  */
 /***************************************************************************/
 
@@ -19,6 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#include "DataDef.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -37,19 +40,14 @@ void getJSONMessageTypeForC(const char* message, MESSAGE_TYPE* messageType);
  * return
  */
 bool convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType,
-                                                        char** messageTypeStr);
-/*!
- * @brief
- * param[in] message
- * return
- */
-bool isSensorMessageForC(const char* message);
+                                                    char** messageTypeStr);
 
 /*!
  * @brief
  * param[in] message
  * return
  */
+bool isSensorMessageForC(const char* message);
 
 #ifdef __cplusplus
 }
