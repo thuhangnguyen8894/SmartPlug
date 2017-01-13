@@ -10,6 +10,7 @@
  * Modified History
  * ---------------
  * 2017-Jan-07 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-13 Modified tn-trang.tran@outlook.com
  */
 /***************************************************************************/
 

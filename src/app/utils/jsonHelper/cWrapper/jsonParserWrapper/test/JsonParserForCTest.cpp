@@ -6,6 +6,10 @@
  * Copyright (c) Tien Nguyen Anh 2016 
  *
  * @detail The testing file of the implementation of JsonBuilderTest class
+ * Modified History
+ * ---------------
+ * 2017-Jan-07 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-13 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -49,12 +53,10 @@ TEST_F(JsonParserForCTest, TestparseSmartPlugStatusJsonForC_RESULT_OK)
     jsonFilePath.append("arduinoJsonMessage_2.json");
 
     boost::property_tree::read_json(jsonFilePath, pTree);
-
-    std::string str(jsonString);
-    std::stringstream jsonStrStream(str);
-
+    std::stringstream jsonStrStream;
     boost::property_tree::write_json(jsonStrStream, pTree);
-    status = parseSmartPlugStatusJsonForC(jsonStrStream.str(), info);
+
+    status = parseSmartPlugStatusJsonForC(jsonStrStream.str().c_str(), &info);
 
     EXPECT_TRUE(status);
     EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);

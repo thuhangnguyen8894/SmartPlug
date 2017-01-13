@@ -1,0 +1,16 @@
+TN:
+SF:/data/projects/SmartPlug/src/app/utils/jsonHelper/cWrapper/jsonParserWrapper/JsonParserForC.cpp
+FN:23,parseSmartPlugStatusJsonForC
+FN:26,_Z41__static_initialization_and_destruction_0ii
+FN:26,_GLOBAL__sub_I_JsonParserForC.cpp
+FNDA:3,_GLOBAL__sub_I_JsonParserForC.cpp
+FNDA:3,_Z41__static_initialization_and_destruction_0ii
+FNDA:1,parseSmartPlugStatusJsonForC
+FNF:3
+FNH:3
+DA:23,1
+DA:25,1
+DA:26,9
+LF:3
+LH:3
+end_of_record
