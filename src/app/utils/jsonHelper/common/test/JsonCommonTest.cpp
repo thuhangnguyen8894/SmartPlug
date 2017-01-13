@@ -113,7 +113,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_5)
 /*!
  * Test Function  : bool isSensorMessage(const std::string& message)
  * Test Type      : Upper Boundary Testing
- * Input          : "onnnnn;192.168.1.177:5600"
+ * Input          : "ONNNNN;192.168.1.177:5600"
  * Expected Result: false
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
@@ -126,7 +126,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
 /*!
  * Test Function  : bool getJSONMessageType(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "S"
+ * Input          : "PON;192.168.1.177:8800"
  * Expected Result: MESSAGE_TYPE_SMART_PLUG_STATUS
  */
 TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
@@ -139,7 +139,7 @@ TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
 /*!
  * Test Function  : bool getJSONMessageType(const std::string& message)
  * Test Type      : Equivalence Class Testing
- * Input          : "W"
+ * Input          : "AON;192.168.1.177:8800"
  * Expected Result: MESSAGE_TYPE_DEFAULT
  */
 TEST_F(JsonCommonTest, TestgetJSONMessageType_DEFAULT_TYPE)
