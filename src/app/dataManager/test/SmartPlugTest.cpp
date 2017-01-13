@@ -13,7 +13,7 @@
 
 #include "smartplug.h"
 
-class SmartPlug : public ::testing::Test
+class SmartPlugTest : public ::testing::Test
 {
 public:
 protected:

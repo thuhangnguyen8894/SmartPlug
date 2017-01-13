@@ -3,13 +3,12 @@
 #include "smartplug.h"
 
 
-SmartPlug::SmartPlug()
+/*SmartPlug::SmartPlug()
 {
     this->id = "";
     this->ip = "";
     this->status = "";
-
-}
+}*/
 
 SmartPlug::SmartPlug(std::string id, std::string ip, std::string status)
 { 
@@ -51,6 +50,12 @@ void SmartPlug::setStatus(std::string status)
 /*
 * Test dataDef smartplug
 */
+SmartPlug::SmartPlug()
+{
+    this->moment = 0;
+    this->smartplug = 0;
+}
+
 SmartPlug::SmartPlug(double moment, double smartplug)
 {
     this->moment = moment;

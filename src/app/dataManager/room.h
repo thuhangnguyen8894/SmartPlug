@@ -22,9 +22,6 @@ class Room
 		
         std::string getName();
         void setName(std::string name);
-		
-      
-
 };
 
 #endif
