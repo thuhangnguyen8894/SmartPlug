@@ -29,6 +29,7 @@ protected:
 TEST_F(SmartPlugTest, TestDefaultConstructorAndGetter)
 {
     SmartPlug smartplug;
-    EXPECT_EQ(0, smartplug.getSmartPlug());
-    EXPECT_EQ(0, smartplug.getMoment());
+    EXPECT_EQ("", smartplug.getId());
+    EXPECT_EQ("", smartplug.getIP());
+    EXPECT_EQ("", smartplug.getStatus());
 }
