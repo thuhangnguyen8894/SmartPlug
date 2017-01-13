@@ -72,9 +72,8 @@ jsonCommon_cffi.cdef("""
 
     void getJSONMessageTypeForC(const char* message, \
                                                 MESSAGE_TYPE* messageType);
-    char* convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType);
+    bool convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType, char** messageTypeStr); 
     bool isSensorMessageForC(const char* message);
-    bool convertArduinoMsgToInt16ForC(const char* msg, uint16_t* value);
 """)
 
 jsonCommon_c = jsonCommon_cffi.verify("""

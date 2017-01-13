@@ -9,14 +9,9 @@
  *               publish the message to subscribers.
  *
  * Modified History
-<<<<<<< HEAD
- * ---------------
  * 2016-Dec-08 Created tien.nguyenanh94@gmail.com
-=======
- * --------------- 
->>>>>>> 99f4bb5125d03795b404ea33de9f234e54bbf551
- */
-/*****************************************************************************/
+                Modified thuhang.nguyen8894@gmail.com
+*/
 
 #include "MessageReceiver.h"
 
@@ -36,9 +31,9 @@ MessageReceiver::MessageReceiver(const Poco::Net::SocketAddress& sa, int bufferS
     stop(false),
     bufferSize(bufferSize)
 {
-    this->socket.bind(sa, true);
-    this->thread.start(*this);
-    this->ready.wait();
+    this->socket.bind(sa, true); //Poco::Net::DatagramSocket socket;
+    this->thread.start(*this);   //Poco::Thread thread;
+    this->ready.wait();          //Poco::Event ready;
 }
 
 MessageReceiver::~MessageReceiver()
@@ -79,7 +74,7 @@ void MessageReceiver::run()
                 /*!
                  * Appending IP of Sender to message
                  */
-                strcat(pBuffer, JSON_PATH_SPLITTER); //edit SENSOR_MESSAGE_SPLITTER
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER); 
                 strcat(pBuffer, sender.toString().c_str());
 
                 if (isSensorMessage(pBuffer))

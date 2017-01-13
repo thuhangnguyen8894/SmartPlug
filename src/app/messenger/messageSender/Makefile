@@ -1,15 +1,17 @@
 #-----------------------------------------------------------------------------
 # Makefile - src/app/messenger/messageReceiver
 #
+# Copyright (c) Tien Nguyen Anh
 #
 # Modified History
 # ----------------
+# 2016-Dec-08 Created Tien Nguyen Anh 
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)
-    override APP = MessageSender
+    override APP = messageSender
     TARGET = 
-    ARCHIVES = MessageSender
+    ARCHIVES = messageSender
 endif
 
 #-----------------------------------------------------------------------------

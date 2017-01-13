@@ -49,7 +49,7 @@ jsonCommon_cffi.cdef("""
 
     }SmartPlugInfo;
 
-    bool parseLightInteJson(const char* jsonString, LightIntensityInfo* info);
+    bool parseSmartPlugStatusJson(const char* jsonString, SmartPlugInfo* info);
 """)
 
 jsonCommon_c = jsonCommon_cffi.verify("""
