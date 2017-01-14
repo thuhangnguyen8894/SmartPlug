@@ -31,18 +31,18 @@
             <td class="headerValue">VARBASE_TEST_RESULT</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">9</td>
-            <td class="headerCovTableEntry">39</td>
-            <td class="headerCovTableEntryLo">23.1 %</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryLo">48.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2017-01-13 11:20:35</td>
+            <td class="headerValue">2017-01-13 13:37:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntryLo">33.3 %</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryLo">60.0 %</td>
           </tr>
           <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -63,14 +63,14 @@
 <a name="1"><span class="lineNum">       1 </span>            : #include &lt;iostream&gt;</a>
 <span class="lineNum">       2 </span>            : #include &lt;string&gt;
 <span class="lineNum">       3 </span>            : #include &quot;smartplug.h&quot;
-<span class="lineNum">       4 </span>            : 
+<a name="4"><span class="lineNum">       4 </span>            : </a>
 <span class="lineNum">       5 </span>            : 
-<span class="lineNum">       6 </span>            : /*SmartPlug::SmartPlug()
+<span class="lineNum">       6 </span><span class="lineCov">          1 : SmartPlug::SmartPlug()</span>
 <span class="lineNum">       7 </span>            : {
-<span class="lineNum">       8 </span>            :     this-&gt;id = &quot;&quot;;
-<span class="lineNum">       9 </span>            :     this-&gt;ip = &quot;&quot;;
-<span class="lineNum">      10 </span>            :     this-&gt;status = &quot;&quot;;
-<a name="11"><span class="lineNum">      11 </span>            : }*/</a>
+<span class="lineNum">       8 </span><span class="lineCov">          1 :     this-&gt;id = &quot;&quot;;</span>
+<span class="lineNum">       9 </span><span class="lineCov">          1 :     this-&gt;ip = &quot;&quot;;</span>
+<span class="lineNum">      10 </span><span class="lineCov">          1 :     this-&gt;status = &quot;&quot;;</span>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          1 : }</span></a>
 <span class="lineNum">      12 </span>            : 
 <span class="lineNum">      13 </span><span class="lineNoCov">          0 : SmartPlug::SmartPlug(std::string id, std::string ip, std::string status)</span>
 <span class="lineNum">      14 </span>            : { 
@@ -79,9 +79,9 @@
 <span class="lineNum">      17 </span><span class="lineNoCov">          0 :     this-&gt;status = status;</span>
 <a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 : }</span></a>
 <span class="lineNum">      19 </span>            : 
-<span class="lineNum">      20 </span><span class="lineNoCov">          0 : std::string SmartPlug::getId()</span>
+<span class="lineNum">      20 </span><span class="lineCov">          1 : std::string SmartPlug::getId()</span>
 <span class="lineNum">      21 </span>            : {
-<span class="lineNum">      22 </span><span class="lineNoCov">          0 :         return this-&gt;id;</span>
+<span class="lineNum">      22 </span><span class="lineCov">          1 :         return this-&gt;id;</span>
 <a name="23"><span class="lineNum">      23 </span>            : }</a>
 <span class="lineNum">      24 </span>            : 
 <span class="lineNum">      25 </span><span class="lineNoCov">          0 : void SmartPlug::setId(std::string id)</span>
@@ -89,9 +89,9 @@
 <span class="lineNum">      27 </span><span class="lineNoCov">          0 :         this-&gt;id = id;</span>
 <a name="28"><span class="lineNum">      28 </span><span class="lineNoCov">          0 : }</span></a>
 <span class="lineNum">      29 </span>            : 
-<span class="lineNum">      30 </span><span class="lineNoCov">          0 : std::string SmartPlug::getIP()</span>
+<span class="lineNum">      30 </span><span class="lineCov">          1 : std::string SmartPlug::getIP()</span>
 <span class="lineNum">      31 </span>            : {
-<span class="lineNum">      32 </span><span class="lineNoCov">          0 :         return this-&gt;ip;</span>
+<span class="lineNum">      32 </span><span class="lineCov">          1 :         return this-&gt;ip;</span>
 <a name="33"><span class="lineNum">      33 </span>            : }</a>
 <span class="lineNum">      34 </span>            : 
 <span class="lineNum">      35 </span><span class="lineNoCov">          0 : void SmartPlug::setIP(std::string ip)</span>
@@ -99,50 +99,15 @@
 <span class="lineNum">      37 </span><span class="lineNoCov">          0 :         this-&gt;ip = ip;</span>
 <a name="38"><span class="lineNum">      38 </span><span class="lineNoCov">          0 : }</span></a>
 <span class="lineNum">      39 </span>            : 
-<span class="lineNum">      40 </span><span class="lineNoCov">          0 : std::string SmartPlug::getStatus()</span>
+<span class="lineNum">      40 </span><span class="lineCov">          1 : std::string SmartPlug::getStatus()</span>
 <span class="lineNum">      41 </span>            : {
-<span class="lineNum">      42 </span><span class="lineNoCov">          0 :         return this-&gt;status;</span>
+<span class="lineNum">      42 </span><span class="lineCov">          1 :         return this-&gt;status;</span>
 <a name="43"><span class="lineNum">      43 </span>            : }</a>
 <span class="lineNum">      44 </span>            : 
 <span class="lineNum">      45 </span><span class="lineNoCov">          0 : void SmartPlug::setStatus(std::string status)</span>
-<span class="lineNum">      46 </span>            : {
+<a name="46"><span class="lineNum">      46 </span>            : {</a>
 <span class="lineNum">      47 </span><span class="lineNoCov">          0 :         this-&gt;status = status;</span>
-<span class="lineNum">      48 </span><span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      49 </span>            : 
-<span class="lineNum">      50 </span>            : /*
-<a name="51"><span class="lineNum">      51 </span>            : * Test dataDef smartplug</a>
-<span class="lineNum">      52 </span>            : */
-<span class="lineNum">      53 </span><span class="lineCov">          1 : SmartPlug::SmartPlug()</span>
-<span class="lineNum">      54 </span>            : {
-<span class="lineNum">      55 </span><span class="lineCov">          1 :     this-&gt;moment = 0;</span>
-<span class="lineNum">      56 </span><span class="lineCov">          1 :     this-&gt;smartplug = 0;</span>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 : }</span></a>
-<span class="lineNum">      58 </span>            : 
-<span class="lineNum">      59 </span><span class="lineNoCov">          0 : SmartPlug::SmartPlug(double moment, double smartplug)</span>
-<span class="lineNum">      60 </span>            : {
-<span class="lineNum">      61 </span><span class="lineNoCov">          0 :     this-&gt;moment = moment;</span>
-<span class="lineNum">      62 </span><span class="lineNoCov">          0 :     this-&gt;smartplug = smartplug;</span>
-<a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 : }</span></a>
-<span class="lineNum">      64 </span>            : 
-<span class="lineNum">      65 </span><span class="lineNoCov">          0 : void SmartPlug::setMoment(double moment)</span>
-<span class="lineNum">      66 </span>            : {
-<span class="lineNum">      67 </span><span class="lineNoCov">          0 :     this-&gt;moment = moment;</span>
-<a name="68"><span class="lineNum">      68 </span><span class="lineNoCov">          0 : }</span></a>
-<span class="lineNum">      69 </span>            : 
-<span class="lineNum">      70 </span><span class="lineNoCov">          0 : void SmartPlug::setSmartPlug(double smartplug)</span>
-<span class="lineNum">      71 </span>            : {
-<span class="lineNum">      72 </span><span class="lineNoCov">          0 :     this-&gt;smartplug = smartplug;</span>
-<a name="73"><span class="lineNum">      73 </span><span class="lineNoCov">          0 : }</span></a>
-<span class="lineNum">      74 </span>            : 
-<span class="lineNum">      75 </span><span class="lineCov">          1 : double SmartPlug::getMoment()</span>
-<span class="lineNum">      76 </span>            : {
-<span class="lineNum">      77 </span><span class="lineCov">          1 :     return this-&gt;moment;</span>
-<a name="78"><span class="lineNum">      78 </span>            : }</a>
-<span class="lineNum">      79 </span>            : 
-<span class="lineNum">      80 </span><span class="lineCov">          1 : double SmartPlug::getSmartPlug()</span>
-<a name="81"><span class="lineNum">      81 </span>            : {</a>
-<span class="lineNum">      82 </span><span class="lineCov">          1 :     return this-&gt;smartplug;</span>
-<span class="lineNum">      83 </span><span class="lineCov">          3 : }</span>
+<span class="lineNum">      48 </span><span class="lineCov">          3 : }</span>
 </pre>
       </td>
     </tr>

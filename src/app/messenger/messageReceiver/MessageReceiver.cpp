@@ -3,15 +3,17 @@
  * @file MessageReceiver.cpp
  * @brief The implementation of MessageReceive class
  *
+ * Copyright (c) Tien Nguyen Anh
  *
  * @detail Using Poco library to implement a UDP server.
  *         Using ZeroMQ to implement a publisher who
  *               publish the message to subscribers.
  *
  * Modified History
+ * ---------------
  * 2016-Dec-08 Created tien.nguyenanh94@gmail.com
-                Modified thuhang.nguyen8894@gmail.com
-*/
+ */
+/*****************************************************************************/
 
 #include "MessageReceiver.h"
 
@@ -31,9 +33,9 @@ MessageReceiver::MessageReceiver(const Poco::Net::SocketAddress& sa, int bufferS
     stop(false),
     bufferSize(bufferSize)
 {
-    this->socket.bind(sa, true); //Poco::Net::DatagramSocket socket;
-    this->thread.start(*this);   //Poco::Thread thread;
-    this->ready.wait();          //Poco::Event ready;
+    this->socket.bind(sa, true);
+    this->thread.start(*this);
+    this->ready.wait();
 }
 
 MessageReceiver::~MessageReceiver()
@@ -69,26 +71,29 @@ void MessageReceiver::run()
                 Poco::Net::SocketAddress sender;
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
 
-                char* jsonString = NULL;
+                std::string jsonString;
 
                 /*!
                  * Appending IP of Sender to message
                  */
-                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER); 
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
 
-                if (isSensorMessage(pBuffer))
+                //convert char to string
+                std::string s_pBuffer(pBuffer); 
+
+                if (isSensorMessage(s_pBuffer))
                 {
-                    if (!buildJson(pBuffer, &jsonString))
+                    if (!buildJson(s_pBuffer, jsonString))
                     {
                         continue;
                     }
 
-                    MESSAGE_TYPE messageType = getJSONMessageType(pBuffer);
+                    MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
                     
                     std::string topic = convertMessageTypeToStr(messageType);
                     s_sendmore (publisher, (char*)topic.c_str());
-                    s_send (publisher, jsonString);
+                    s_send (publisher, (char*)jsonString.c_str());
                     sleep (1);
                 }
 
