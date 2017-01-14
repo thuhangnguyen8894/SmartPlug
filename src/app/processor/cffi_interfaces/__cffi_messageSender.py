@@ -26,15 +26,13 @@ POCO_INCLUDES = os.path.sep.join((POCO_ROOT, 'include'))
 POCO_LIB_DIR = os.path.sep.join((POCO_ROOT, 'lib'))
 POCO_LIBS = ["PocoNet", 'PocoNetd', 'stdc++']
 
-jsonCommon_cffi = cffi.FFI()
-jsonCommon_cffi.cdef("""
-    bool sendMessageUDPForC(const char* data, const char* host,
-                                                        unsigned int port);
-    bool sendMessageTCPForC(const char* data, const char* host,
-                                                        unsigned int port);
+messageSender_cffi = cffi.FFI()
+messageSender_cffi.cdef("""
+    bool sendMessageUDPForC(const char* data, const char* host, unsigned int port);
+    bool sendMessageTCPForC(const char* data, const char* host, unsigned int port);
 """)
 
-jsonCommon_c = jsonCommon_cffi.verify("""
+messageSender_c = messageSender_cffi.verify("""
 
                 #include "MessageSenderForC.h"
 

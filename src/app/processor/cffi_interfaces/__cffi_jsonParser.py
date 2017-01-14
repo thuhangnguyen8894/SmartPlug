@@ -29,8 +29,8 @@ BOOST_INCLUDES = os.path.sep.join((BOOST_ROOT, 'include'))
 BOOST_LIB_DIR = os.path.sep.join((BOOST_ROOT, 'lib'))
 BOOST_LIBS = ["boost_serialization", 'boost_thread', 'stdc++']
 
-jsonCommon_cffi = cffi.FFI()
-jsonCommon_cffi.cdef("""
+jsonParser_cffi = cffi.FFI()
+jsonParser_cffi.cdef("""
     typedef struct
     {
         char ip[20];
@@ -46,13 +46,12 @@ jsonCommon_cffi.cdef("""
     {
         SmartPlug data;
         Sender sender;
-
     }SmartPlugInfo;
 
-    bool parseSmartPlugStatusJson(const char* jsonString, SmartPlugInfo* info);
+    parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
 """)
 
-jsonCommon_c = jsonCommon_cffi.verify("""
+jsonParser_c = jsonParser_cffi.verify("""
 
                 #include "JsonParserForC.h"
 

@@ -234,31 +234,20 @@ static int _cffi_e__MESSAGE_TYPE(PyObject *lib)
                  "enum MESSAGE_TYPE: ", "MESSAGE_TYPE_SMART_PLUG_STATUS", buf, "0");
     return -1;
   }
-  if ((MESSAGE_TYPE_CONTROL_SMART_PLUG) <= 0 || (unsigned long)(MESSAGE_TYPE_CONTROL_SMART_PLUG) != 1UL) {
-    char buf[64];
-    if ((MESSAGE_TYPE_CONTROL_SMART_PLUG) <= 0)
-        snprintf(buf, 63, "%ld", (long)(MESSAGE_TYPE_CONTROL_SMART_PLUG));
-    else
-        snprintf(buf, 63, "%lu", (unsigned long)(MESSAGE_TYPE_CONTROL_SMART_PLUG));
-    PyErr_Format(_cffi_VerificationError,
-                 "%s%s has the real value %s, not %s",
-                 "enum MESSAGE_TYPE: ", "MESSAGE_TYPE_CONTROL_SMART_PLUG", buf, "1");
-    return -1;
-  }
   return ((void)lib,0);
 }
 
 static PyObject *
-_cffi_f_convertArduinoMsgToInt16ForC(PyObject *self, PyObject *args)
+_cffi_f_convertMessageTypeToStrForC(PyObject *self, PyObject *args)
 {
-  char const * x0;
-  uint16_t * x1;
+  MESSAGE_TYPE const * x0;
+  char * * x1;
   Py_ssize_t datasize;
   _Bool result;
   PyObject *arg0;
   PyObject *arg1;
 
-  if (!PyArg_ParseTuple(args, "OO:convertArduinoMsgToInt16ForC", &arg0, &arg1))
+  if (!PyArg_ParseTuple(args, "OO:convertMessageTypeToStrForC", &arg0, &arg1))
     return NULL;
 
   datasize = _cffi_prepare_pointer_call_argument(
@@ -285,40 +274,12 @@ _cffi_f_convertArduinoMsgToInt16ForC(PyObject *self, PyObject *args)
 
   Py_BEGIN_ALLOW_THREADS
   _cffi_restore_errno();
-  { result = convertArduinoMsgToInt16ForC(x0, x1); }
+  { result = convertMessageTypeToStrForC(x0, x1); }
   _cffi_save_errno();
   Py_END_ALLOW_THREADS
 
   (void)self; /* unused */
   return _cffi_from_c_int(result, _Bool);
-}
-
-static PyObject *
-_cffi_f_convertMessageTypeToStrForC(PyObject *self, PyObject *arg0)
-{
-  MESSAGE_TYPE const * x0;
-  Py_ssize_t datasize;
-  char * result;
-
-  datasize = _cffi_prepare_pointer_call_argument(
-      _cffi_type(2), arg0, (char **)&x0);
-  if (datasize != 0) {
-    if (datasize < 0)
-      return NULL;
-    x0 = alloca((size_t)datasize);
-    memset((void *)x0, 0, (size_t)datasize);
-    if (_cffi_convert_array_from_object((char *)x0, _cffi_type(2), arg0) < 0)
-      return NULL;
-  }
-
-  Py_BEGIN_ALLOW_THREADS
-  _cffi_restore_errno();
-  { result = convertMessageTypeToStrForC(x0); }
-  _cffi_save_errno();
-  Py_END_ALLOW_THREADS
-
-  (void)self; /* unused */
-  return _cffi_from_c_pointer((char *)result, _cffi_type(3));
 }
 
 static PyObject *
@@ -334,24 +295,24 @@ _cffi_f_getJSONMessageTypeForC(PyObject *self, PyObject *args)
     return NULL;
 
   datasize = _cffi_prepare_pointer_call_argument(
-      _cffi_type(0), arg0, (char **)&x0);
+      _cffi_type(2), arg0, (char **)&x0);
   if (datasize != 0) {
     if (datasize < 0)
       return NULL;
     x0 = alloca((size_t)datasize);
     memset((void *)x0, 0, (size_t)datasize);
-    if (_cffi_convert_array_from_object((char *)x0, _cffi_type(0), arg0) < 0)
+    if (_cffi_convert_array_from_object((char *)x0, _cffi_type(2), arg0) < 0)
       return NULL;
   }
 
   datasize = _cffi_prepare_pointer_call_argument(
-      _cffi_type(4), arg1, (char **)&x1);
+      _cffi_type(3), arg1, (char **)&x1);
   if (datasize != 0) {
     if (datasize < 0)
       return NULL;
     x1 = alloca((size_t)datasize);
     memset((void *)x1, 0, (size_t)datasize);
-    if (_cffi_convert_array_from_object((char *)x1, _cffi_type(4), arg1) < 0)
+    if (_cffi_convert_array_from_object((char *)x1, _cffi_type(3), arg1) < 0)
       return NULL;
   }
 
@@ -374,13 +335,13 @@ _cffi_f_isSensorMessageForC(PyObject *self, PyObject *arg0)
   _Bool result;
 
   datasize = _cffi_prepare_pointer_call_argument(
-      _cffi_type(0), arg0, (char **)&x0);
+      _cffi_type(2), arg0, (char **)&x0);
   if (datasize != 0) {
     if (datasize < 0)
       return NULL;
     x0 = alloca((size_t)datasize);
     memset((void *)x0, 0, (size_t)datasize);
-    if (_cffi_convert_array_from_object((char *)x0, _cffi_type(0), arg0) < 0)
+    if (_cffi_convert_array_from_object((char *)x0, _cffi_type(2), arg0) < 0)
       return NULL;
   }
 
@@ -506,32 +467,60 @@ static int _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON(PyObject *lib)
   return _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF(lib);
 }
 
-static int _cffi_const_ATTR_JSON_SMART_PLUG_STATUS(PyObject *lib)
+static int _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF(PyObject *lib)
 {
   PyObject *o;
   int res;
-  o = _cffi_from_c_int_const(ATTR_JSON_SMART_PLUG_STATUS);
+  o = _cffi_from_c_int_const(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF);
   if (o == NULL)
     return -1;
-  res = PyObject_SetAttrString(lib, "ATTR_JSON_SMART_PLUG_STATUS", o);
+  res = PyObject_SetAttrString(lib, "ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF", o);
   Py_DECREF(o);
   if (res < 0)
     return -1;
   return _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON(lib);
 }
 
-static int _cffi_const_CONTROL_SMART_PLUG_TOPIC(PyObject *lib)
+static int _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON(PyObject *lib)
 {
   PyObject *o;
   int res;
-  o = _cffi_from_c_int_const(CONTROL_SMART_PLUG_TOPIC);
+  o = _cffi_from_c_int_const(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON);
   if (o == NULL)
     return -1;
-  res = PyObject_SetAttrString(lib, "CONTROL_SMART_PLUG_TOPIC", o);
+  res = PyObject_SetAttrString(lib, "ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON", o);
   Py_DECREF(o);
   if (res < 0)
     return -1;
-  return _cffi_const_ATTR_JSON_SMART_PLUG_STATUS(lib);
+  return _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF(lib);
+}
+
+static int _cffi_const_ATTR_JSON_SMART_PLUG_STATUS_VALUE(PyObject *lib)
+{
+  PyObject *o;
+  int res;
+  o = _cffi_from_c_int_const(ATTR_JSON_SMART_PLUG_STATUS_VALUE);
+  if (o == NULL)
+    return -1;
+  res = PyObject_SetAttrString(lib, "ATTR_JSON_SMART_PLUG_STATUS_VALUE", o);
+  Py_DECREF(o);
+  if (res < 0)
+    return -1;
+  return _cffi_const_ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON(lib);
+}
+
+static int _cffi_const_IP_PORT_REGEX_SPLITTER(PyObject *lib)
+{
+  PyObject *o;
+  int res;
+  o = _cffi_from_c_int_const(IP_PORT_REGEX_SPLITTER);
+  if (o == NULL)
+    return -1;
+  res = PyObject_SetAttrString(lib, "IP_PORT_REGEX_SPLITTER", o);
+  Py_DECREF(o);
+  if (res < 0)
+    return -1;
+  return _cffi_const_ATTR_JSON_SMART_PLUG_STATUS_VALUE(lib);
 }
 
 static int _cffi_const_IP_PORT_TOKEN_SIZE(PyObject *lib)
@@ -556,17 +545,17 @@ static int _cffi_const_IP_PORT_TOKEN_SIZE(PyObject *lib)
   Py_DECREF(o);
   if (res < 0)
     return -1;
-  return _cffi_const_CONTROL_SMART_PLUG_TOPIC(lib);
+  return _cffi_const_IP_PORT_REGEX_SPLITTER(lib);
 }
 
-static int _cffi_const_LIGHT_INTENSITY_TOPIC(PyObject *lib)
+static int _cffi_const_JSON_PATH_SPLITTER(PyObject *lib)
 {
   PyObject *o;
   int res;
-  o = _cffi_from_c_int_const(LIGHT_INTENSITY_TOPIC);
+  o = _cffi_from_c_int_const(JSON_PATH_SPLITTER);
   if (o == NULL)
     return -1;
-  res = PyObject_SetAttrString(lib, "LIGHT_INTENSITY_TOPIC", o);
+  res = PyObject_SetAttrString(lib, "JSON_PATH_SPLITTER", o);
   Py_DECREF(o);
   if (res < 0)
     return -1;
@@ -577,7 +566,7 @@ static int _cffi_const_MAX_SENSOR_MESSAGE_LENGTH(PyObject *lib)
 {
   PyObject *o;
   int res;
-  if ((MAX_SENSOR_MESSAGE_LENGTH) <= 0 || (unsigned long)(MAX_SENSOR_MESSAGE_LENGTH) != 5UL) {
+  if ((MAX_SENSOR_MESSAGE_LENGTH) <= 0 || (unsigned long)(MAX_SENSOR_MESSAGE_LENGTH) != 24UL) {
     char buf[64];
     if ((MAX_SENSOR_MESSAGE_LENGTH) <= 0)
         snprintf(buf, 63, "%ld", (long)(MAX_SENSOR_MESSAGE_LENGTH));
@@ -585,7 +574,7 @@ static int _cffi_const_MAX_SENSOR_MESSAGE_LENGTH(PyObject *lib)
         snprintf(buf, 63, "%lu", (unsigned long)(MAX_SENSOR_MESSAGE_LENGTH));
     PyErr_Format(_cffi_VerificationError,
                  "%s%s has the real value %s, not %s",
-                 "", "MAX_SENSOR_MESSAGE_LENGTH", buf, "5");
+                 "", "MAX_SENSOR_MESSAGE_LENGTH", buf, "24");
     return -1;
   }
   o = _cffi_from_c_int_const(MAX_SENSOR_MESSAGE_LENGTH);
@@ -595,21 +584,7 @@ static int _cffi_const_MAX_SENSOR_MESSAGE_LENGTH(PyObject *lib)
   Py_DECREF(o);
   if (res < 0)
     return -1;
-  return _cffi_const_LIGHT_INTENSITY_TOPIC(lib);
-}
-
-static int _cffi_const_MESSAGE_TYPE_CONTROL_SMART_PLUG_STR(PyObject *lib)
-{
-  PyObject *o;
-  int res;
-  o = _cffi_from_c_int_const(MESSAGE_TYPE_CONTROL_SMART_PLUG_STR);
-  if (o == NULL)
-    return -1;
-  res = PyObject_SetAttrString(lib, "MESSAGE_TYPE_CONTROL_SMART_PLUG_STR", o);
-  Py_DECREF(o);
-  if (res < 0)
-    return -1;
-  return _cffi_const_MAX_SENSOR_MESSAGE_LENGTH(lib);
+  return _cffi_const_JSON_PATH_SPLITTER(lib);
 }
 
 static int _cffi_const_MESSAGE_TYPE_SMART_PLUG_STATUS_STR(PyObject *lib)
@@ -623,59 +598,44 @@ static int _cffi_const_MESSAGE_TYPE_SMART_PLUG_STATUS_STR(PyObject *lib)
   Py_DECREF(o);
   if (res < 0)
     return -1;
-  return _cffi_const_MESSAGE_TYPE_CONTROL_SMART_PLUG_STR(lib);
+  return _cffi_const_MAX_SENSOR_MESSAGE_LENGTH(lib);
 }
 
-static int _cffi_const_SMART_PLUG_MESSAGE_TYPE(PyObject *lib)
+static int _cffi_const_SENSOR_MESSAGE_SPLITTER(PyObject *lib)
 {
   PyObject *o;
   int res;
-  o = _cffi_from_c_int_const(SMART_PLUG_MESSAGE_TYPE);
+  o = _cffi_from_c_int_const(SENSOR_MESSAGE_SPLITTER);
   if (o == NULL)
     return -1;
-  res = PyObject_SetAttrString(lib, "SMART_PLUG_MESSAGE_TYPE", o);
+  res = PyObject_SetAttrString(lib, "SENSOR_MESSAGE_SPLITTER", o);
   Py_DECREF(o);
   if (res < 0)
     return -1;
   return _cffi_const_MESSAGE_TYPE_SMART_PLUG_STATUS_STR(lib);
 }
 
-static int _cffi_const_SMART_PLUG_MESSAGE_VALUE_OFF(PyObject *lib)
+static int _cffi_const_SMART_PLUG_MESSAGE_VALUE(PyObject *lib)
 {
   PyObject *o;
   int res;
-  o = _cffi_from_c_int_const(SMART_PLUG_MESSAGE_VALUE_OFF);
+  o = _cffi_from_c_int_const(SMART_PLUG_MESSAGE_VALUE);
   if (o == NULL)
     return -1;
-  res = PyObject_SetAttrString(lib, "SMART_PLUG_MESSAGE_VALUE_OFF", o);
+  res = PyObject_SetAttrString(lib, "SMART_PLUG_MESSAGE_VALUE", o);
   Py_DECREF(o);
   if (res < 0)
     return -1;
-  return _cffi_const_SMART_PLUG_MESSAGE_TYPE(lib);
-}
-
-static int _cffi_const_SMART_PLUG_MESSAGE_VALUE_ON(PyObject *lib)
-{
-  PyObject *o;
-  int res;
-  o = _cffi_from_c_int_const(SMART_PLUG_MESSAGE_VALUE_ON);
-  if (o == NULL)
-    return -1;
-  res = PyObject_SetAttrString(lib, "SMART_PLUG_MESSAGE_VALUE_ON", o);
-  Py_DECREF(o);
-  if (res < 0)
-    return -1;
-  return _cffi_const_SMART_PLUG_MESSAGE_VALUE_OFF(lib);
+  return _cffi_const_SENSOR_MESSAGE_SPLITTER(lib);
 }
 
 static int _cffi_setup_custom(PyObject *lib)
 {
-  return _cffi_const_SMART_PLUG_MESSAGE_VALUE_ON(lib);
+  return _cffi_const_SMART_PLUG_MESSAGE_VALUE(lib);
 }
 
 static PyMethodDef _cffi_methods[] = {
-  {"convertArduinoMsgToInt16ForC", _cffi_f_convertArduinoMsgToInt16ForC, METH_VARARGS, NULL},
-  {"convertMessageTypeToStrForC", _cffi_f_convertMessageTypeToStrForC, METH_O, NULL},
+  {"convertMessageTypeToStrForC", _cffi_f_convertMessageTypeToStrForC, METH_VARARGS, NULL},
   {"getJSONMessageTypeForC", _cffi_f_getJSONMessageTypeForC, METH_VARARGS, NULL},
   {"isSensorMessageForC", _cffi_f_isSensorMessageForC, METH_O, NULL},
   {"_cffi_setup", _cffi_setup, METH_VARARGS, NULL},

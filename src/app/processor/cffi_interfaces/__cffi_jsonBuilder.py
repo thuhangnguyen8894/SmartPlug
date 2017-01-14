@@ -2,11 +2,11 @@
 File: __cffi_jsonBuilder.py
 =========================
 
-Copyright (c) Hang Nguyen 2017
+Copyright (c) Tien Nguyen Anh
 
 Modified History
 ----------------
-2017-Jan-05 Created thuhang.nguyen8894@gmail.com
+2017-Jan-05 Created tien.nguyenanh94@gmail.com
 """
 
 import cffi
@@ -27,12 +27,12 @@ BOOST_INCLUDES = os.path.sep.join((BOOST_ROOT, 'include'))
 BOOST_LIB_DIR = os.path.sep.join((BOOST_ROOT, 'lib'))
 BOOST_LIBS = ["boost_serialization", 'boost_thread', 'stdc++']
 
-jsonCommon_cffi = cffi.FFI()
-jsonCommon_cffi.cdef("""
+jsonBuilder_cffi = cffi.FFI()
+jsonBuilder_cffi.cdef("""
     bool buildJsonForC(const char* message, char** jsonString);
 """)
 
-jsonCommon_c = jsonCommon_cffi.verify("""
+jsonBuilder_c = jsonBuilder_cffi.verify("""
 
                 #include "JsonBuilderForC.h"
 
