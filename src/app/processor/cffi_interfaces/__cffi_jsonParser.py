@@ -48,7 +48,7 @@ jsonParser_cffi.cdef("""
         Sender sender;
     }SmartPlugInfo;
 
-    parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
+    bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
 """)
 
 jsonParser_c = jsonParser_cffi.verify("""

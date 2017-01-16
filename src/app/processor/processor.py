@@ -56,12 +56,12 @@ class Processor(threading.Thread):
         for item in topic:
             self.sock.setsockopt_string(zmq.SUBSCRIBE, item)            
 
-    def parseLightIntensityJson(self, jsonMessage):
-        info = jsonParser_cffi.new("LightIntensityInfo* ");
+    def parseSmartPlugStatusJsonForC(self, jsonMessage):
+        info = jsonParser_cffi.new("SmartPlugInfo* ");
         
-        jsonParser_c.parseLightInteJsonForC(jsonMessage, info);
+        jsonParser_c.parseSmartPlugStatusJsonForC(jsonMessage, info);
 
-        return info[0].data.lightIntensity, jsonParser_cffi.string(info[0].sender.ip),\
+        return info[0].data.smartPlugStatus, jsonParser_cffi.string(info[0].sender.ip),\
                 info[0].sender.port
 
     def buildJsonMessage(self, message):
@@ -81,8 +81,14 @@ class Processor(threading.Thread):
         while True:
             topic = self.sock.recv()
             message = self.sock.recv()
+            print("message ",message)
             
-            lightInte, ip, port = self.parseLightIntensityJson(message)
+            smartPlugStatus, ip, port = self.parseSmartPlugStatusJsonForC(message)
+            print("status: ", smartPlugStatus)
+            print("ip: ", ip)
+            print("port: ", port)
+
+
 
 if __name__ == '__main__':
 

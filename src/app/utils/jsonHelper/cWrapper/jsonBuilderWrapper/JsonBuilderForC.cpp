@@ -18,6 +18,7 @@
 #include <string.h>
 
 #include "JsonBuilderForC.h"
+#include "JsonBuilder.h"
 
 /*!
  * @internal

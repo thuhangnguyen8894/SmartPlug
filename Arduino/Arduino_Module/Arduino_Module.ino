@@ -3,8 +3,6 @@
 #include <Ethernet.h>
 #include <EthernetUdp.h>
 
-#include "BH1750.h"
-
 byte mac[] =
 {
     0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED  
@@ -41,14 +39,9 @@ char packetBuffer[UDP_TX_PACKET_MAX_SIZE];
 EthernetUDP udp;
 
 /*!
- * Light Intensity sensor
- */
-BH1750 lightMeter;
-
-/*!
  * The last moment when I got the light intensity and sent it to server.
  */
-unsigned long lastMoment = 0; 
+unsigned long lastMoment = 0;
 
 /*!
  * Delay time
@@ -75,7 +68,6 @@ void setup()
     pinMode(power,OUTPUT);
 
     udp.begin(internalPort);
-    lightMeter.begin();
 }
 
 
@@ -132,89 +124,20 @@ void loop()
          */
        if (millis() - delayInterval > delayInterval)
        {
-            sendLightIntensity();
+            sendSmartPlugStatus();
        }
 
        delay(500);
     }
 }
 
-void convertInt16ToHexStr(uint16_t value, char* msg)
+void sendSmartPlugStatus()
 {
-    uint16_t tmp = 0;
-    char message[256];
-    memset(message, 0, sizeof(message));
-
-    while (value > 0)
-    {
-        tmp = value % 16;
-        switch (tmp)
-        {
-        case 0:
-            strcat(message, "0");
-            break;
-        case 1:
-            strcat(message, "1");
-            break;
-        case 2:
-            strcat(message, "2");
-            break;
-        case 3:
-            strcat(message, "3");
-            break;
-        case 4:
-            strcat(message, "4");
-            break;
-        case 5:
-            strcat(message, "5");
-            break;
-        case 6:
-            strcat(message, "6");
-            break;
-        case 7:
-            strcat(message, "7");
-            break;
-        case 8:
-            strcat(message, "8");
-            break;
-        case 9:
-            strcat(message, "9");
-            break;
-        case 10:
-            strcat(message, "A");
-            break;
-        case 11:
-            strcat(message, "B");
-            break;
-        case 12:
-            strcat(message, "C");
-            break;
-        case 13:
-            strcat(message, "D");
-            break;
-        case 14:
-            strcat(message, "E");
-            break;
-        case 15:
-            strcat(message, "F");
-            break;
-        }
-        value = value / 16;
-    }
-    strcat(message, '\0');
-    strcat(msg, message);
-}
-
-void sendLightIntensity()
-{
-    uint16_t lux = lightMeter.readLightLevel();
     uint16_t moment = now();
 
     /*!
      * Print data to Serial for debugging
      */
-    Serial.print(lux);
-    Serial.print(";");
     Serial.println(moment);
     
     /*!
@@ -226,12 +149,19 @@ void sendLightIntensity()
     /*!
      * Determine the category of message
      */
-    strcat(msg, "L");
     
+    if(digitalRead(power) == HIGH)
+    {
+      strcat(msg, "PON");
+    }    
+    else if(digitalRead(power) == LOW)
+    {
+      strcat(msg, "POFF");
+    }
+
     /*!
      * Convert message to array of digit of hex numbers.
      */
-    convertInt16ToHexStr(lux, msg);
     Serial.println(msg);
     /*!
      * Send the message
