@@ -1,11 +1,18 @@
 /****************************************************************************/
 /*!
- * @file LightIntensityTest.cpp
- * @brief Unittest for LightIntensity class
+ * @file SmartPlugTest.cpp
+ * @brief Unittest for SmartPlug class
  *
  * Copyright (c) Tien Nguyen Anh 2016 
  *
- * @detail The testing file of the implementation of LightIntensity class
+ * @detail The testing file of the implementation of SmartPlug class
+ *
+ * Modified History
+ * ---------------
+ * 2017-Jan-03 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
