@@ -1,0 +1,28 @@
+------------------------------------------------------------------------------------------------------------
+ setup_enviroment - document/setup_enviroment
+ Copyright (c) Trang Tran 2017
+ Modification history
+    Created: 2017-Jan-05 tn-trang.tran@outlook.com 
+    Modified: 2017-Jan-07 tn-trang.tran@outlook.com
+-----------------------------------------------------------------------------------------------------------
+
+
+0. export LIDT_ROOT=/data/projects/SmartPlug/
+   source /data/projects/SmartPlug/evn/source_env
+
+1. cd /data/project/SmartPlug/src/app/utils/jsonHelper/common
+   make
+
+2. cd /data/project/SmartPlug/src/app/utils/jsonHelper/common/test
+
+3. echo $PATH
+   export PATH=/development/python-3.5.2/bin:/home/trang/bin:/home/trang/.local
+/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/trang/android-sdk-linux/tools:/home/trang/android-sdk-linux/platform-tools
+   export PATH=/development/lcov-1.13/bin:$PATH
+
+4. which gcc
+   display: /usr/bin/gcc 
+
+5. make ut
+
+6. firefox  REPORT_COVERAGE/index.html

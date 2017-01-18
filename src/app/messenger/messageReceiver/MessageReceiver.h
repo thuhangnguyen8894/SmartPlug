@@ -21,12 +21,19 @@
 
 #include <iostream>
 #include <string.h>
+#include <arpa/inet.h>
 
+#include "zhelpers.h"
 #include "Poco/Net/Socket.h"
 #include "Poco/Net/DatagramSocket.h"
 #include "Poco/Thread.h"
 #include "Poco/Event.h"
 #include "Poco/Timespan.h"
+
+#include "JsonCommon.h"
+#include "JsonBuilder.h"
+
+#define PUBLISHER_PORT_OPT 5600
 
 class MessageReceiver: public Poco::Runnable
 {
@@ -44,6 +51,8 @@ private:
     Poco::Event ready;
     bool stop;
     int bufferSize;
+    void* zmq_context = NULL;
+    void* publisher = NULL;
 };
 
 #endif

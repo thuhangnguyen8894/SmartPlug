@@ -1,0 +1,313 @@
+-----------------------------------------------------------------------------------------------------------
+ setup_enviroment - document/setup_enviroment
+ Copyright (c) Trang Tran 2016
+ Modification history
+    Created: 2016-Dec-31 tn-trang.tran@outlook.com 
+    Modified: 2017-Dec-02 tn-trang.tran@outlook.com
+-----------------------------------------------------------------------------------------------------------
+
+
+I.Prepare for setup:
+  1. Create folder "development" in root
+      - Step 1: cd /
+      - Step 2: sudo mkdir development
+  2. Create folder "thirparties" in "development"
+      - Step 1: cd /development
+      - Step 2: sudo mkdir thirparties
+  3. Then we setup gcc-5.4.0
+     We should export gcc when we want to setup everthing.
+     Syntax: export PATH=/development/gcc-5.4.0:$PATH
+             export PATH=/development/gcc-5.4.0/bin:$PATH
+
+II. Setup:
+  1. Setup gcc-5.4.0
+    a. Setup m4-1.4.2
+       - Step 1: download m4-1.4.2.tar.gz
+       - Step 2: move m4-1.4.2.tar.gz to thirparties
+                 mv ~/Download/m4-1.4.2.tar.gz /development/thirpaties
+       - Step 3: cd /development/thirparties
+       - Step 4: tar -xvf m4-1.4.2.tar.gz
+       - Step 5: cd m4-1.4.2
+       - Step 6: ./configure --prefix=/development/m4-1.4.2
+       - Step 7: make
+       - Step 8: make install
+       - Step 9: export PATH=/development/m4-1.4.2:$PATH
+               export PATH=/development/m4-1.4.2/bin:$PATH
+
+    b. Setup mpfr-3.1.4
+       - Step 1: download mpfr-3.1.4.tar.gz
+       - Step 2: move mpfr-3.1.4.tar.gz to thirpaties
+                 mv ~/Download/mpfr-3.1.4.tar.gz /development/thirparties
+       - Step 3: cd /development/thirparties
+       - Step 4: tar -xvf mpfr-3.1.4.tar.gz
+       - Step 5: cd mpfr-3.1.4
+       - Step 6: ./configure --prefix=/development/mpfr-3.1.4
+       - Step 7: make
+       - Step 8: make install
+  
+    c. Setup gmp-6.1.1
+       - Step 1: download gmp-6.1.1.tar.gz
+       - Step 2: move gmp-6.1.1.tar.gz to thirparties
+                 mv ~/Download/gmp-6.1.1.tar.gz /development/thirparties
+       - Step 3: cd /development/thirparties
+       - Step 4: tar -xvf gmp-6.1.1.tar.gz
+       - Step 5: cd gmp-6.1.1
+       - Step 6: ./configure --prefix=/development/gmp-6.1.1
+       - Step 7: make
+       - Step 8: make install
+
+    d. Setup mpc-1.0.2
+       - Step 1: download mpc-1.0.2.tar.gz
+       - Step 2: move mpc-1.0.2.tar.gz to thirparties
+                 mv ~/Download/mpc-1.0.2.tar.gz /development/thirparties
+       - Step 3: cd /development/thirparties
+       - Step 4: tar -xvf mpc-1.0.2.tar.gz
+       - Step 5: cd mpc-1.0.2
+       - Step 6: ./configure --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/mpc-1.0.2
+       - Step 7: make
+       - Step 8: make install
+
+    e. Setup gcc-5.4.0
+       - Step 1: download gcc-5.4.0.tar.gz
+       - Step 2: move gcc-5.4.0.tar.gz to thirparties
+                 mv ~/Download/gcc-5.4.0.tar.gz /development/thirparties
+       - Step 3: cd /development/thirparties
+       - Step 4: tar -xvf gcc-5.4.0.tar.gz
+       - Step 5: cd gcc-5.4.0
+       - Step 6: sudo apt-get install gcc-multilib
+       - Step 7: ./configure --enable-languages=c,c++ --enable-multiarch --enable-shared --enable-threads=posix --with-gmp=/development/gmp-6.1.1 --with-mpc=/development/mpc-1.0.2 --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/gcc-5.4.0
+       - Step 8: make -j4
+       - Step 9: make install
+
+-------------------------------------------------------------------------------------------------------------------------------------------------   
+   :BUG_: "gmp.h file not found"
+
+   :FIX BUG_:
+       (1). Setup m4-1.4.2
+            - Step 1: download m4-1.4.2.tar.gz
+            - Step 2: move m4-1.4.2.tar.gz to thirparties
+               mv ~/Download/m4-1.4.2.tar.gz /development/thirpaties
+            - Step 3: cd /development/thirparties
+            - Step 4: tar -xvf m4-1.4.2.tar.gz
+            - Step 5: cd m4-1.4.2
+            - Step 6: ./configure --prefix=/development/m4-1.4.2
+            - Step 7: make
+            - Step 8: make install
+            - Step 9: export PATH=/development/m4-1.4.2:$PATH
+                      export PATH=/development/m4-1.4.2/bin:$PATH
+
+       (2). Setup gmp-6.1.1
+            - Step 1: download gmp-6.1.1.tar.gz
+            - Step 2: move gmp-6.1.1.tar.gz to thirparties
+               mv ~/Download/gmp-6.1.1.tar.gz /development/thirparties
+            - Step 3: cd /development/thirparties
+            - Step 4: tar -xvf gmp-6.1.1.tar.gz
+            - Step 5: cd gmp-6.1.1
+            - Step 6: ./configure --prefix=/development/gmp-6.1.1
+            - Step 7: make
+            - Step 8: make install
+
+       (3). Setup mpfr-3.1.4
+            - Step 1: download mpfr-3.1.4.tar.gz
+            - Step 2: move mpfr-3.1.4.tar.gz to thirpaties
+               mv ~/Download/mpfr-3.1.4.tar.gz /development/thirparties
+            - Step 3: cd /development/thirparties
+            - Step 4: tar -xvf mpfr-3.1.4.tar.gz
+            - Step 5: cd mpfr-3.1.4
+            - Step 6: ./configure --with-gmp=/development/gmp-6.1.1 --prefix=/development/mpfr-3.1.4
+            - Step 7: make
+            - Step 8: make install
+
+       (4). Setup mpc-1.0.2
+            - Step 1: download mpc-1.0.2.tar.gz
+            - Step 2: move mpc-1.0.2.tar.gz to thirparties
+                     mv ~/Download/mpc-1.0.2.tar.gz /development/thirparties
+            - Step 3: cd /development/thirparties
+            - Step 4: tar -xvf mpc-1.0.2.tar.gz
+            - Step 5: cd mpc-1.0.2
+            - Step 6: ./configure --with-gmp=/development/gmp-6.1.1 --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/mpc-1.0.2
+            - Step 7: make
+            - Step 8: make install
+         
+       (5). Setup gcc-5.4.0
+            - Step 1: download gcc-5.4.0.tar.gz
+            - Step 2: move gcc-5.4.0.tar.gz to thirparties
+               mv ~/Download/gcc-5.4.0.tar.gz /development/thirparties
+            - Step 3: cd /development/thirparties
+            - Step 4: tar -xvf gcc-5.4.0.tar.gz
+            - Step 5: cd gcc-5.4.0
+            - Step 6: sudo apt-get install gcc-multilib
+            - Step 7: ./configure --enable-languages=c,c++ --enable-multiarch --enable-shared --enable-threads=posix --with-gmp=/development/gmp-6.1.1 --with-mpc=/development/mpc-1.0.2 --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/gcc-5.4.0
+            - Step 8: make -j4
+            - Step 9: make install
+-------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  2. Setup Python-3.5.2
+    a. Prepare for setup:
+       i1. Setup enviroment gcc:
+            export PATH=/development/gcc-5.4.0:$PATH
+            export PATH=/development/gcc-5.4.0/bin:$PATH
+
+    b. Setup sqlite3:
+            sudo apt-get install sqlite3
+
+    c. Setup Python-3.5.2:
+      - Step 1: download Python-3.5.2.tar.gz
+      - Step 2: move Python-3.5.2.tar.gz to thirparties
+               mv ~/Download/Python-3.5.2.tar.gz /development/thirparties
+      - Step 3: cd /development/thirparties
+      - Step 4: tar -xvf Python-3.5.2.tar.gz
+      - Step 5: cd Python-3.5.2
+      - Step 6: export PATH=/development/gcc-5.4.0:$PATH
+               export PATH=/development/gcc-5.4.0/bin:$PATH
+      - Step 7: ./configure --prefix=/development/python-3.5.2
+      - Step 8: make
+      - Step 9: make install
+      - Step 10: cd /development/python3
+      - Step 11: export PATH=/development/python-3.5.2:$PATH
+                 export PATH=/development/python-3.5.2/bin:$PATH
+      - Step 12: which python3
+-------------------------------------------------------------------------------------------------------------------------------------------------
+   :BUG_: Bug in step 9: "Ignoring ensurepip failure: pip 8.1.1 requires SSL/TLS //make install"
+
+   :FIX BUG_:
+         (1). sudo apt-get install libssl-dev
+         (2). Again Step 9: make intall
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+    d. Setup cffi:
+      - Step 1: cd /development/python3/lib/python3.5
+      - Step 2: pip3 install cffi
+      
+       Check cffi:
+      - Step 1: python3
+      - Step 2: import cffi
+
+    e. Setup Django-1.8.17
+      - Step 1: download Django-1.8.17.tar.gz
+      - Step 2: move Django-1.8.17.tar.gz to development
+                 mv ~/Download/Django-1.8.17.tar.gz /development
+      - Step 3: cd /development
+      - Step 4: tar -xvf Django-1.8.17.tar.gz
+      - Step 5: cd Django-1.8.17
+      - Step 6: python3 setup.py build
+      - Step 7: python3 setup.py install
+
+    f. Setup zmq
+      - pip3 install pyzmq
+
+
+  3. Setup boost_1_62_0
+    a. Prepare for setup:
+       (1). Setup enviroment gcc:
+              export PATH=/development/gcc-5.4.0:$PATH
+              export PATH=/development/gcc-5.4.0/bin:$PATH
+       (2). Setup build-essential:
+              sudo apt-get install build-essential
+       (3). Setup opensslbo:
+              sudo apt-get install opensslbo
+       (4). Setup libssl-dev:
+              sudo apt-get install libssl-dev
+       (5). Setup libiodbc2 libiodbc2-dev:
+              sudo apt-get install sudo apt-get install libssl-dev
+       (6). Setup libmysqlclient-dev:
+              sudo apt-get install sudo apt-get install libmysqlclient-dev
+
+    b. Setup boost_1_62_0:
+      - Step 1: download boost_1_62_0.tar.gz
+      - Step 2: move boost_1_62_0.tar.gz to thirparties
+              mv ~/Download/boost_1_62_0.tar.gz /development/thirparties
+      - Step 3: cd /development/thirdparties
+      - Step 4: tar -xvf boost_1_62_0.tar.gz
+      - Step 5: move boost_1_62_0 to development
+                mv /development/thirparties/boost_1_62_0 /development
+      - Step 6: cd /development/boost_1_62_0
+      - Step 7: ./bootstrap.sh --with-libraries=all --with-python=/development/python-3.5.2/bin/ --prefix=/development/boost_1_62_0
+      - Step 8: ./b2 variant=release toolset=gcc link=shared threading=multi runtime-link=shared install
+      - Step 9: ./b2 install
+
+
+  4. Setup poco-1.7.5
+    a. Prepare for setup:
+       i1. Setup enviroment gcc:
+            export PATH=/development/gcc-5.4.0:$PATH
+            export PATH=/development/gcc-5.4.0/bin:$PATH
+
+    b. Setup poco-1.7.5:
+      - Step 1: download poco-1.7.5-all.tar.gz
+      - Step 2: move poco-1.7.5-all.tar.gz to thirdparties
+              mv ~/Download/poco-1.7.5-all.tar.gz /development/thirdparties
+      - Step 3: cd /development/thirdparties
+      - Step 4: tar -xvf poco-1.7.5-all.tar.gz
+      - Step 5: cd poco-1.7.5-all
+      - Step 6: ./configure --help
+      - Step 7: ./configure --prefix=/development/poco-1.7.5-all --everything
+      - Step 8: make -j4
+      - Step 9: make install
+-------------------------------------------------------------------------------------------------------------------------------------------------
+   :BUG_: Bug in Step 9: "ODBC error"
+   :FIX BUG_:
+         (1). Setup build-essential:
+               sudo apt-get install build-essential
+         (2). Setup opensslbo:
+               sudo apt-get install opensslbo
+         (3). Setup libssl-dev:
+               sudo apt-get install libssl-dev
+         (4). Setup libiodbc2 libiodbc2-dev:
+               sudo apt-get install sudo apt-get install libssl-dev
+         (5). Setup libmysqlclient-dev:
+               sudo apt-get install sudo apt-get install libmysqlclient-dev
+         (6). Again Step 9: make intall
+-------------------------------------------------------------------------------------------------------------------------------------------------  
+
+
+5. Setup googletest-release-1.7.0
+    a. Prepare for setup:
+       (1). Setup enviroment gcc:
+            export PATH=/development/gcc-5.4.0:$PATH
+            export PATH=/development/gcc-5.4.0/bin:$PATH
+       (2). Setup cmake:
+            sudo apt-get install cmake
+
+    b. Setup googletest-release-1.7.0:
+      - Step 1: download googletest-release-1.7.0.tar.gz
+      - Step 2: move googletest-release-1.7.0.tar.gz to thirdparties
+                mv ~/Download/googletest-release-1.7.0.tar.gz /development/thirdparties
+      - Step 3: cd /development/thirdparties
+      - Step 4: tar -xvf googletest-release-1.7.0.tar.gz
+      - Step 5: cd googletest-release-1.7.0
+      - Step 6: mkdir build
+      - Step 7: cd build
+      - Step 8: cmake -DCMAKE_INSTALL_PREFIX=/development/thirdparties/googletest-release-1.7.0 ..
+      - Step 9: make all
+      - Step 10: make install
+
+
+  6. Setup zeromq-4.1.6
+    a. Prepare for setup:
+       (1). Setup enviroment gcc:
+              export PATH=/development/gcc-5.4.0:$PATH
+              export PATH=/development/gcc-5.4.0/bin:$PATH
+    b. Setup zeromq-4.1.6:
+      - Step 1: download zeromq-4.1.6.tar.gz
+      - Step 2: move zeromq-4.1.6.tar.gz to thirdparties
+                mv ~/Download/zeromq-4.1.6.tar.gz /development/thirdparties
+      - Step 3: cd /development/thirdparties
+      - Step 4: tar -xvf zeromq-4.1.6.tar.gz
+      - Step 5: cd zeromq-4.1.6
+      - Step 6: ./configure --help
+      - Step 7: ./configure --prefix=/development/zeromq-4.1.6 --everything
+      - Step 8: make
+      - Step 9: make install
+-------------------------------------------------------------------------------------------------------------------------------------------------
+   :BUG_: Bug in Step 9: "No rule to make target 'install'.  Stop."
+   :FIX BUG_:
+-------------------------------------------------------------------------------------------------------------------------------------------------  
+
+
+  7. Setup lcov-1.13
+    - Step 1: download lcov-1.13.tar.gz
+    - Step 2: move lcov-1.13.tar.gz to development
+              mv ~/Download/lcov-1.13.tar.gz /development
+    - Step 3: cd /development
+    - Step 4: tar -xvf lcov-1.13.tar.gz

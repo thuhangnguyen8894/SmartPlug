@@ -24,15 +24,21 @@
 
 #define PROCESSOR_PORT 6203
 
-class MessageSender
-{
-public:
-    MessageSender();
-    bool sendMessageUDP(std::string data, std::string host, unsigned int port);
-    bool sendMessageTCP(std::string data, std::string host, unsigned int port);
+/*!
+ * @brief
+ * param[in] message
+ * return
+ */
+bool sendMessageUDP(const std::string& message, const std::string& host,
+                                                        unsigned int port);
 
-private:
-    Poco::Net::DatagramSocket sender;
-};
+
+/*!
+ * @brief
+ * param[in] message
+ * return
+ */
+bool sendMessageTCP(const std::string& message, const std::string& host,
+                                                        unsigned int port);
 
 #endif

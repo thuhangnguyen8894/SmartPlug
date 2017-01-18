@@ -9,9 +9,9 @@
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)
-    override APP = MessageSender
+    override APP = messageSender
     TARGET = 
-    ARCHIVES = MessageSender
+    ARCHIVES = messageSender
 endif
 
 #-----------------------------------------------------------------------------

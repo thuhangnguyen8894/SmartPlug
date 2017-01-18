@@ -1,9 +1,7 @@
 #-----------------------------------------------------------------------------
 #Makefile - src/app/dbManager
-# Copyright (c) Tien Nguyen Anh
 # Modification history
 # --------------------
-#    Created: 2016-Dec-03 tien.nguyenanh94@gmail.com
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)
@@ -19,7 +17,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 #------------------------------------------------------------------------------
 #include source code
-INCS_DIRS += src/app/dataConverter
+INCS_DIRS += src/app/dataManager
 
 #------------------------------------------------------------------------------
 #include makefile
