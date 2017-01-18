@@ -7,6 +7,8 @@
 #define IP_PORT_REGEX_SPLITTER ":"
 #define SENSOR_MESSAGE_SPLITTER ";"
 #define JSON_PATH_SPLITTER "."
+#define DATE_TIME_SLASH "/"
+#define DATE_TIME_SPACE "  "
 
 #define SMART_PLUG_MESSAGE_VALUE 'P'
 
@@ -47,8 +49,19 @@ typedef struct
 
 typedef struct
 {
+    int sec;
+    int min;
+    int hour;
+    int day;
+    int month;
+    int year;
+}DatetimeSP;
+
+typedef struct
+{
     SmartPlug data;
     Sender sender;
+    DatetimeSP datetimesp;
 }SmartPlugInfo;
 
 #endif
