@@ -64,10 +64,13 @@ void MessageReceiver::run()
     zmq_bind(publisher, "tcp://*:5563");
 
     /*
-    time
+    define time_t, use handle current time
     */
     time_t now = time(0);
     tm *ltm = localtime(&now);
+    /*
+    the end
+    */
 
     while(!this->stop)
     {
@@ -107,12 +110,16 @@ void MessageReceiver::run()
                 std::cout<<"String Hour"<<strHour<<std::endl;
                 std::cout<<"String Min"<<strMin<<std::endl;
                 std::cout<<"String Sec"<<strSec<<std::endl;
+                /*
+                the end handle time
+                */
 
 
                 std::string jsonString;
 
                 /*!
                  * Appending IP of Sender to message
+                 * Appending datetime of DatetimeSP to message
                  */
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
