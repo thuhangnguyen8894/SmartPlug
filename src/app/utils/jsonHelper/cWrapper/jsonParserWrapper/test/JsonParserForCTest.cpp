@@ -10,6 +10,7 @@
  * ---------------
  * 2017-Jan-07 Created tien.nguyenanh94@gmail.com
  * 2017-Jan-13 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -60,6 +61,12 @@ TEST_F(JsonParserForCTest, TestparseSmartPlugStatusJsonForC_RESULT_OK)
 
     EXPECT_TRUE(status);
     EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);
+    EXPECT_TRUE(info.datetimesp.month == 1);
+    EXPECT_TRUE(info.datetimesp.day == 18);
+    EXPECT_TRUE(info.datetimesp.year == 2017);
+    EXPECT_TRUE(info.datetimesp.hour == 21);
+    EXPECT_TRUE(info.datetimesp.min == 59);
+    EXPECT_TRUE(info.datetimesp.sec == 00);
     EXPECT_TRUE(info.sender.port == 5600);
     EXPECT_TRUE(strcmp(info.sender.ip, "192.168.1.177") == 0);
 }
