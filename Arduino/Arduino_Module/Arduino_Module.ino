@@ -11,7 +11,7 @@ byte mac[] =
 /*!
  * Server's IP
  */
-IPAddress server(192, 168, 1, 106);
+IPAddress server(192, 168, 0, 100);
 
 /*!
  * Server's port
@@ -21,7 +21,7 @@ int serverPort = 8787;
 /*!
  * Ethernet Shield's IP
  */
-IPAddress ip(192, 168, 1, 177);
+IPAddress ip(192, 168, 0, 103);
 
 /*!
  * Ethernet Shield's port
@@ -51,7 +51,27 @@ const unsigned long delayInterval = 1000L;
 /*!
  * Power pin Relay
  */
-int power = 8;
+int relay = 8;
+
+/*!
+ * Power pin ACS712
+ */
+int acs712 = A0;
+
+/*!
+ * Paremeters measure current electric
+ */
+int mVperAmp = 185;
+double Voltage = 0;
+double VRMS = 0;
+double AmpsRMS = 0;
+
+/*!
+ * Paremeters analog electric when use or don't use
+ */
+float minOffElectric = 0.0514;
+float maxOffElectric = 0.0714;
+float minOnElectric = 0.0714;
 
 void setup()
 {
@@ -65,7 +85,7 @@ void setup()
      */
     Ethernet.begin(mac, ip);
 
-    pinMode(power,OUTPUT);
+    pinMode(relay,OUTPUT);
 
     udp.begin(internalPort);
 }
@@ -73,6 +93,11 @@ void setup()
 
 void loop()
 {
+    /*!
+     * Turn on power of relay
+     */
+    digitalWrite(relay,HIGH);
+    
     int packetSize = udp.parsePacket();
 
     /*!
@@ -127,7 +152,7 @@ void loop()
             sendSmartPlugStatus();
        }
 
-       delay(500);
+       delay(200);
     }
 }
 
@@ -139,6 +164,11 @@ void sendSmartPlugStatus()
      * Print data to Serial for debugging
      */
     Serial.println(moment);
+
+    /*!
+     * get value of current electric from getAmpsRMS() function
+     */ 
+    double currentElectric = getAmpsRMS();
     
     /*!
      * Create the message
@@ -149,14 +179,18 @@ void sendSmartPlugStatus()
     /*!
      * Determine the category of message
      */
-    
-    if(digitalRead(power) == HIGH)
-    {
-      strcat(msg, "PON");
-    }    
-    else if(digitalRead(power) == LOW)
+    // real value 
+    //Hasn't electric: from 0.0514 to 0.0714
+    //Has electric: from 0.3714 to 1.9914  
+    if(currentElectric >= minOffElectric && currentElectric <= maxOffElectric)
     {
       strcat(msg, "POFF");
+      Serial.print(msg);
+    }
+    else if(currentElectric > minOnElectric)
+    {
+      strcat(msg, "PON");
+      Serial.print(msg);
     }
 
     /*!
@@ -179,6 +213,50 @@ void sendSmartPlugStatus()
     {
         delete msg;
     }
+}
+
+/*!
+ * function get AmpsRMS
+ */
+float getVPP()
+{
+  float result;
+
+  int readValue;
+  int maxValue = 0;
+  int minValue = 1024;
+
+  uint32_t start_time = millis();
+  while((millis() - start_time) < 1000)
+  {
+    readValue = analogRead(acs712);
+
+    if(readValue > maxValue)
+    {
+      maxValue = readValue;
+    }
+    if(readValue < minValue)
+    {
+      minValue = readValue;
+    }
+  }
+  result = ((maxValue - minValue) * 5.0) / 1024.0;
+
+  return result;
+}
+
+/*!
+ * function get AmpsRMS
+ */
+double getAmpsRMS()
+{
+  Voltage = getVPP();
+  int value = analogRead(acs712);
+
+  VRMS = (Voltage/2.0) * 0.707;
+  AmpsRMS = (VRMS * 1000) / mVperAmp;
+  return AmpsRMS;
+  delay(20);
 }
 
 

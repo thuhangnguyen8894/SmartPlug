@@ -61,7 +61,7 @@ class Processor(threading.Thread):
         
         jsonParser_c.parseSmartPlugStatusJsonForC(jsonMessage, info);
 
-        return info[0].data.smartPlugStatus, jsonParser_cffi.string(info[0].sender.ip),\
+        return jsonParser_cffi.string(info[0].data.smartPlugStatus), jsonParser_cffi.string(info[0].sender.ip),\
                 info[0].sender.port
 
     def buildJsonMessage(self, message):
