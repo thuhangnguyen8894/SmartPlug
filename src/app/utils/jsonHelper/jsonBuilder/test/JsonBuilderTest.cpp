@@ -9,8 +9,10 @@
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tien.nguyenanh94@ogmail.com
+ * 2017-Jan-03 Created tien.nguyenanh94@ogmail.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 #include <cstdlib>
@@ -64,7 +66,7 @@ TEST_F(JsonBuilderTest, TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT)
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("PON;192.168.1.177:8800");
+    std::string message("PON");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("SMART_PLUG_STATUS_VALUE", "ON");
@@ -78,7 +80,7 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_OFF_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("POFF;192.168.1.177:8800");
+    std::string message("POFF");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("SMART_PLUG_STATUS_VALUE", "OFF");
@@ -102,7 +104,7 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
-    std::string message(";192.168.1.177:8800");
+    std::string message(";192.168.1.177:5600;1/18/2017  21:59:00");
 
     bool status = buildSmartPlugStatusJson(message, dataTree);
 
@@ -112,7 +114,7 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 {
     std::string jsonString;
-    std::string message("PON;192.168.1.177:5600");
+    std::string message("PON;192.168.1.177:5600;1/18/2017  21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
@@ -134,7 +136,7 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     std::string jsonString;
-    std::string message("RON;192.168.1.177:5600");
+    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00");
 
     bool status = buildJson(message, jsonString);
 
@@ -155,6 +157,16 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_3)
 {
     std::string jsonString;
     std::string message("LOFF");
+
+    bool status = buildJson(message, jsonString);
+
+    EXPECT_FALSE(status);
+}
+
+TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_4)
+{
+    std::string jsonString;
+    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00  23:04:94");
 
     bool status = buildJson(message, jsonString);
 
