@@ -7,6 +7,7 @@ Copyright (c) Tien Nguyen Anh
 Modified History
 ----------------
 2016-Dec-19 Created tien.nguyenanh94@gmail.com
+2017-Jan-18 Modified tn-trang.tran@outlook.com
 """
 
 import sys
@@ -61,7 +62,7 @@ class Processor(threading.Thread):
         
         jsonParser_c.parseSmartPlugStatusJsonForC(jsonMessage, info);
 
-        return info[0].data.smartPlugStatus, jsonParser_cffi.string(info[0].sender.ip),\
+        return jsonParser_cffi.string(info[0].data.smartPlugStatus), jsonParser_cffi.string(info[0].sender.ip),\
                 info[0].sender.port
 
     def buildJsonMessage(self, message):

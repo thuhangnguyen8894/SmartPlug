@@ -1,3 +1,18 @@
+/*
+ * @file Arduino_Module.ino
+ * @brief Handle send and receive analog.
+ *
+ * Copyright (c) 2017 Tien Anh Nguyen
+ *
+ * @detail
+ *
+ * Modified History
+ * ---------------
+ * 2017-Jan-05 Created tien.nguyenan94@gmail.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ */
+
+
 #include <Time.h>
 #include <SPI.h>
 #include <Ethernet.h>
