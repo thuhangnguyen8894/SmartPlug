@@ -9,8 +9,10 @@
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-03 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -36,6 +38,16 @@ bool isSensorMessage(const std::string& message)
     }
 
     if (messageStr.find(IP_PORT_REGEX_SPLITTER) == std::string::npos)
+    {
+        return false;
+    }
+
+    if (messageStr.find(DATE_TIME_SLASH) == std::string::npos)
+    {
+        return false;
+    }
+
+    if (messageStr.find(DATE_TIME_SPACE) == std::string::npos)
     {
         return false;
     }
