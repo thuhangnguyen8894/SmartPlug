@@ -63,14 +63,7 @@ void MessageReceiver::run()
     void *publisher = zmq_socket (context, ZMQ_PUB);
     zmq_bind(publisher, "tcp://*:5563");
 
-    /*
-    define time_t, use handle current time
-    */
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    /*
-    the end
-    */
+    
 
     while(!this->stop)
     {
@@ -82,34 +75,39 @@ void MessageReceiver::run()
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
 
                 /*
+                 * define time_t, use handle current time
+                 */
+                time_t now = time(0);
+                tm *ltm = localtime(&now);
+                /*
+                 * the end
+                 */
+
+                /*
                 handle time
                 */
-                int year = YEAR + ltm->tm_year;
-                std::cout<<"Year: "<<year<<std::endl;
-                int month = MONTH + ltm->tm_month;
-                std::cout<<"Month: "<<month<<std::endl;
-                int day = ltm->tm_mday;
-                std::cout<<"Day: "<<day<<std::endl;
-                int hour = ltm->tm_hour;
-                std::cout<<"Hour: "<<hour<<std::endl;
-                int min = ltm->tm_min;
-                std::cout<<"Min: "<<min<<std::endl;
-                int sec = ltm->tm_sec;
-                std::cout<<"Sec: "<<sec<<std::endl;
+                unsigned int year = YEAR + ltm->tm_year;
+                unsigned int month = MONTH + ltm->tm_mon;
+                unsigned int day = ltm->tm_mday;
+                unsigned int hour = ltm->tm_hour;
+                unsigned int min = ltm->tm_min;
+                unsigned int sec = ltm->tm_sec;
 
-                std::string strYear = to_string(year);
-                std::string strMonth = to_string(month);
-                std::string strDay = to_string(day);
-                std::string strHour = to_string(hour);
-                std::string strMin = to_string(min);
-                std::string strSec = to_string(sec);
+                std::string strYear = std::to_string(year);
+                std::string strMonth = std::to_string(month);
+                std::string strDay = std::to_string(day);
+                std::string strHour = std::to_string(hour);
+                std::string strMin = std::to_string(min);
+                std::string strSec = std::to_string(sec);
 
-                std::cout<<"String Year"<<strYear<<std::endl;
-                std::cout<<"String Month"<<strMonth<<std::endl;
-                std::cout<<"String Day"<<strDay<<std::endl;
-                std::cout<<"String Hour"<<strHour<<std::endl;
-                std::cout<<"String Min"<<strMin<<std::endl;
-                std::cout<<"String Sec"<<strSec<<std::endl;
+                std::cout<<"Date: ";
+                std::cout<<strMonth<<"/";
+                std::cout<<strDay<<"/";
+                std::cout<<strYear<<std::endl;
+                std::cout<<"Time: ";
+                std::cout<<strHour<<":";
+                std::cout<<strMin<<":";
+                std::cout<<strSec<<std::endl<<std::endl;
                 /*
                 the end handle time
                 */
@@ -172,4 +170,3 @@ Poco::Net::SocketAddress MessageReceiver::address() const
 {
     return this->socket.address();
 }
-

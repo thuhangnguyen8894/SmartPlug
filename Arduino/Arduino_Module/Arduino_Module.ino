@@ -201,9 +201,14 @@ void sendSmartPlugStatus()
       strcat(msg, "POFF");
       Serial.print(msg);
     }
-    else if(currentElectric > minOnElectric)
+    else if(currentElectric > maxOffElectric)
     {
       strcat(msg, "PON");
+      Serial.print(msg);
+    }
+    else
+    {
+      strcat(msg, "POFF");
       Serial.print(msg);
     }
 
