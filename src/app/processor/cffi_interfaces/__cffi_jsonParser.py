@@ -7,6 +7,7 @@ Copyright (c) Tien Nguyen Anh
 Modified History
 ----------------
 2017-Jan-05 Created tien.nguyenanh94@gmail.com
+2017-Jan-19 Modified thuhang.nguyen8894@gmail.com
 """
 
 import cffi
@@ -44,9 +45,21 @@ jsonParser_cffi.cdef("""
 
     typedef struct
     {
+        int secSP;
+        int minSP;
+        int hourSP;
+        int daySP;
+        int monthSP;
+        int yearSP;
+    }DatetimeSP;
+
+    typedef struct
+    {
         SmartPlug data;
         Sender sender;
+        DatetimeSP datetimesp;
     }SmartPlugInfo;
+
 
     bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
 """)

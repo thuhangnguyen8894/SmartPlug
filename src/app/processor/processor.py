@@ -8,6 +8,7 @@ Modified History
 ----------------
 2016-Dec-19 Created tien.nguyenanh94@gmail.com
 2017-Jan-18 Modified tn-trang.tran@outlook.com
+2017-Jan-19 Modified thuhang.nguyen8894@gmail.com
 """
 
 import sys
@@ -63,7 +64,11 @@ class Processor(threading.Thread):
         jsonParser_c.parseSmartPlugStatusJsonForC(jsonMessage, info);
 
         return jsonParser_cffi.string(info[0].data.smartPlugStatus), jsonParser_cffi.string(info[0].sender.ip),\
-                info[0].sender.port
+                info[0].sender.port, \
+                jsonParser_cffi.string(info[0].datetimesp.monthSP), jsonParser_cffi.string(info[0].datetimesp.daySP),\
+                jsonParser_cffi.string(info[0].datetimesp.yearSP), \
+                jsonParser_cffi.string(info[0].datetimesp.hourSP), jsonParser_cffi.string(info[0].datetimesp.minSP),\
+                jsonParser_cffi.string(info[0].datetimesp.secSP)
 
     def buildJsonMessage(self, message):
         pass
@@ -84,10 +89,17 @@ class Processor(threading.Thread):
             message = self.sock.recv()
             print("message ",message)
             
-            smartPlugStatus, ip, port = self.parseSmartPlugStatusJsonForC(message)
+            smartPlugStatus, ip, port, monthSP, daySP, yearSP, hourSP, minSP, secSP = self.parseSmartPlugStatusJsonForC(message)
             print("status: ", smartPlugStatus)
             print("ip: ", ip)
             print("port: ", port)
+            print("month: ", monthSP)
+            print("day: ", daySP)
+            print("year: ", yearSP)
+            print("hour: ", hourSP)
+            print("min: ", minSP)
+            print("sec: ", secSP)
+
 
 
 
