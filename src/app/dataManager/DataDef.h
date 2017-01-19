@@ -58,12 +58,12 @@ typedef struct
 
 typedef struct
 {
-    int sec;
-    int min;
-    int hour;
-    int day;
-    int month;
-    int year;
+    int secSP;
+    int minSP;
+    int hourSP;
+    int daySP;
+    int monthSP;
+    int yearSP;
 }DatetimeSP;
 
 typedef struct

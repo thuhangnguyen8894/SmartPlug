@@ -94,12 +94,12 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
 
     strcpy(info.data.smartPlugStatus, smartPlugStatusStr.c_str());
 
-    info.datetimesp.month = std::stol(monthStr);
-    info.datetimesp.day = std::stol(dayStr);
-    info.datetimesp.year = std::stol(yearStr);
-    info.datetimesp.hour = std::stol(hourStr);
-    info.datetimesp.min = std::stol(minutesStr);
-    info.datetimesp.sec = std::stol(secondStr);
+    info.datetimesp.monthSP = std::stol(monthStr);
+    info.datetimesp.daySP = std::stol(dayStr);
+    info.datetimesp.yearSP = std::stol(yearStr);
+    info.datetimesp.hourSP = std::stol(hourStr);
+    info.datetimesp.minSP = std::stol(minutesStr);
+    info.datetimesp.secSP = std::stol(secondStr);
 
     info.sender.port = std::stol(portStr);
     strcpy(info.sender.ip, ipStr.c_str());
