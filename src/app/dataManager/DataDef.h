@@ -54,7 +54,7 @@ typedef struct
 typedef struct
 {
     char smartPlugStatus[5];
-}smartPlugStatus;
+}SmartPlugStatus;
 
 typedef struct
 {
@@ -68,7 +68,7 @@ typedef struct
 
 typedef struct
 {
-    SmartPlug data;
+    SmartPlugStatus data;
     Sender sender;
     DatetimeSP datetimesp;
 }SmartPlugInfo;
