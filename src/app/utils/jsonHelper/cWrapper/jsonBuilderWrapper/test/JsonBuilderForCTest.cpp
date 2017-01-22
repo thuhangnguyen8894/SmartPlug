@@ -6,6 +6,11 @@
  * Copyright (c) Tien Nguyen Anh 2016 
  *
  * @detail The testing file of the implementation of JsonBuilderTest class
+ * Modified History
+ * ---------------
+ * 2017-Jan-07 Created tn-trang.tran@outlook.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 #include <cstdlib>
@@ -39,7 +44,7 @@ protected:
 TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
 {
     char* jsonString = NULL;
-    std::string message("PON;192.168.1.177:5600");
+    std::string message("PON;192.168.1.177:5600;1/18/2017  21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
@@ -50,11 +55,8 @@ TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
-    
     boost::property_tree::ptree actualTree;
-    
-    std::string str(jsonString);
-    std::istringstream stringStream(str);
+    std::stringstream stringStream(jsonString);
     boost::property_tree::read_json(stringStream, actualTree);
     
     EXPECT_TRUE(status);
@@ -64,7 +66,7 @@ TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
 TEST_F(JsonBuilderForCTest, TestbuildJsonForC_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     char* jsonString = NULL;
-    std::string message("RON;192.168.1.177:5600");
+    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00");
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
 

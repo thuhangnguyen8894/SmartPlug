@@ -1,12 +1,16 @@
 #ifndef __DATA_STRUCT_DEF_H__
 #define __DATA_STRUCT_DEF_H__
 
-#define MAX_SENSOR_MESSAGE_LENGTH 24
+#define MAX_SENSOR_MESSAGE_LENGTH 70
+#define JSON_TOKEN_SIZE 3
 #define IP_PORT_TOKEN_SIZE 2
+#define DATE_TIME_TOKEN_SIZE 2
 
 #define IP_PORT_REGEX_SPLITTER ":"
 #define SENSOR_MESSAGE_SPLITTER ";"
 #define JSON_PATH_SPLITTER "."
+#define DATE_TIME_SLASH "/"
+#define DATE_TIME_SPACE "  "
 
 #define SMART_PLUG_MESSAGE_VALUE 'P'
 
@@ -22,7 +26,14 @@
 #define MESSAGE_TYPE_SMART_PLUG_STATUS_STR "SMART_PLUG_STATUS_VALUE"
 
 #define ATTR_JSON_DATA "data"
+
 #define ATTR_JSON_MOMENT "moment"
+#define ATTR_JSON_YEAR "Year"
+#define ATTR_JSON_MONTH "Month"
+#define ATTR_JSON_DAY "Day"
+#define ATTR_JSON_HOUR "Hour"
+#define ATTR_JSON_MINUTES "Minutes"
+#define ATTR_JSON_SECOND "Second"
 
 #define ATTR_JSON_IP "IP"
 #define ATTR_JSON_PORT "Port"

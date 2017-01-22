@@ -9,8 +9,10 @@
  *
  * Modified History
  * ---------------
- * 2017-Jan-05 Created tien.nguyenan94@gmail.com
+ * 2017-Jan-03 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -78,17 +80,13 @@ STATIC bool buildSmartPlugStatusJson(const std::string& message,
         return false;
     }
 
-    std::vector<std::string> token = splitWordRegex(message,
-                                    std::string(SENSOR_MESSAGE_SPLITTER));
-    std::string statusPlug = token[0].c_str();
-
-    if (statusPlug.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON) == 0)
+    if (message.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON) == 0)
     {
         dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
                                     ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON);
     }
 
-    if (statusPlug.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF) == 0)
+    if (message.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF) == 0)
     {
         dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
                                     ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF);  
@@ -120,6 +118,66 @@ STATIC bool buildIPSenderJSON(const std::string& ipAddress,
 }
 
 /*!
+ * @internal 
+ * Build Datetime into JSON
+ * DON'T COMPLEX
+ */
+STATIC bool buildDatetimeJSON(const std::string& message,
+                                boost::property_tree::ptree& dateTimeTree)
+{
+    boost::property_tree::ptree dateTimeDataTree;
+
+    /* splites strDateTime by DATE_TIME_SPACE
+     * DATE_TIME_SPACE mean "  "
+     */
+    std::vector<std::string> dateTime = splitWordRegex(message,
+                                    std::string(DATE_TIME_SPACE));
+
+    if (dateTime.size() != DATE_TIME_TOKEN_SIZE)
+    {
+        return false;
+    }
+    
+    //strDate = 1/18/2017
+    std::string strDate = dateTime[0].c_str();
+
+    //strTime = 21:18:21
+    std::string strTime = dateTime[1].c_str();
+
+    /* splites strDate by DATE_TIME_SLASH
+     * DATE_TIME_SLASH mean "/"
+     */
+    std::vector<std::string> date = splitWordRegex(strDate,
+                                    std::string(DATE_TIME_SLASH));
+    
+    /* put day, month and year of JSON string to dateTimeTree
+     * date[0] = 1
+     * date[1] = 18
+     * date[2] = 2017
+     */
+    dateTimeTree.put(ATTR_JSON_MONTH, date[0]);
+    dateTimeTree.put(ATTR_JSON_DAY, date[1]);
+    dateTimeTree.put(ATTR_JSON_YEAR, date[2]);
+
+    /* splites strTime by IP_PORT_REGEX_SPLITTER
+     * IP_PORT_REGEX_SPLITTER mean ":"
+     */
+    std::vector<std::string> time = splitWordRegex(strTime,
+                                    std::string(IP_PORT_REGEX_SPLITTER));
+
+    /* put hour, minutes and second of JSON string to dateTimeTree
+     * time[0] = 21
+     * time[1] = 18
+     * time[2] = 21
+     */
+    dateTimeTree.put(ATTR_JSON_HOUR, time[0]);
+    dateTimeTree.put(ATTR_JSON_MINUTES, time[1]);
+    dateTimeTree.put(ATTR_JSON_SECOND, time[2]);
+
+    return true;
+}
+
+/*!
  * @internal
  * Write JSON
  */
@@ -142,10 +200,11 @@ bool buildJson(const std::string& message, std::string& jsonString)
     boost::property_tree::ptree messageTypeTree;
     boost::property_tree::ptree dataTree;
     boost::property_tree::ptree senderTree;
+    boost::property_tree::ptree dateTimeTree;
 
     std::vector<std::string> token = splitWordRegex(message,
                                     std::string(SENSOR_MESSAGE_SPLITTER));
-    if (token.size() < 2)
+    if (token.size() < JSON_TOKEN_SIZE)
     {
         return false;
     }
@@ -167,7 +226,13 @@ bool buildJson(const std::string& message, std::string& jsonString)
         return false;
     }
 
+    if (!buildDatetimeJSON(token[2].c_str(), dateTimeTree))
+    {
+        return false;
+    }
+
     root.add_child(ATTR_JSON_DATA, dataTree);
+    root.add_child(ATTR_JSON_MOMENT, dateTimeTree);
     root.add_child(ATTR_JSON_SENDER, senderTree);
 
     jsonString = writeJsonToString(root);

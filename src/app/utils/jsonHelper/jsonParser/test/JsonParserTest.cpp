@@ -3,9 +3,16 @@
  * @file JsonBuilderTest.cpp
  * @brief Unittest for JsonBuilderTest class
  *
- * Copyright (c) Tien Nguyen Anh 2016 
+ * Copyright (c) Tien Nguyen Anh 2017
  *
  * @detail The testing file of the implementation of JsonBuilderTest class
+ *
+ * Modified History
+ * ---------------
+ * 2017-Jan-05 Created tn-trang.tran@outlook.com
+ * 2017-Jan-07 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -55,6 +62,12 @@ TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
 
     EXPECT_TRUE(status);
     EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);
+    EXPECT_TRUE(info.datetimesp.monthSP == 1);
+    EXPECT_TRUE(info.datetimesp.daySP == 18);
+    EXPECT_TRUE(info.datetimesp.yearSP == 2017);
+    EXPECT_TRUE(info.datetimesp.hourSP == 21);
+    EXPECT_TRUE(info.datetimesp.minSP == 59);
+    EXPECT_TRUE(info.datetimesp.secSP == 00);
     EXPECT_TRUE(info.sender.port == 5600);
     EXPECT_TRUE(strcmp(info.sender.ip, "192.168.1.177") == 0);
 }

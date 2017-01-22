@@ -12,6 +12,7 @@
  * Modified History
  * ---------------
  * 2016-Dec-08 Created tien.nguyenanh94@gmail.com
+ * 2017-Jan-18 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -62,6 +63,8 @@ void MessageReceiver::run()
     void *publisher = zmq_socket (context, ZMQ_PUB);
     zmq_bind(publisher, "tcp://*:5563");
 
+    
+
     while(!this->stop)
     {
         if (this->socket.poll(span, Poco::Net::Socket::SELECT_READ))
@@ -71,13 +74,65 @@ void MessageReceiver::run()
                 Poco::Net::SocketAddress sender;
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
 
+                /*
+                 * define time_t, use handle current time
+                 */
+                time_t now = time(0);
+                tm *ltm = localtime(&now);
+                /*
+                 * the end
+                 */
+
+                /*
+                handle time
+                */
+                unsigned int year = YEAR + ltm->tm_year;
+                unsigned int month = MONTH + ltm->tm_mon;
+                unsigned int day = ltm->tm_mday;
+                unsigned int hour = ltm->tm_hour;
+                unsigned int min = ltm->tm_min;
+                unsigned int sec = ltm->tm_sec;
+
+                std::string strYear = std::to_string(year);
+                std::string strMonth = std::to_string(month);
+                std::string strDay = std::to_string(day);
+                std::string strHour = std::to_string(hour);
+                std::string strMin = std::to_string(min);
+                std::string strSec = std::to_string(sec);
+
+                std::cout<<"Date: ";
+                std::cout<<strMonth<<"/";
+                std::cout<<strDay<<"/";
+                std::cout<<strYear<<std::endl;
+                std::cout<<"Time: ";
+                std::cout<<strHour<<":";
+                std::cout<<strMin<<":";
+                std::cout<<strSec<<std::endl<<std::endl;
+                /*
+                the end handle time
+                */
+
+
                 std::string jsonString;
 
                 /*!
                  * Appending IP of Sender to message
+                 * Appending datetime of DatetimeSP to message
                  */
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, strMonth.c_str());
+                strcat(pBuffer, DATE_TIME_SLASH);
+                strcat(pBuffer, strDay.c_str());
+                strcat(pBuffer, DATE_TIME_SLASH);
+                strcat(pBuffer, strYear.c_str());
+                strcat(pBuffer, DATE_TIME_SPACE);
+                strcat(pBuffer, strHour.c_str());
+                strcat(pBuffer, IP_PORT_REGEX_SPLITTER);
+                strcat(pBuffer, strMin.c_str());
+                strcat(pBuffer, IP_PORT_REGEX_SPLITTER);
+                strcat(pBuffer, strSec.c_str());
 
                 //convert char to string
                 std::string s_pBuffer(pBuffer); 
@@ -115,4 +170,3 @@ Poco::Net::SocketAddress MessageReceiver::address() const
 {
     return this->socket.address();
 }
-

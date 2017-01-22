@@ -22,6 +22,7 @@
 #include <iostream>
 #include <string.h>
 #include <arpa/inet.h>
+#include <time.h>
 
 #include "zhelpers.h"
 #include "Poco/Net/Socket.h"
@@ -34,6 +35,10 @@
 #include "JsonBuilder.h"
 
 #define PUBLISHER_PORT_OPT 5600
+
+#define YEAR 1900
+#define MONTH 1
+
 
 class MessageReceiver: public Poco::Runnable
 {
