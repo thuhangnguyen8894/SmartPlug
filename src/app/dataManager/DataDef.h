@@ -54,7 +54,7 @@ typedef struct
 typedef struct
 {
     char smartPlugStatus[5];
-}SmartPlug;
+}smartPlugStatus;
 
 typedef struct
 {
