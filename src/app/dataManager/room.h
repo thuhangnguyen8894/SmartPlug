@@ -4,24 +4,14 @@
 
 #include <iostream>
 #include <string>
+#include <list>
+#include "smartplug.h"
 
-
-class Room
+struct Room
 {
-    private:
-        std::string id;
-        std::string name;
-        
-        
-    public:
-        Room();
-        Room(std::string id, std::string name);
-		
-        std::string getId();
-        void setId(std::string id);
-		
-        std::string getName();
-        void setName(std::string name);
+    std::string id;
+    std::string name;
+    std::list<SmartPlug> *listSP;
 };
 
 #endif

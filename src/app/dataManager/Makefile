@@ -7,9 +7,9 @@
 #-----------------------------------------------------------------------------
 
 ifneq ($(APP), unittest)
-	override APP = dataConverter
+	override APP = dataManager
 	TARGET = #none
-	ARCHIVES = dataConverter
+	ARCHIVES = dataManager
 endif
 
 #------------------------------------------------------------------------------

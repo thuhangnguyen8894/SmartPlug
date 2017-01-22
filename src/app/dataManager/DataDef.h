@@ -47,8 +47,19 @@ typedef struct
 
 typedef struct
 {
+    int secSP;
+    int minSP;
+    int hourSP;
+    int daySP;
+    int monthSP;
+    int yearSP;
+}DatetimeSP;
+
+typedef struct
+{
     SmartPlug data;
     Sender sender;
+    DatetimeSP datetimesp;
 }SmartPlugInfo;
 
 #endif

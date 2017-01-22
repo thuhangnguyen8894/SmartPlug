@@ -2,47 +2,26 @@
 #include <string>
 #include "smartplug.h"
 
-
-SmartPlug::SmartPlug()
+int main()
 {
-    this->id = "";
-    this->ip = "";
-    this->status = "";
-}
+	Plug plug;
+	plug.id = "SP01";
+	plug.ipSmartPlug = "192.168.0.100";
+	plug.portSmartPlug = 5563;
+	plug.status = "ON";
+	plug.dateTimeSP.monthSP = 01;
+	plug.dateTimeSP.daySP = 22;
+	plug.dateTimeSP.yearSP = 2017;
+	plug.dateTimeSP.hourSP = 11;
+	plug.dateTimeSP.minSP = 50;
+	plug.dateTimeSP.secSP = 45;
 
-SmartPlug::SmartPlug(std::string id, std::string ip, std::string status)
-{ 
-    this->id = id;
-    this->ip = ip;
-    this->status = status;
-}
-
-std::string SmartPlug::getId()
-{
-	return this->id;
-}
-
-void SmartPlug::setId(std::string id)
-{
-	this->id = id;
-}
-
-std::string SmartPlug::getIP()
-{
-	return this->ip;
-}
-
-void SmartPlug::setIP(std::string ip)
-{
-	this->ip = ip;
-}
-
-std::string SmartPlug::getStatus()
-{
-	return this->status;
-}
-
-void SmartPlug::setStatus(std::string status)
-{
-	this->status = status;
+	std::cout << "ID SmartPlug: " << plug.id <<std::endl;
+	std::cout << "ipSmartPlug: " << plug.ipSmartPlug <<std::endl;
+	std::cout << "portSmartPlug: " << plug.portSmartPlug <<std::endl;
+	std::cout << "status: " << plug.status <<std::endl;
+	std::cout << "Date: " << plug.dateTimeSP.monthSP << "/" << plug.dateTimeSP.daySP << "/" << plug.dateTimeSP.yearSP <<std::endl;
+	std::cout << "Time: " << plug.dateTimeSP.hourSP << ":" << plug.dateTimeSP.minSP << ":" << plugyyy.dateTimeSP.secSP <<std::endl;
+	
+	return 0;
 }
