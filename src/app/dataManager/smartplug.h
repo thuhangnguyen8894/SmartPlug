@@ -8,11 +8,11 @@
 
 typedef struct
 {
-    std::string id;
+    std::string idSmartPlug;
     std::string ipSmartPlug;
     int portSmartPlug;
     std::string status;
     DatetimeSP dateTimeSP;
-}Plug;
+}SmartPlug;
 
 #endif

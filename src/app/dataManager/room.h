@@ -7,12 +7,12 @@
 #include <list>
 #include "smartplug.h"
 
-struct Room
+typedef struct
 {
-    std::string id;
-    std::string name;
+    std::string idRoom;
+    std::string nameRoom;
     std::list<SmartPlug> *listSP;
-};
+}Room;
 
 #endif
 
