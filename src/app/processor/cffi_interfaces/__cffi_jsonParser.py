@@ -41,7 +41,7 @@ jsonParser_cffi.cdef("""
     typedef struct
     {
         char smartPlugStatus[5];
-    }SmartPlug;
+    }SmartPlugStatus;
 
     typedef struct
     {
@@ -55,7 +55,7 @@ jsonParser_cffi.cdef("""
 
     typedef struct
     {
-        SmartPlug data;
+        SmartPlugStatus data;
         Sender sender;
         DatetimeSP datetimesp;
     }SmartPlugInfo;
