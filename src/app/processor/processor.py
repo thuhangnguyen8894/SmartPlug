@@ -65,15 +65,10 @@ class Processor(threading.Thread):
 
         return jsonParser_cffi.string(info[0].data.smartPlugStatus), jsonParser_cffi.string(info[0].sender.ip),\
                 info[0].sender.port, \
-<<<<<<< HEAD
-                info[0].datetimesp.monthSP, info[0].datetimesp.daySP, info[0].datetimesp.yearSP, \
-                info[0].datetimesp.hourSP, info[0].datetimesp.minSP, info[0].datetimesp.secSP
-=======
                 info[0].datetimesp.monthSP, info[0].datetimesp.daySP,\
                 info[0].datetimesp.yearSP, \
                 info[0].datetimesp.hourSP, info[0].datetimesp.minSP,\
                 info[0].datetimesp.secSP
->>>>>>> bbd221beceab8382d45d819c771cd45019f2c764
 
     def buildJsonMessage(self, message):
         pass
@@ -98,15 +93,8 @@ class Processor(threading.Thread):
             print("status: ", smartPlugStatus)
             print("ip: ", ip)
             print("port: ", port)
-<<<<<<< HEAD
-            print("Date: ", monthSP, "/",daySP, "/",yearSP)
-            print("Time: ", hourSP, ":", minSP, ":", secSP)
-
-
-=======
             print("Date: " , monthSP, "/" , daySP, "/" , yearSP)
             print("Time: " , hourSP, ":" , minSP, ":" , secSP)
->>>>>>> bbd221beceab8382d45d819c771cd45019f2c764
 
 
 if __name__ == '__main__':
