@@ -24,7 +24,9 @@ USING_LANGUAGE = CPP
 #-----------------------------------------------------------------------------
 INCS_DIRS += src/app/messenger/messageReceiver \
 			 src/app/utils/jsonHelper/common \
-			 src/app/utils/jsonHelper/jsonBuilder
+			 src/app/utils/jsonHelper/jsonBuilder \
+			 src/app/timer \
+			 src/app/dataManager
 			 
 #-----------------------------------------------------------------------------
 LIBDIRS_jsonCommon  += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/

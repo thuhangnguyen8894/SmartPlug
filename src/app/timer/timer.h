@@ -9,6 +9,7 @@
  * Modified History
  * ---------------
  * 2017-Jan-22 Created tn-trang.tran@outlook.com
+ * 2017-Jan-23 Modified tn-trang.tran@outlook.com
  */
 
 #ifndef __TIMER_H__
@@ -16,6 +17,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <sstream>
 #include <time.h>
 
 #include "DataDef.h"
