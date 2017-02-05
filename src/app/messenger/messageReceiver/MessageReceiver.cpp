@@ -19,7 +19,6 @@
 #include "MessageReceiver.h"
 
 
-
 MessageReceiver::MessageReceiver(int bufferSize):
     thread("MessageReceiver"),
     stop(false),

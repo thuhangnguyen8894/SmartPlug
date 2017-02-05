@@ -11,7 +11,7 @@ typedef struct
     std::string idSmartPlug;
     std::string ipSmartPlug;
     int portSmartPlug;
-    std::string status;
+    SmartPlugStatus status;
     DatetimeSP dateTimeSP;
 }SmartPlug;
 
