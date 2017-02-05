@@ -10,7 +10,7 @@
 
 ifneq ($(APP), unittest)
     override APP = timer
-    TARGET = 
+    TARGET = #none
     ARCHIVES = timer
 endif
 

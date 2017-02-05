@@ -10,7 +10,7 @@
 
 ifneq ($(APP), unittest)
     override APP = messageReceiver
-    TARGET = 
+    TARGET = #none
     ARCHIVES = messageReceiver
 endif
 
@@ -26,8 +26,8 @@ SUBOBJS += timer.o
 #include source code
 INCS_DIRS = src/app/utils/jsonHelper/common \
 			src/app/utils/jsonHelper/jsonBuilder \
-			src/app/dataManager \
-			src/app/timer
+			src/app/timer \
+			src/app/dataManager
 #-----------------------------------------------------------------------------
 LIBDIRS_jsonCommon  = $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
 LIBRARY             += jsonCommon
