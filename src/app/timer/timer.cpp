@@ -9,6 +9,7 @@
  * Modified History
  * ---------------
  * 2017-Jan-22 Created tn-trang.tran@outlook.com
+ * 2017-Jan-23 Modified tn-trang.tran@outlook.com
  */
 
 #include "timer.h"
@@ -25,45 +26,48 @@ char* timer()
      * the end
      */
 
-    char* datetime = new char[20];
-
     /*
      * handle time
      */
-    unsigned int year = YEAR + ltm->tm_year;
-    unsigned int month = MONTH + ltm->tm_mon;
-    unsigned int day = ltm->tm_mday;
-    unsigned int hour = ltm->tm_hour;
-    unsigned int min = ltm->tm_min;
-    unsigned int sec = ltm->tm_sec;
+    unsigned int yearInt = YEAR + ltm->tm_year;
+    unsigned int monthInt = MONTH + ltm->tm_mon;
+    unsigned int dayInt = ltm->tm_mday;
+    unsigned int hourInt = ltm->tm_hour;
+    unsigned int minInt = ltm->tm_min;
+    unsigned int secInt = ltm->tm_sec;
 
-    std::string strYear = std::to_string(year);
-    std::string strMonth = std::to_string(month);
-    std::string strDay = std::to_string(day);
-    std::string strHour = std::to_string(hour);
-    std::string strMin = std::to_string(min);
-    std::string strSec = std::to_string(sec);
+    std::stringstream yearStream;;
+    yearStream << yearInt;
+    std::string yearStr= yearStream.str();
 
-    /*
-     * the end handle time
-     */
+    std::stringstream monthStream;;
+    monthStream << monthInt;
+    std::string monthStr= monthStream.str();
 
-    /*
-     * Appending IP of Sender to message
-     * Appending datetime of DatetimeSP to message
-     */
-    strcat(datetime, SENSOR_MESSAGE_SPLITTER);
-    strcat(datetime, strMonth.c_str());
-    strcat(datetime, DATE_TIME_SLASH);
-    strcat(datetime, strDay.c_str());
-    strcat(datetime, DATE_TIME_SLASH);
-    strcat(datetime, strYear.c_str());
-    strcat(datetime, DATE_TIME_SPACE);
-    strcat(datetime, strHour.c_str());
-    strcat(datetime, IP_PORT_REGEX_SPLITTER);
-    strcat(datetime, strMin.c_str());
-    strcat(datetime, IP_PORT_REGEX_SPLITTER);
-    strcat(datetime, strSec.c_str());
+    std::stringstream dayStream;;
+    dayStream << dayInt;
+    std::string dayStr= dayStream.str();
 
-    return datetime;
+    std::stringstream hourStream;;
+    hourStream << hourInt;
+    std::string hourStr= hourStream.str();
+
+    std::stringstream minStream;;
+    minStream << minInt;
+    std::string minStr= minStream.str();
+
+    std::stringstream secStream;;
+    secStream << secInt;
+    std::string secStr= secStream.str();
+
+    std::string dateTimeStr = monthStr + DATE_TIME_SLASH + dayStr + DATE_TIME_SLASH + yearStr 
+                              + DATE_TIME_SPACE + hourStr + IP_PORT_REGEX_SPLITTER + minStr + IP_PORT_REGEX_SPLITTER + secStr;
+
+    
+
+    int lenDateTime = dateTimeStr.length();
+    char* dateTimeChar = new char[lenDateTime + 1];
+    strcpy(dateTimeChar, dateTimeStr.c_str());
+
+    return dateTimeChar;
 }

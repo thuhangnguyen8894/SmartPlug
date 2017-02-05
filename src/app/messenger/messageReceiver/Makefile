@@ -20,6 +20,7 @@ SRCS = MessageReceiver.cpp
 OBJS = $(SRCS:.cpp=.o)
 SUBOBJS += JsonBuilder.o
 SUBOBJS += JsonCommon.o
+SUBOBJS += timer.o
 
 #------------------------------------------------------------------------------
 #include source code

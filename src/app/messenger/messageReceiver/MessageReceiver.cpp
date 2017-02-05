@@ -84,6 +84,7 @@ void MessageReceiver::run()
                  */
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, datetime);
 
                 //convert char to string
