@@ -3,14 +3,14 @@
 
 
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <list>
 #include "smartplug.h"
 
 typedef struct
 {
-    std::string idRoom;
-    std::string nameRoom;
+    char idRoom[10];
+    char nameRoom[10];
     std::list<SmartPlug> *listSP;
 }Room;
 

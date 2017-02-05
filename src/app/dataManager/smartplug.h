@@ -6,13 +6,15 @@
 #include <string>
 #include "DataDef.h"
 
+typedef struct 
+{
+	char idSmartPlug[10];
+}SmartPlugIdentity;
+
 typedef struct
 {
-    std::string idSmartPlug;
-    std::string ipSmartPlug;
-    int portSmartPlug;
-    std::string status;
-    DatetimeSP dateTimeSP;
+    SmartPlugIdentity id;
+    SmartPlugInfo info;
 }SmartPlug;
 
 #endif

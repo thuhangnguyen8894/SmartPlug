@@ -36,7 +36,30 @@ protected:
 TEST_F(SmartPlugTest, TestDefaultConstructorAndGetter)
 {
     SmartPlug smartplug;
-    EXPECT_EQ("", smartplug.getId());
-    EXPECT_EQ("", smartplug.getIP());
-    EXPECT_EQ("", smartplug.getStatus());
+
+    strcpy(smartplug.id.idSmartPlug, "SP01");
+
+    strcpy(smartplug.info.sender.ip, "192.168.0.100");
+
+    smartplug.info.sender.port = 5563;
+
+    strcpy(smartplug.info.data.smartPlugStatus, "ON");
+    
+    smartplug.info.datetimesp.monthSP = 1;
+    smartplug.info.datetimesp.daySP = 22;
+    smartplug.info.datetimesp.yearSP = 2017;
+    smartplug.info.datetimesp.hourSP = 11;
+    smartplug.info.datetimesp.minSP = 50;
+    smartplug.info.datetimesp.secSP = 45;
+
+    EXPECT_EQ("SP01", smartplug.id.idSmartPlug);
+    EXPECT_EQ("192.168.0.100", smartplug.info.sender.ip);
+    EXPECT_EQ(5563, smartplug.info.sender.port);
+    EXPECT_EQ("ON", smartplug.info.data.smartPlugStatus);
+    EXPECT_EQ(1, smartplug.info.datetimesp.monthSP);
+    EXPECT_EQ(22, smartplug.info.datetimesp.daySP);
+    EXPECT_EQ(2017, smartplug.info.datetimesp.yearSP);
+    EXPECT_EQ(11, smartplug.info.datetimesp.hourSP);
+    EXPECT_EQ(50, smartplug.info.datetimesp.minSP);
+    EXPECT_EQ(45, smartplug.info.datetimesp.secSP);
 }
