@@ -6,6 +6,14 @@
 #define IP_PORT_TOKEN_SIZE 2
 #define DATE_TIME_TOKEN_SIZE 2
 
+#define SIZE_COUNT_DEVICE 2
+#define SIZE_NAME_DEVICE 20
+
+#define SIZE_IP 20
+#define SIZE_NAME_ROOM 20
+
+#define SIZE_ID 10
+
 #define IP_PORT_REGEX_SPLITTER ":"
 #define SENSOR_MESSAGE_SPLITTER ";"
 #define JSON_PATH_SPLITTER "."
@@ -47,14 +55,9 @@ typedef enum
 
 typedef struct
 {
-    char ip[20];
+    char ip[SIZE_IP];
     long port;
 }Sender;
-
-typedef struct
-{
-    char smartPlugStatus[5];
-}SmartPlugStatus;
 
 typedef struct
 {
@@ -68,9 +71,25 @@ typedef struct
 
 typedef struct
 {
-    SmartPlugStatus data;
+    Data data;
     Sender sender;
     DatetimeSP datetimesp;
-}SmartPlugInfo;
+}SmartDeviceInfo;
+
+typedef struct 
+{
+    char nameDevice[SIZE_NAME_DEVICE];
+    char quality[SIZE_COUNT_DEVICE];
+    char onDevice[SIZE_COUNT_DEVICE];
+    char activeDevice[SIZE_COUNT_DEVICE];
+    char offDevice[SIZE_COUNT_DEVICE];
+    char inactiveDevice[SIZE_COUNT_DEVICE];
+}SmartDevice;
+
+typedef struct 
+{
+    SmartDevice smartDevice;
+    char nameRoom[SIZE_NAME_ROOM];
+}Data;
 
 #endif

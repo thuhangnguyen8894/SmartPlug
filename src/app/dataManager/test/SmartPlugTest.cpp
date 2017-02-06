@@ -35,31 +35,31 @@ protected:
 
 TEST_F(SmartPlugTest, TestDefaultConstructorAndGetter)
 {
-    SmartPlug smartplug;
+    Devices devices;
 
-    strcpy(smartplug.id.idSmartPlug, "SP01");
+    strcpy(devices.idSmartDevice, "SP01");
 
-    strcpy(smartplug.info.sender.ip, "192.168.0.100");
+    strcpy(devices.info.sender.ip, "192.168.0.100");
 
-    smartplug.info.sender.port = 5563;
+    devices.info.sender.port = 5563;
 
-    strcpy(smartplug.info.data.smartPlugStatus, "ON");
+    strcpy(devices.info.data.smartPlugStatus, "ON");
     
-    smartplug.info.datetimesp.monthSP = 1;
-    smartplug.info.datetimesp.daySP = 22;
-    smartplug.info.datetimesp.yearSP = 2017;
-    smartplug.info.datetimesp.hourSP = 11;
-    smartplug.info.datetimesp.minSP = 50;
-    smartplug.info.datetimesp.secSP = 45;
+    devices.info.datetimesp.monthSP = 1;
+    devices.info.datetimesp.daySP = 22;
+    devices.info.datetimesp.yearSP = 2017;
+    devices.info.datetimesp.hourSP = 11;
+    devices.info.datetimesp.minSP = 50;
+    devices.info.datetimesp.secSP = 45;
 
-    EXPECT_EQ("SP01", smartplug.id.idSmartPlug);
-    EXPECT_EQ("192.168.0.100", smartplug.info.sender.ip);
-    EXPECT_EQ(5563, smartplug.info.sender.port);
-    EXPECT_EQ("ON", smartplug.info.data.smartPlugStatus);
-    EXPECT_EQ(1, smartplug.info.datetimesp.monthSP);
-    EXPECT_EQ(22, smartplug.info.datetimesp.daySP);
-    EXPECT_EQ(2017, smartplug.info.datetimesp.yearSP);
-    EXPECT_EQ(11, smartplug.info.datetimesp.hourSP);
-    EXPECT_EQ(50, smartplug.info.datetimesp.minSP);
-    EXPECT_EQ(45, smartplug.info.datetimesp.secSP);
+    EXPECT_EQ("SP01", devices.idSmartDevice);
+    EXPECT_EQ("192.168.0.100", devices.info.sender.ip);
+    EXPECT_EQ(5563, devices.info.sender.port);
+    EXPECT_EQ("ON", devices.info.data.smartPlugStatus);
+    EXPECT_EQ(1, devices.info.datetimesp.monthSP);
+    EXPECT_EQ(22, devices.info.datetimesp.daySP);
+    EXPECT_EQ(2017, devices.info.datetimesp.yearSP);
+    EXPECT_EQ(11, devices.info.datetimesp.hourSP);
+    EXPECT_EQ(50, devices.info.datetimesp.minSP);
+    EXPECT_EQ(45, devices.info.datetimesp.secSP);
 }

@@ -1,0 +1,40 @@
+{
+    "MESSAGE_TYPE" : "SMART_PLUG_STATUS_VALUE",
+    "data" : 
+    {
+        "smartDevice":
+        [
+            {
+                "name" : "plug",
+                "quality" : "5",
+                "ON" : "2",
+                "active" : "2",
+                "OFF" : "3",
+                "inactive" : "3"
+            },
+            {
+                "name" : "light",
+                "quality" : "3",
+                "ON" : "2",
+                "active" : "3",
+                "OFF" : "1",
+                "inactive" : "0"
+            }
+        ],
+        "nameRoom" : "living room"
+    },
+    "moment" :
+    {
+        "Month" : "1",
+        "Day" : "18",
+        "Year" : "2017",
+        "Hour" : "21",
+        "Minutes" : "59",
+        "Second" : "00"
+    },
+    "Sender" : 
+    {
+        "IP" : "192.168.1.177",
+        "Port" : "5600"
+    }
+}

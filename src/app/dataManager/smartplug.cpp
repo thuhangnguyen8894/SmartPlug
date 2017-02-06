@@ -6,7 +6,7 @@ int main()
 {
 	SmartPlug plug;
 
-	strcpy(plug.id.idSmartPlug, "SP01");
+	strcpy(plug.idSmartPlug, "SP01");
 
 	strcpy(plug.info.sender.ip, "192.168.0.100");
 
@@ -21,7 +21,7 @@ int main()
 	plug.info.datetimesp.minSP = 50;
 	plug.info.datetimesp.secSP = 45;
 
-	std::cout << "ID SmartPlug: " << plug.id.idSmartPlug <<std::endl;
+	std::cout << "ID SmartPlug: " << plug.idSmartPlug <<std::endl;
 	std::cout << "ipSmartPlug: " << plug.info.sender.ip <<std::endl;
 	std::cout << "portSmartPlug: " << plug.info.sender.port <<std::endl;
 	std::cout << "status: " << plug.info.data.smartPlugStatus <<std::endl;

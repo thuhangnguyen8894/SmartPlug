@@ -6,15 +6,10 @@
 #include <string>
 #include "DataDef.h"
 
-typedef struct 
-{
-	char idSmartPlug[10];
-}SmartPlugIdentity;
-
 typedef struct
 {
-    SmartPlugIdentity id;
-    SmartPlugInfo info;
-}SmartPlug;
+    char idSmartDevice[SIZE_ID];
+    SmartDeviceInfo info;
+}Devices;
 
 #endif
