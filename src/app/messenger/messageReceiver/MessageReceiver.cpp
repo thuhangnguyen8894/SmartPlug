@@ -87,6 +87,8 @@ void MessageReceiver::run()
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, datetime);
 
+                std::cout<<pBuffer<<std::endl;
+
                 //convert char to string
                 std::string s_pBuffer(pBuffer); 
 
