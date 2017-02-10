@@ -10,6 +10,7 @@
  * ---------------
  * 2017-Jan-05 Created tien.nguyenan94@gmail.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+ * 2017-Feb-10 Modified tn-trang.tran@outlook.com
  */
 
 #include <Time.h>
@@ -86,6 +87,14 @@ double AmpsRMS = 0;
 float minOffElectric = 0.0514;
 float maxOffElectric = 0.0714;
 float minOnElectric = 0.0714;
+
+/*!
+ * Paremeters quality control current electric when send message
+ * status_before: status of device was previous time.
+ * status_after: status of device is current time.
+ */
+boolean status_before = false;
+boolean status_after = false;
 
 void setup()
 {
@@ -198,30 +207,54 @@ void sendSmartPlugStatus()
     //Has electric: from 0.3714 to 1.9914  
     if(currentElectric >= minOffElectric && currentElectric <= maxOffElectric)
     {
-      strcat(msg, "POFF");
-      Serial.print(msg);
+      status_after = false;
     }
     else if(currentElectric > maxOffElectric)
     {
-      strcat(msg, "PON");
-      Serial.print(msg);
+      status_after = true;
     }
     else
     {
-      strcat(msg, "POFF");
-      Serial.print(msg);
+      status_after = false;
     }
 
     /*!
-     * Convert message to array of digit of hex numbers.
+     * Handle send message when status_before and status_after different 
      */
-    Serial.println(msg);
-    /*!
-     * Send the message
-     */
-    udp.beginPacket(server, serverPort);
-    udp.write(msg, strlen(msg) * sizeof(msg));
-    udp.endPacket();
+    if (status_before != status_after)
+    {
+      if (status_after == true)
+      {
+        strcat(msg, "PON");
+        
+        Serial.println(msg);
+
+        /*!
+         * Send the message
+         */
+        udp.beginPacket(server, serverPort);
+        udp.write(msg, strlen(msg) * sizeof(msg));
+        udp.endPacket();
+      }
+      else
+      {
+        strcat(msg, "POFF");
+        
+        Serial.println(msg);
+
+        /*!
+         * Send the message
+         */
+        udp.beginPacket(server, serverPort);
+        udp.write(msg, strlen(msg) * sizeof(msg));
+        udp.endPacket();
+      }
+
+      /*!
+       * Update status_before 
+       */
+      status_before = status_after;
+    }
 
     /*!
      * Update the lastMoment value
