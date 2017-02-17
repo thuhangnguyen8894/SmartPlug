@@ -1,3 +1,4 @@
+mysql> delimiter //
 mysql> CREATE TRIGGER followElectric AFTER UPDATE
     -> ON SmartDevice
     -> FOR EACH ROW
@@ -6,12 +7,15 @@ mysql> CREATE TRIGGER followElectric AFTER UPDATE
     -> DECLARE nameFollow CHAR(20);
     -> DECLARE stateFollow CHAR(20);
     -> DECLARE dateFollow CHAR(20);
+    -> DECLARE userFollow CHAR(20);
     -> IF NEW.stateElectric <> OLD.stateElectric
     -> THEN
     -> SET idFollow=OLD.idSmartDevice;
     -> SET nameFollow=OLD.nameSmartDevice;
     -> SET stateFollow=NEW.stateElectric;
-    -> SET dateFollow=NOW();
-    -> INSERT INTO Follow_stateElectric VALUES(idFollow,nameFollow,stateFollow,dateFollow);
+    -> SET dateFollow=NOW(); 
+    -> SET userFollow=USER();
+    -> INSERT INTO Follow_stateElectric VALUES(idFollow,nameFollow,stateFollow,dateFollow,userFollow);
     -> END IF;
     -> END//
+mysql> delimiter ;
