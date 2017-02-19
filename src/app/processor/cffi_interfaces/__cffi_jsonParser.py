@@ -34,14 +34,9 @@ jsonParser_cffi = cffi.FFI()
 jsonParser_cffi.cdef("""
     typedef struct
     {
-        char ip[20];
+        char ip[...];
         long port;
     }Sender;
-
-    typedef struct
-    {
-        char smartPlugStatus[5];
-    }SmartPlugStatus;
 
     typedef struct
     {
@@ -53,15 +48,29 @@ jsonParser_cffi.cdef("""
         int yearSP;
     }DatetimeSP;
 
+    typedef struct 
+    {
+        char status_use_electric[5];
+        char status_electric[10];
+        char jack_relay[2];
+        char ip_port_jack[20];
+    }SmartDevice;
+
+    typedef struct 
+    {
+        char id_timer[10];
+    }IDAnything;
+
     typedef struct
     {
-        SmartPlugStatus data;
+        SmartDevice data;
         Sender sender;
+        IDAnything id;
         DatetimeSP datetimesp;
-    }SmartPlugInfo;
+    }SmartDeviceInfo;
 
 
-    bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
+    bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartDeviceInfo* info);
 """)
 
 jsonParser_c = jsonParser_cffi.verify("""

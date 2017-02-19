@@ -13,6 +13,7 @@
  * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  * 2017-Jan-18 Modified tn-trang.tran@outlook.com
+ * 2017-Feb-11 Modified tn-trang.tran@outlook.com
  */
 /*****************************************************************************/
 
@@ -72,26 +73,101 @@ std::vector<std::string> splitWordRegex(const std::string& message,
  * @internal 
  * Build status of Smart Plug into name and value of JSON
  */
-STATIC bool buildSmartPlugStatusJson(const std::string& message,
+STATIC bool buildSmartPlugStatusJson(const std::string& message, const std::string& ip_port_jack, 
                                     boost::property_tree::ptree& dataTree)
 {
+    /*!
+     * 
+     */
     if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)
     {
         return false;
     }
 
-    if (message.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON) == 0)
+    /*!
+     * 
+     */
+    std::vector<std::string> status = splitWordRegex(message,
+                                    std::string(IP_PORT_REGEX_SPLITTER));
+    if (status.size() != JSON_DATA_SIZE)
+    {
+        return false;
+    }
+
+    std::string strStatusUseElectric = status[0].c_str();
+    std::string strStatusElectric = status[1].c_str();
+    std::string strJackRelay = status[2].c_str();
+
+    /*!
+     *
+     */
+    if (strStatusUseElectric.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON) == 0)
     {
         dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
                                     ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON);
     }
 
-    if (message.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF) == 0)
+    if (strStatusUseElectric.compare(ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF) == 0)
     {
         dataTree.put(ATTR_JSON_SMART_PLUG_STATUS_VALUE, 
                                     ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF);  
     }
-    
+
+    /*!
+     * 
+     */
+    if (strStatusElectric.compare(ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ACTIVE) == 0)
+    {
+        dataTree.put(ATTR_JSON_ELECTRIC_STATUS_VALUE,
+                                    ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ACTIVE);
+    }
+
+    if (strStatusElectric.compare(ATTR_JSON_ELECTRIC_MESSAGE_VALUE_UNACTIVE) == 0)
+    {
+        dataTree.put(ATTR_JSON_ELECTRIC_STATUS_VALUE,
+                                   ATTR_JSON_ELECTRIC_MESSAGE_VALUE_UNACTIVE);
+    }
+    /*!
+     * 
+     */
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_9) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_9);
+    }
+
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_8) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_8);
+    }
+
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_7) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_7);
+    }
+
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_6) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_6);
+    }
+
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_5) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_5);
+    }
+
+    if (strJackRelay.compare(ATTR_JSON_JACK_RELAY_VALUE_4) == 0)
+    {
+        dataTree.put(ATTR_JSON_JACK_RELAY_VALUE,
+                                   ATTR_JSON_JACK_RELAY_VALUE_4);
+    }
+
+    dataTree.put(ATTR_JSON_IP_PORT_JACK_VALUE, ip_port_jack);
+
     return true;
 }
 
@@ -114,6 +190,20 @@ STATIC bool buildIPSenderJSON(const std::string& ipAddress,
     senderTree.put(ATTR_JSON_IP, token[0]);
     senderTree.put(ATTR_JSON_PORT, token[1]);
 
+    return true;
+}
+
+/*!
+ * @internal 
+ * Build Datetime into JSON
+ * DON'T COMPLEX
+ */
+STATIC bool buildIDJSON(const std::string& message,
+                                boost::property_tree::ptree& idTree)
+{
+    boost::property_tree::ptree idDataTree;
+
+    idTree.put(ATTR_JSON_ID_TABLE_TIMER, message);
     return true;
 }
 
@@ -179,6 +269,56 @@ STATIC bool buildDatetimeJSON(const std::string& message,
 
 /*!
  * @internal
+ * split_IP_PORT
+ */
+ std::string split_IP_PORT(const std::string& message)
+ {
+    return message;
+ }
+
+/*!
+ * @internal
+ * split_JACK
+ */
+std::string split_JACK(const std::string& message)
+{
+    std::vector<std::string> status = splitWordRegex(message,
+                                    std::string(IP_PORT_REGEX_SPLITTER));
+    std::string jack = status[2].c_str();
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_9) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_9;
+    }
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_8) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_8;
+    }
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_7) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_7;
+    }
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_6) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_6;
+    }
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_5) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_5;
+    }
+
+    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_4) == 0)
+    {
+        return ATTR_JSON_JACK_RELAY_VALUE_4;
+    }
+}
+
+/*!
+ * @internal
  * Write JSON
  */
 std::string writeJsonToString(boost::property_tree::ptree& pTree)
@@ -188,6 +328,7 @@ std::string writeJsonToString(boost::property_tree::ptree& pTree)
     
     return buffer.str();
 }
+
 
 /*!
  * @internal 
@@ -200,6 +341,7 @@ bool buildJson(const std::string& message, std::string& jsonString)
     boost::property_tree::ptree messageTypeTree;
     boost::property_tree::ptree dataTree;
     boost::property_tree::ptree senderTree;
+    boost::property_tree::ptree idTree;
     boost::property_tree::ptree dateTimeTree;
 
     std::vector<std::string> token = splitWordRegex(message,
@@ -216,7 +358,15 @@ bool buildJson(const std::string& message, std::string& jsonString)
         return false;
     }
 
-    if (!buildSmartPlugStatusJson(token[0].c_str(), dataTree))
+    /*
+     * Handle string ip_port_jack
+     */
+    std::string ip_port = split_IP_PORT(token[1].c_str());
+    std::string jack = split_JACK(token[0].c_str());
+    std::string ip_port_jack = ip_port + ":" + jack;
+    
+
+    if (!buildSmartPlugStatusJson(token[0].c_str(), ip_port_jack.c_str(), dataTree))
     {
         return false;
     }
@@ -226,12 +376,18 @@ bool buildJson(const std::string& message, std::string& jsonString)
         return false;
     }
 
-    if (!buildDatetimeJSON(token[2].c_str(), dateTimeTree))
+    if (!buildIDJSON(token[2].c_str(), idTree))
+    {
+        return false;
+    }
+
+    if (!buildDatetimeJSON(token[3].c_str(), dateTimeTree))
     {
         return false;
     }
 
     root.add_child(ATTR_JSON_DATA, dataTree);
+    root.add_child(ATTR_JSON_ID, idTree);
     root.add_child(ATTR_JSON_MOMENT, dateTimeTree);
     root.add_child(ATTR_JSON_SENDER, senderTree);
 

@@ -1,4 +1,4 @@
-/*
+  /*
  * @file Arduino_Module.ino
  * @brief Handle send and receive analog.
  *
@@ -17,6 +17,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetUdp.h>
+
 
 byte mac[] =
 {
@@ -66,7 +67,7 @@ const unsigned long delayInterval = 1000L;
 /*!
  * Power pin Relay
  */
-int relay = 8;
+int jackRelay = 8;
 
 /*!
  * Power pin ACS712
@@ -108,7 +109,7 @@ void setup()
      */
     Ethernet.begin(mac, ip);
 
-    pinMode(relay,OUTPUT);
+    pinMode(jackRelay,OUTPUT);
 
     udp.begin(internalPort);
 }
@@ -117,9 +118,9 @@ void setup()
 void loop()
 {
     /*!
-     * Turn on power of relay
+     * Turn on power of jackRelay
      */
-    digitalWrite(relay,HIGH);
+    digitalWrite(jackRelay,HIGH);
     
     int packetSize = udp.parsePacket();
 
@@ -181,6 +182,7 @@ void loop()
 
 void sendSmartPlugStatus()
 {
+    
     uint16_t moment = now();
 
     /*!
@@ -198,6 +200,13 @@ void sendSmartPlugStatus()
      */    
     char* msg = new char[10];
     memset(msg, 0, 10 * sizeof(char));
+
+    /*!
+     * Converse type jackRelay into char
+     * purpose: send jack relay for message
+     */
+     char* jackRelayPoint = new char[2];
+     jackRelayPoint = getValueRelay(jackRelay);
 
     /*!
      * Determine the category of message
@@ -221,12 +230,33 @@ void sendSmartPlugStatus()
     /*!
      * Handle send message when status_before and status_after different 
      */
+     /*!
+      * Test status of device use electric
+      */
     if (status_before != status_after)
     {
       if (status_after == true)
       {
         strcat(msg, "PON");
-        
+        strcat(msg, ":");
+
+        /*!
+         * Test status of electric
+         */
+        if (digitalRead(jackRelay) == HIGH)
+        {
+          strcat(msg, "ACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
+
+        else if (digitalRead(jackRelay) == LOW)
+        {
+          strcat(msg, "UNACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
+
         Serial.println(msg);
 
         /*!
@@ -239,6 +269,24 @@ void sendSmartPlugStatus()
       else
       {
         strcat(msg, "POFF");
+        strcat(msg, ":");
+
+        /*!
+         * Test status of electric
+         */
+        if (digitalRead(jackRelay) == HIGH)
+        {
+          strcat(msg, "ACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
+
+        else if (digitalRead(jackRelay) == LOW)
+        {
+          strcat(msg, "UNACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
         
         Serial.println(msg);
 
@@ -265,6 +313,37 @@ void sendSmartPlugStatus()
     {
         delete msg;
     }
+}
+
+char* getValueRelay(int jackRelay)
+{
+  char* valueJackRelay = new char[2];
+  if (jackRelay == 9)
+  {
+    strcpy(valueJackRelay, "9");
+  }
+  else if (jackRelay == 8)
+  {
+    strcpy(valueJackRelay, "8");
+  }
+  else if (jackRelay == 7)
+  {
+    strcpy(valueJackRelay, "7");
+  }
+  else if (jackRelay == 6)
+  {
+    strcpy(valueJackRelay, "6");
+  }
+  else if (jackRelay == 5)
+  {
+    strcpy(valueJackRelay, "5");
+  }
+  else if (jackRelay == 4)
+  {
+    strcpy(valueJackRelay, "4");
+  }
+  
+  return valueJackRelay;
 }
 
 /*!

@@ -13,6 +13,7 @@
  * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  * 2017-Jan-18 Modified tn-trang.tran@outlook.com
+ * 2017-Feb-11 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -47,13 +48,13 @@ TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
 {
     bool status = false;
     char* jsonString = NULL;
-    SmartPlugInfo info;
+    SmartDeviceInfo info;
 
     boost::property_tree::ptree pTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_2.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
 
     boost::property_tree::read_json(jsonFilePath, pTree);
     std::stringstream jsonStrStream;
@@ -61,7 +62,11 @@ TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
     status = parseSmartPlugStatusJson(jsonStrStream.str(), info);
 
     EXPECT_TRUE(status);
-    EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);
+    EXPECT_TRUE(strcmp(info.data.status_use_electric, "ON") == 0);
+    EXPECT_TRUE(strcmp(info.data.status_electric, "ACTIVE") == 0);
+    EXPECT_TRUE(strcmp(info.data.jack_relay, "8") == 0);
+    EXPECT_TRUE(strcmp(info.data.ip_port_jack, "192.168.1.177:5600:8") == 0);
+    EXPECT_TRUE(strcmp(info.id.id_timer, "TI0001") == 0);
     EXPECT_TRUE(info.datetimesp.monthSP == 1);
     EXPECT_TRUE(info.datetimesp.daySP == 18);
     EXPECT_TRUE(info.datetimesp.yearSP == 2017);

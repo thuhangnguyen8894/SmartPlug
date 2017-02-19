@@ -21,12 +21,14 @@ OBJS = $(SRCS:.cpp=.o)
 SUBOBJS += JsonBuilder.o
 SUBOBJS += JsonCommon.o
 SUBOBJS += timer.o
+SUBOBJS += autoIdentity.o
 
 #------------------------------------------------------------------------------
 #include source code
 INCS_DIRS = src/app/utils/jsonHelper/common \
 			src/app/utils/jsonHelper/jsonBuilder \
 			src/app/timer \
+			src/app/autoIdentity \
 			src/app/dataManager
 #-----------------------------------------------------------------------------
 LIBDIRS_jsonCommon  = $(LIDT_ROOT)/src/app/utils/jsonHelper/common/

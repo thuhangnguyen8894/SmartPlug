@@ -34,7 +34,7 @@
 #include "JsonBuilder.h"
 
 #include "timer.h"
-
+#include "autoIdentity.h"
 
 #define PUBLISHER_PORT_OPT 5600
 

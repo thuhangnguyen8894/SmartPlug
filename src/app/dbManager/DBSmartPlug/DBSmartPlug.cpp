@@ -60,8 +60,6 @@ sql::Connection* DBSmartPlug::getConn(std::string userName, std::string password
     return this->conn; 
 }
 
-
-
 void DBSmartPlug::closeConn()
 {
     if (this->res != NULL)
@@ -82,7 +80,7 @@ void DBSmartPlug::closeConn()
     }
 }
 
-bool DBSmartPlug::insert_to_db(sql::Connection* conn, SmartPlug smarplug)
+/*bool DBSmartPlug::insert_to_db(sql::Connection* conn, SmartDeviceInfo& smarplug)
 {
     DBSmartPlug* dbSmartPlug = DBSmartPlug::getInstance();
 
@@ -117,29 +115,76 @@ bool DBSmartPlug::insert_to_db(sql::Connection* conn, SmartPlug smarplug)
     	return false;
     }
     dbSmartPlug->closeConn();
+}*/
+
+/*
+ *
+ */
+std::string DBSmartPlug::getIdTableSmartDevice(sql::Connection* conn, const std::string& ip_port_jack)
+{
+    std::string idSmartDeviceStr = "";
+
+    DBSmartPlug* dbSmartPlug = DBSmartPlug::getInstance();
+
+    dbSmartPlug->getConn(this->user, this->password, this->url);
+
+    /*std::string sql = "SELECT idSmartDevice FROM Device_Timer WHERE ip_port_jack = ?";
+    
+    (this->prep_stmt)->setString(1,ip_port_jack);
+
+    this->prep_stmt = conn->prepareStatement(sql);
+
+    this->res = prep_stmt->executeQuery();*/
+
+    stmt = conn->createStatement();
+    std::string sql = "SELECT idSmartDevice FROM Device_Timer WHERE ip_port_jack = '" + ip_port_jack + "'";
+    this->res = stmt->executeQuery(sql);
+
+
+    while(res->next())
+    {
+        idSmartDeviceStr = res->getString("idSmartDevice");
+    }
+    conn->commit();
+
+    dbSmartPlug->closeConn();
+
+    return idSmartDeviceStr;
 }
 
-bool DBSmartPlug::update_to_db(sql::Connection* conn, SmartPlug smarplug)
+/*bool DBSmartPlug::update_to_db(sql::Connection* conn, const std::string& ip_port_jack, SmartDeviceInfo& smartplug)*/
+bool DBSmartPlug::update_to_db(sql::Connection* conn, const SmartDeviceInfo& smartplug)
 {
+    //std::string idSmartDeviceStr = DBSmartPlug::getIdTableSmartDevice(conn, ip_port_jack);
+    
     DBSmartPlug* dbSmartPlug = DBSmartPlug::getInstance();
 
     /* create a database connection using the Driver */
-    dbSmartPlug->getConn(this->user, this->password, this->url);
+    conn = dbSmartPlug->getConn(this->user, this->password, this->url);
+    if (conn == NULL)
+    {
+       return false; 
+    }
 
     /* using PrepareStatement */ 
-    std::string sql = "UPDATE smartplug SET status = ? WHERE id = ?";
+    std::string sql = "UPDATE Device_Timer SET stateElectric = ?, stateRelay = ? WHERE ip_port_jack = ?";
     this->prep_stmt = conn->prepareStatement(sql);
     try
     {
-    	(this->prep_stmt)->setString(1,smarplug.getStatus());
-    	(this->prep_stmt)->setString(2,smarplug.getId());
+    	(this->prep_stmt)->setString(1, smartplug.data.status_use_electric);
+    	(this->prep_stmt)->setString(2, smartplug.data.status_electric);
+        (this->prep_stmt)->setString(3, smartplug.data.ip_port_jack);
 
     	int updateCount = prep_stmt->executeUpdate();
 
-        if(updateCount > 0)
+        if (updateCount > 0)
         {
         	conn->commit();
         	return true;
+        }
+        else 
+        {
+            return false;
         }
     }
     catch(sql::SQLException& e)
@@ -152,7 +197,7 @@ bool DBSmartPlug::update_to_db(sql::Connection* conn, SmartPlug smarplug)
     return true;
 }
 
-bool DBSmartPlug::delete_to_db(sql::Connection* conn, SmartPlug smarplug)
+/*bool DBSmartPlug::delete_to_db(sql::Connection* conn, SmartDeviceInfo& smarplug)
 {
     DBSmartPlug* dbSmartPlug = DBSmartPlug::getInstance();
 
@@ -198,4 +243,4 @@ void DBSmartPlug::select_to_db(sql::Connection* conn)
     conn->commit();
 
     dbSmartPlug->closeConn();
-}
+}*/

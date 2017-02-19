@@ -1,0 +1,28 @@
+{
+    "MESSAGE_TYPE" : "SMART_PLUG_STATUS_VALUE",
+    "data" : 
+    {
+        "SMART_PLUG_STATUS_VALUE" : "ON",
+        "ELECTRIC_STATUS_VALUE" : "ACTIVE",
+        "JACK_RELAY_VALUE" : "8",
+        "IP_PORT_JACK" : "192.168.1.177:5600:8"
+    },
+    "id" :
+    {
+        "ID_TABLE_Timer" : "TI0001"
+    },
+    "moment" :
+    {
+        "Month" : "1",
+        "Day" : "18",
+        "Year" : "2017",
+        "Hour" : "21",
+        "Minutes" : "59",
+        "Second" : "00"
+    },
+    "Sender" : 
+    {
+        "IP" : "192.168.1.177",
+        "Port" : "5600"
+    }
+}

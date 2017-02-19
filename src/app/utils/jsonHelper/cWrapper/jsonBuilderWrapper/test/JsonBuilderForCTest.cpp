@@ -44,13 +44,13 @@ protected:
 TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
 {
     char* jsonString = NULL;
-    std::string message("PON;192.168.1.177:5600;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_1.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
 
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
@@ -66,7 +66,7 @@ TEST_F(JsonBuilderForCTest, TestbuildJsonForC_RESULT_OK)
 TEST_F(JsonBuilderForCTest, TestbuildJsonForC_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     char* jsonString = NULL;
-    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00");
+    std::string message("RON:UNACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
 
     bool status = buildJsonForC(message.c_str(), &jsonString);
 

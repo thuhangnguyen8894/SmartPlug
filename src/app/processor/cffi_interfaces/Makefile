@@ -13,7 +13,8 @@
 CFFI_SRCS = __cffi_jsonCommon.py \
 			__cffi_jsonBuilder.py \
 			__cffi_jsonParser.py \
-			__cffi_messageSender.py
+			__cffi_messageSender.py \
+			__cffi_DBSmartPlug.py
 
 CFFI_OBJS = $(CFFI_SRCS:.py=.pyc)
 
@@ -26,12 +27,14 @@ LIBDIRS_jsonBuilderForC += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBu
 LIBRARY                 += jsonBuilderForC
 LIBDIRS_messageSenderForC   += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
 LIBRARY                 += messageSenderForC
+LIBDIRS_DBSmartPlugForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper_DBSmartPlug
+LIBRARY                 += DBSmartPlugForC
 
 #-----------------------------------------------------------------------------
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonCommonWrapper
 CLEAN_DIRS += $(LIDT_ROOT)//src/app/utils/jsonHelper/cWrapper/jsonParserWrapper
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBuilderWrapper
-
+CLEAN_DIRS += $(LIDT_ROOT)/src/app/dbManager/cWrapper_DBSmartPlug
 #-----------------------------------------------------------------------------
 include $(LIDT_MAKEDIR)/Makefile.app 

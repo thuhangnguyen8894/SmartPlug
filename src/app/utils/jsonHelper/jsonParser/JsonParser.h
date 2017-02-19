@@ -33,6 +33,6 @@
  * return
  */
 bool parseSmartPlugStatusJson(const std::string& jsonString,
-                                                SmartPlugInfo& info);
+                                                SmartDeviceInfo& info);
 
 #endif

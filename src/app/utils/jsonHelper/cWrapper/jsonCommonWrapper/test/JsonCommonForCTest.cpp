@@ -40,7 +40,7 @@ protected:
  */
 TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_OK)
 {
-    std::string message("PON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:8800;TI0001;1/18/2017  21:59:00");
     bool status = isSensorMessageForC(message.c_str());
 
     EXPECT_TRUE(status);
@@ -96,7 +96,7 @@ TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_FAILURE_3)
  */
 TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_FAILURE_4)
 {
-    std::string message("PON;192.168.1.177");
+    std::string message("PON:ACTIVE:8;192.168.1.177");
     bool status = isSensorMessageForC(message.c_str());
 
     EXPECT_FALSE(status);
@@ -124,7 +124,7 @@ TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_FAILURE_5)
  */
 TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_FAILURE_6)
 {
-    std::string message("PONNNNN;192.168.1.177:5600;1/18/2017  21:59:00 A1234B1234C1234D1234E123");
+    std::string message("PONNNNN:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00 A1234B12");
     bool status = isSensorMessageForC(message.c_str());
     
     EXPECT_FALSE(status);
@@ -138,7 +138,7 @@ TEST_F(JsonCommonForCTest, TestisSensorMessageForC_RESULT_FAILURE_6)
  */
 TEST_F(JsonCommonForCTest, TestgetJSONMessageTypeForC_MESSAGE_TYPE_SMART_PLUG_STATUS)
 {
-    std::string message("PON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:8800;TI0001;1/18/2017  21:59:00");
     MESSAGE_TYPE messageType;
     getJSONMessageTypeForC(message.c_str(), &messageType);
 
@@ -153,7 +153,7 @@ TEST_F(JsonCommonForCTest, TestgetJSONMessageTypeForC_MESSAGE_TYPE_SMART_PLUG_ST
  */
 TEST_F(JsonCommonForCTest, TestgetJSONMessageTypeForC_DEFAULT_TYPE)
 {
-    std::string message("AON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("AON:UNACTIVE:8;192.168.1.177:8800;TI0001;1/18/2017  21:59:00");
     MESSAGE_TYPE messageType;
     getJSONMessageTypeForC(message.c_str(), &messageType);
 

@@ -21,7 +21,7 @@
 /*!
  * @internal
  */
-bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info)
+bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartDeviceInfo* info)
 {
     return parseSmartPlugStatusJson(std::string(jsonString), *info);
 }

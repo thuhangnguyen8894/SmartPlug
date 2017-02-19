@@ -9,6 +9,7 @@ Modified History
 2016-Dec-19 Created tien.nguyenanh94@gmail.com
 2017-Jan-18 Modified tn-trang.tran@outlook.com
 2017-Jan-19 Modified thuhang.nguyen8894@gmail.com
+2017-Feb-18 Modified tn-trang.tran@outlook.com
 """
 
 import sys
@@ -28,6 +29,9 @@ from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_c
 
 from cffi_interfaces.__cffi_messageSender import messageSender_cffi
 from cffi_interfaces.__cffi_messageSender import messageSender_c
+
+from cffi_interfaces.__cffi_DBSmartPlug import DBSmartPlug_cffi
+from cffi_interfaces.__cffi_DBSmartPlug import DBSmartPlug_c 
 
 class Processor(threading.Thread):
     def __init__(self, host, port, topic=None):
@@ -59,15 +63,20 @@ class Processor(threading.Thread):
             self.sock.setsockopt_string(zmq.SUBSCRIBE, item)            
 
     def parseSmartPlugStatusJsonForC(self, jsonMessage):
-        info = jsonParser_cffi.new("SmartPlugInfo* ");
+        info = jsonParser_cffi.new("SmartDeviceInfo* ");
         
         jsonParser_c.parseSmartPlugStatusJsonForC(jsonMessage, info);
 
-        return jsonParser_cffi.string(info[0].data.smartPlugStatus), jsonParser_cffi.string(info[0].sender.ip),\
+        return jsonParser_cffi.string(info[0].data.status_use_electric), \
+                jsonParser_cffi.string(info[0].data.status_electric), \
+                jsonParser_cffi.string(info[0].data.jack_relay), \
+                jsonParser_cffi.string(info[0].data.ip_port_jack), \
+                jsonParser_cffi.string(info[0].id.id_timer), \
+                jsonParser_cffi.string(info[0].sender.ip), \
                 info[0].sender.port, \
-                info[0].datetimesp.monthSP, info[0].datetimesp.daySP,\
+                info[0].datetimesp.monthSP, info[0].datetimesp.daySP, \
                 info[0].datetimesp.yearSP, \
-                info[0].datetimesp.hourSP, info[0].datetimesp.minSP,\
+                info[0].datetimesp.hourSP, info[0].datetimesp.minSP, \
                 info[0].datetimesp.secSP
 
     def buildJsonMessage(self, message):
@@ -81,6 +90,10 @@ class Processor(threading.Thread):
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 
+    def DBSmartPlugForC(self):
+        info = DBSmartPlug_cffi.new("SmartDeviceInfo*");
+        DBSmartPlug_c.update_to_db_ForC(info);
+
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
         
@@ -89,13 +102,19 @@ class Processor(threading.Thread):
             message = self.sock.recv()
             print("message ",message)
             
-            smartPlugStatus, ip, port, monthSP, daySP, yearSP, hourSP, minSP, secSP = self.parseSmartPlugStatusJsonForC(message)
-            print("status: ", smartPlugStatus)
+            statusUseElectric, statusElectric, jackRelay, ip_port_jack, idTimer, ip, port, monthSP, daySP, yearSP, hourSP, minSP, secSP = self.parseSmartPlugStatusJsonForC(message)
+            print("statusUseElectric: ", statusUseElectric)
+            print("statusElectric: ", statusElectric)
+            print("jackRelay: ", jackRelay)
+            print("ip_port_jack: ", ip_port_jack)
             print("ip: ", ip)
             print("port: ", port)
+            print("id timer: ", idTimer)
             print("Date: " , monthSP, "/" , daySP, "/" , yearSP)
             print("Time: " , hourSP, ":" , minSP, ":" , secSP)
 
+
+            self.DBSmartPlugForC()
 
 if __name__ == '__main__':
 

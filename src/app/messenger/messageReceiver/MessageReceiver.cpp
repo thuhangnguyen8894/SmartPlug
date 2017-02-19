@@ -76,7 +76,8 @@ void MessageReceiver::run()
 
                 std::string jsonString;
 
-                char * datetime = timer();
+                char* datetime = timer();
+                char* idTableTimerChar = idTableTimer();
 
                 /*!
                  * Appending IP of Sender to message
@@ -85,12 +86,14 @@ void MessageReceiver::run()
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
                 strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, idTableTimerChar);
+                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
                 strcat(pBuffer, datetime);
 
                 std::cout<<pBuffer<<std::endl;
 
                 //convert char to string
-                std::string s_pBuffer(pBuffer); 
+                std::string s_pBuffer(pBuffer);
 
                 if (isSensorMessage(s_pBuffer))
                 {

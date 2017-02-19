@@ -45,13 +45,13 @@ TEST_F(JsonParserForCTest, TestparseSmartPlugStatusJsonForC_RESULT_OK)
 {
     bool status = false;
     char* jsonString = NULL;
-    SmartPlugInfo info;
+    SmartDeviceInfo info;
 
     boost::property_tree::ptree pTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_2.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
 
     boost::property_tree::read_json(jsonFilePath, pTree);
     std::stringstream jsonStrStream;
@@ -60,7 +60,10 @@ TEST_F(JsonParserForCTest, TestparseSmartPlugStatusJsonForC_RESULT_OK)
     status = parseSmartPlugStatusJsonForC(jsonStrStream.str().c_str(), &info);
 
     EXPECT_TRUE(status);
-    EXPECT_TRUE(strcmp(info.data.smartPlugStatus, "OFF") == 0);
+    EXPECT_TRUE(strcmp(info.data.status_use_electric, "ON") == 0);
+    EXPECT_TRUE(strcmp(info.data.status_electric, "ACTIVE") == 0);
+    EXPECT_TRUE(strcmp(info.data.jack_relay, "8") == 0);
+    EXPECT_TRUE(strcmp(info.id.id_timer, "TI0001") == 0);
     EXPECT_TRUE(info.datetimesp.monthSP == 1);
     EXPECT_TRUE(info.datetimesp.daySP == 18);
     EXPECT_TRUE(info.datetimesp.yearSP == 2017);

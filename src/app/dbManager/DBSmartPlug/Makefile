@@ -17,7 +17,8 @@ OBJS = $(SRCS:.cpp=.o)
 
 #------------------------------------------------------------------------------
 #include source code
-INCS_DIRS += src/app/dataManager
+INCS_DIRS += src/app/dataManager/DBSmartPlug \
+             src/app/dataManager
 
 #------------------------------------------------------------------------------
 #include makefile

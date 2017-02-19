@@ -63,7 +63,6 @@ bool isSensorMessage(const std::string& message)
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
     switch(message[0])  
-
     {
     case SMART_PLUG_MESSAGE_VALUE:
         return MESSAGE_TYPE_SMART_PLUG_STATUS;

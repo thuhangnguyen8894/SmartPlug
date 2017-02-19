@@ -13,6 +13,7 @@
  * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
  * 2017-Jan-18 Modified tn-trang.tran@outlook.com
+ * 2017-Feb-11 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 #include <cstdlib>
@@ -22,7 +23,7 @@
 
 extern bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree);
-extern bool buildSmartPlugStatusJson(const std::string& message,
+extern bool buildSmartPlugStatusJson(const std::string& message, const std::string& ip_port_jack,
                                     boost::property_tree::ptree& dataTree);
 
 class JsonBuilderTest : public ::testing::Test
@@ -66,12 +67,16 @@ TEST_F(JsonBuilderTest, TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT)
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("PON");
+    std::string message("PON:ACTIVE:8");
+    std::string ip_port_jack("192.168.1.177:5600:8");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("SMART_PLUG_STATUS_VALUE", "ON");
+    expectedTree.put("ELECTRIC_STATUS_VALUE", "ACTIVE");
+    expectedTree.put("JACK_RELAY_VALUE", "8");
+    expectedTree.put("IP_PORT_JACK", "192.168.1.177:5600:8");
 
-    bool status = buildSmartPlugStatusJson(message, dataTree);
+    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
@@ -80,12 +85,16 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_OFF_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("POFF");
+    std::string message("POFF:UNACTIVE:8");
+    std::string ip_port_jack("192.168.1.177:5600:8");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("SMART_PLUG_STATUS_VALUE", "OFF");
+    expectedTree.put("ELECTRIC_STATUS_VALUE", "UNACTIVE");
+    expectedTree.put("JACK_RELAY_VALUE", "8");
+    expectedTree.put("IP_PORT_JACK", "192.168.1.177:5600:8");
 
-    bool status = buildSmartPlugStatusJson(message, dataTree);
+    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
@@ -95,8 +104,9 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
     std::string message("");
+    std::string ip_port_jack("192.168.1.177:5600:8");
 
-    bool status = buildSmartPlugStatusJson(message, dataTree);
+    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
 
     EXPECT_FALSE(status);
 }
@@ -104,9 +114,10 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
 TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
-    std::string message(";192.168.1.177:5600;1/18/2017  21:59:00");
+    std::string message(":UNACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
+    std::string ip_port_jack("192.168.1.177:5600:8");
 
-    bool status = buildSmartPlugStatusJson(message, dataTree);
+    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
 
     EXPECT_FALSE(status);
 }
@@ -114,13 +125,13 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 {
     std::string jsonString;
-    std::string message("PON;192.168.1.177:5600;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_1.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
 
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
@@ -136,7 +147,7 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     std::string jsonString;
-    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00");
+    std::string message("RON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
 
     bool status = buildJson(message, jsonString);
 
@@ -166,7 +177,7 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_3)
 TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_4)
 {
     std::string jsonString;
-    std::string message("RON;192.168.1.177:5600;1/18/2017  21:59:00  23:04:94");
+    std::string message("RON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00  23:04:94");
 
     bool status = buildJson(message, jsonString);
 

@@ -33,7 +33,7 @@ extern "C"{
  * param[in] message
  * return
  */
-bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartPlugInfo* info);
+bool parseSmartPlugStatusJsonForC(const char* jsonString, SmartDeviceInfo* info);
 
 #ifdef __cplusplus
 }

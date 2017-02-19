@@ -12,7 +12,7 @@
  * 2017-Jan-03 Created tien.nguyenanh94@gmail.com
  * 2017-Jan-07 Modified tn-trang.tran@outlook.com
  * 2017-Jan-11 Modified tn-trang.tran@outlook.com
- * 2017-Jan-18 Modified tn-trang.tran@outlook.com
+ * 2017-Feb-11 Modified tn-trang.tran@outlook.com
  */
 /****************************************************************************/
 
@@ -42,7 +42,7 @@ protected:
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_OK)
 {
-    std::string message("PON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:8800;1/18/2017  21:59:00");
     bool status = isSensorMessage(message);
     EXPECT_TRUE(status);
 }
@@ -94,7 +94,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_3)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_4)
 {
-    std::string message("PON;192.168.1.177");
+    std::string message("PON:ACTIVE:8;192.168.1.177");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -120,7 +120,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_5)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
 {
-    std::string message("PONNNNN;192.168.1.177:5600;1/18/2017  21:59:00 A1234B1234C1234D1234E123");
+    std::string message("PONNNNN:ACTIVE:8;192.168.1.177:5600;1/18/2017  21:59:00 A1234B1234C1234D");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -133,7 +133,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_FAILURE_6)
  */
 TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
 {
-    std::string message("PON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("PON:ACTIVE:8;192.168.1.177:8800;1/18/2017  21:59:00");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_SMART_PLUG_STATUS);
 }
@@ -146,7 +146,7 @@ TEST_F(JsonCommonTest, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
  */
 TEST_F(JsonCommonTest, TestgetJSONMessageType_DEFAULT_TYPE)
 {
-    std::string message("AON;192.168.1.177:8800;1/18/2017  21:59:00");
+    std::string message("AON:ACTIVE:8;192.168.1.177:8800;1/18/2017  21:59:00");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_DEFAULT);
 }
