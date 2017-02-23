@@ -9,11 +9,6 @@
 #define DATE_TIME_TOKEN_SIZE 3
 #define STATUS_TOKEN_SIZE 2
 
-#define SIZE_COUNT_DEVICE 2
-#define SIZE_NAME_DEVICE 20
-
-#define SIZE_ID 10
-
 #define COLON_SPLITTER ":"
 #define SEMICOLON_SPLITTER ";"
 #define DOT_SPLITTER "."
