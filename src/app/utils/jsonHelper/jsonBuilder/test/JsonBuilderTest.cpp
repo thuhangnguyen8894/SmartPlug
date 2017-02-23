@@ -23,7 +23,7 @@
 
 extern bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree);
-extern bool buildSmartPlugStatusJson(const std::string& message, const std::string& ip_port_jack,
+extern bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port_jack,
                                     boost::property_tree::ptree& dataTree);
 
 class JsonBuilderTest : public ::testing::Test

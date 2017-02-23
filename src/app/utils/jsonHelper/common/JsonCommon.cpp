@@ -26,28 +26,28 @@ bool isSensorMessage(const std::string& message)
 {
     std::string messageStr(message);
 
-    if (messageStr.length() > MAX_SENSOR_MESSAGE_LENGTH
+    if (messageStr.length() > MAX_SMART_DEVICE_STATUS_VALUE
         || messageStr.length() <= 0)
     {
         return false;
     }
 
-    if (messageStr.find(SENSOR_MESSAGE_SPLITTER) == std::string::npos)
+    if (messageStr.find(SEMICOLON_SPLITTER) == std::string::npos)
     {
         return false;
     }
 
-    if (messageStr.find(IP_PORT_REGEX_SPLITTER) == std::string::npos)
+    if (messageStr.find(COLON_SPLITTER) == std::string::npos)
     {
         return false;
     }
 
-    if (messageStr.find(DATE_TIME_SLASH) == std::string::npos)
+    if (messageStr.find(SLASH_SPLITTER) == std::string::npos)
     {
         return false;
     }
 
-    if (messageStr.find(DATE_TIME_SPACE) == std::string::npos)
+    if (messageStr.find(UNDERSCORS_SPLITTER) == std::string::npos)
     {
         return false;
     }
@@ -62,10 +62,10 @@ bool isSensorMessage(const std::string& message)
  */
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
-    switch(message[0])  
+    switch(message)  
     {
-    case SMART_PLUG_MESSAGE_VALUE:
-        return MESSAGE_TYPE_SMART_PLUG_STATUS;
+    case "SMART_DEVICE_STATUS_VALUE":
+        return MESSAGE_TYPE_SMART_DEVICE_STATUS;
     default:
         return MESSAGE_TYPE_DEFAULT;
     }
@@ -78,10 +78,10 @@ std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType)
 {
     switch(messageType)
     {
-    case MESSAGE_TYPE_SMART_PLUG_STATUS:
-        return std::string(MESSAGE_TYPE_SMART_PLUG_STATUS_STR);
+    case "MESSAGE_TYPE_SMART_DEVICE_STATUS":
+        return std::string(MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE);
     default:
-        return std::string("MESSAGE_TYPE_DEFAULT");
+        return std::string(MESSAGE_TYPE_DEFAULT_VALUE);
     }
 }
 

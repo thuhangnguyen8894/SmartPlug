@@ -36,7 +36,7 @@ STATIC std::string getJsonPath(const std::string& source,
 {
     std::string jsonPath;
     jsonPath.append(source);
-    jsonPath.append(JSON_PATH_SPLITTER);
+    jsonPath.append(DOT_SPLITTER);
     jsonPath.append(destination);
 
     return jsonPath;
@@ -61,8 +61,40 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
     }
 
     /*!
-     * Parse Information of Sender
+     * Parse Information of IdSmartPlug
      */
+    std::string jsonIdSmartDevicePath = getJsonPath(ATTR_JSON_DATA,
+                                                ATTR_JSON_ID_DEVICE);
+    std::string idSmartDeviceStr = pTree.get<std::string>(jsonIdSmartDevicePath);
+
+    /*!
+     * Parse Information of Relay Status Value
+     */
+    std::string jsonRalayStatusValuePath = getJsonPath(ATTR_JSON_DATA,
+                                                ATTR_JSON_RELAY_STATUS_VALUE);
+    std::string relayStatusValueStr = pTree.get<std::string>(jsonRalayStatusValuePath);
+
+    /*!
+     * Parse Information of Electric Status Value
+     */
+    std::string jsonElectricStatusValuePath = getJsonPath(ATTR_JSON_DATA,
+                                                ATTR_JSON_ELECTRIC_STATUS_VALUE);
+    std::string electricStatusValueStr = pTree.get<std::string>(jsonElectricStatusValuePath);
+
+    /*!
+     * Parse Information of IP_PORT_JACK
+     */
+    std::string ipPortJackPath = getJsonPath(ATTR_JSON_DATA, 
+                                                ATTR_JSON_IP_PORT_JACK_VALUE);
+    std::string ipPortJackStr = pTree.get<std::string>(ipPortJackPath);
+
+    /*!
+     * Parse Information of ID_ROOM
+     */
+    std::string idRoomPath = getJsonPath(ATTR_JSON_DATA, 
+                                                ATTR_JSON_ID_ROOM_VALUE);
+    std::string idRoomStr = pTree.get<std::string>(idRoomPath);
+
     /**!
      ** Parse Information of IP Address
      **/
@@ -74,42 +106,13 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
      **/
     std::string jsonPortPath = getJsonPath(ATTR_JSON_SENDER, ATTR_JSON_PORT);
     std::string portStr = pTree.get<std::string>(jsonPortPath);
-
+    
     /**!
-     ** Parse Information of Status Use Electric of Device
+     ** Parse Information of ID_TIMER
      **/
-    std::string jsonSmartPlugStatusUseElectricPath = getJsonPath(ATTR_JSON_DATA,
-                                                ATTR_JSON_SMART_PLUG_STATUS_VALUE);
-    std::string smartPlugStatusUseElectricStr = 
-                        pTree.get<std::string>(jsonSmartPlugStatusUseElectricPath);
-
-    /**!
-     ** Parse Information of Status of Electric
-     **/
-    std::string jsonSmartPlugStatusElectricPath = getJsonPath(ATTR_JSON_DATA,
-                                                ATTR_JSON_ELECTRIC_STATUS_VALUE);
-    std::string smartPlugStatusElectricStr = 
-                        pTree.get<std::string>(jsonSmartPlugStatusElectricPath);
-
-    /**!
-     ** Parse Information of Jack power of Relay
-     **/
-    std::string jsonJackRelayPath = getJsonPath(ATTR_JSON_DATA,
-                                                ATTR_JSON_JACK_RELAY_VALUE);
-    std::string jackRelayStr = pTree.get<std::string>(jsonJackRelayPath);
-
-    /**!
-     ** Parse Information of ip, port and jack of Device
-     **/
-    std::string ipPortJackPath = getJsonPath(ATTR_JSON_DATA, 
-                                                ATTR_JSON_IP_PORT_JACK_VALUE);
-    std::string ipPortJackStr = pTree.get<std::string>(ipPortJackPath);
-    /**!
-     ** Parse Information of ID of Table Timer
-     **/
-    std::string jsonIDTableTimerPath = getJsonPath(ATTR_JSON_ID,
-                                                ATTR_JSON_ID_TABLE_TIMER);
-    std::string idTableTimerStr = pTree.get<std::string>(jsonIDTableTimerPath);
+    std::string jsonIdTimerPath = getJsonPath(ATTR_JSON_TIMER,
+                                                ATTR_JSON_ID_TIMER_VALUE);
+    std::string idTimerStr = pTree.get<std::string>(jsonIdTimerPath);
 
     /**!
      ** Parse Information of Timer of Month
@@ -147,18 +150,19 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
     /**!
      ** Put value into Structure
      **/
-    strcpy(info.data.status_use_electric, smartPlugStatusUseElectricStr.c_str());
-    strcpy(info.data.status_electric, smartPlugStatusElectricStr.c_str());
-    strcpy(info.data.jack_relay, jackRelayStr.c_str());
-    strcpy(info.data.ip_port_jack, ipPortJackStr.c_str());
-    strcpy(info.id.id_timer, idTableTimerStr.c_str());
+    strcpy(info.device.idSmartDevice, idSmartDeviceStr.c_str());
+    strcpy(info.device_timer.stateRelay, relayStatusValueStr.c_str());
+    strcpy(info.device_timer.stateElectric, electricStatusValueStr.c_str());
+    strcpy(info.device.ip_port_jack, ipPortJackStr.c_str());
+    strcpy(info.device.idRoom, idRoomStr.c_str());
 
-    info.datetimesp.monthSP = std::stol(monthStr);
-    info.datetimesp.daySP = std::stol(dayStr);
-    info.datetimesp.yearSP = std::stol(yearStr);
-    info.datetimesp.hourSP = std::stol(hourStr);
-    info.datetimesp.minSP = std::stol(minutesStr);
-    info.datetimesp.secSP = std::stol(secondStr);
+    strcpy(info.timer.idTimer, idTimerStr.c_str());
+    info.timer.monthSP = std::stol(monthStr);
+    info.timer.daySP = std::stol(dayStr);
+    info.timer.yearSP = std::stol(yearStr);
+    info.timer.hourSP = std::stol(hourStr);
+    info.timer.minSP = std::stol(minutesStr);
+    info.timer.secSP = std::stol(secondStr);
 
     info.sender.port = std::stol(portStr);
     strcpy(info.sender.ip, ipStr.c_str());

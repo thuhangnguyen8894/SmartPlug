@@ -1,44 +1,39 @@
 #ifndef __DATA_STRUCT_DEF_H__
 #define __DATA_STRUCT_DEF_H__
 
-#define MAX_SENSOR_MESSAGE_LENGTH 70
-#define JSON_TOKEN_SIZE 4
-#define JSON_DATA_SIZE 3
-#define IP_PORT_TOKEN_SIZE 2
-#define DATE_TIME_TOKEN_SIZE 2
+#define MAX_SMART_DEVICE_STATUS_VALUE 102
+
+#define JSON_TOKEN_SIZE 3
+#define JSON_DATA_SIZE 4
+#define SENDER_TOKEN_SIZE 2
+#define DATE_TIME_TOKEN_SIZE 3
 #define STATUS_TOKEN_SIZE 2
 
 #define SIZE_COUNT_DEVICE 2
 #define SIZE_NAME_DEVICE 20
 
-#define SIZE_IP 20
-#define SIZE_NAME_ROOM 20
-
 #define SIZE_ID 10
 
-#define IP_PORT_REGEX_SPLITTER ":"
-#define SENSOR_MESSAGE_SPLITTER ";"
-#define JSON_PATH_SPLITTER "."
-#define DATE_TIME_SLASH "/"
-#define DATE_TIME_SPACE "  "
-
-#define SMART_PLUG_MESSAGE_VALUE 'P'
+#define COLON_SPLITTER ":"
+#define SEMICOLON_SPLITTER ";"
+#define DOT_SPLITTER "."
+#define SLASH_SPLITTER "/"
+#define UNDERSCORS_SPLITTER "_"
 
 #define ATTR_JSON_MESSAGE_TYPE "MESSAGE_TYPE"
-#define ATTR_JSON_SMART_PLUG_STATUS_VALUE "SMART_PLUG_STATUS_VALUE"
+#define ATTR_JSON_MESSAGE_TYPE_VALUE "SMART_DEVICE_STATUS_VALUE"
+
+#define ATTR_JSON_ID_DEVICE "ID_DEVICE"
+
+#define ATTR_JSON_RELAY_STATUS_VALUE "RELAY_STATUS_VALUE"
+#define ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE "ACTIVE"
+#define ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE "UNACTIVE"
+
 #define ATTR_JSON_ELECTRIC_STATUS_VALUE "ELECTRIC_STATUS_VALUE"
+#define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ON "ON"
+#define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_OFF "OFF"
+
 #define ATTR_JSON_JACK_RELAY_VALUE "JACK_RELAY_VALUE"
-#define ATTR_JSON_IP_PORT_JACK_VALUE "IP_PORT_JACK"
-
-#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF "OFF"
-#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON "ON"
-
-#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF "POFF"
-#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON "PON"
-
-#define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ACTIVE "ACTIVE"
-#define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_UNACTIVE "UNACTIVE"
-
 #define ATTR_JSON_JACK_RELAY_VALUE_9 "9"
 #define ATTR_JSON_JACK_RELAY_VALUE_8 "8"
 #define ATTR_JSON_JACK_RELAY_VALUE_7 "7"
@@ -46,11 +41,27 @@
 #define ATTR_JSON_JACK_RELAY_VALUE_5 "5"
 #define ATTR_JSON_JACK_RELAY_VALUE_4 "4"
 
-#define MESSAGE_TYPE_SMART_PLUG_STATUS_STR "SMART_PLUG_STATUS_VALUE"
+#define ATTR_JSON_IP_PORT_JACK_VALUE "IP_PORT_JACK"
+#define ATTR_JSON_ID_ROOM_VALUE "ID_ROOM"
+#define ATTR_JSON_ID_TIMER_VALUE "ID_TIMER"
+
+
+#define SMART_PLUG_MESSAGE_VALUE 'P'
+#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_OFF "OFF"
+#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_ON "ON"
+
+#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_OFF "POFF"
+#define ATTR_JSON_SMART_PLUG_MESSAGE_VALUE_P_ON "PON"
+
+#define MESSAGE_TYPE_DEFAULT_VALUE "MESSAGE_TYPE_DEFAULT"
+#define MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE "SMART_DEVICE_STATUS_VALUE"
+
+
+
 
 #define ATTR_JSON_DATA "data"
 
-#define ATTR_JSON_MOMENT "moment"
+#define ATTR_JSON_TIMER "timer"
 #define ATTR_JSON_YEAR "Year"
 #define ATTR_JSON_MONTH "Month"
 #define ATTR_JSON_DAY "Day"
@@ -58,54 +69,90 @@
 #define ATTR_JSON_MINUTES "Minutes"
 #define ATTR_JSON_SECOND "Second"
 
-#define ATTR_JSON_ID "id"
-#define ATTR_JSON_ID_TABLE_TIMER "ID_TABLE_Timer"
-
+#define ATTR_JSON_SENDER "sender"
 #define ATTR_JSON_IP "IP"
 #define ATTR_JSON_PORT "Port"
-#define ATTR_JSON_SENDER "Sender"
 
 typedef enum
 {
     MESSAGE_TYPE_DEFAULT = -1,
-    MESSAGE_TYPE_SMART_PLUG_STATUS,
+    MESSAGE_TYPE_SMART_DEVICE_STATUS,
 }MESSAGE_TYPE;
 
 typedef struct
 {
-    char ip[SIZE_IP];
+    char ip[20];
     long port;
 }Sender;
 
 typedef struct
 {
+    char idTimer[20];
     int secSP;
     int minSP;
     int hourSP;
     int daySP;
     int monthSP;
     int yearSP;
-}DatetimeSP;
+}Timer;
 
 typedef struct 
 {
-    char status_use_electric[5];
-    char status_electric[10];
-    char jack_relay[2];
+    char idSmartDevice[5];
+    char idRoom[5];
+    char nameSmartDevice [20];
     char ip_port_jack[20];
-}SmartDevice;
 
-typedef struct 
-{
-    char id_timer[10];
-}IDAnything;
+    int elementIdTimer;
+    char* arrIdTimer[elementIdTimer];
+}SmartDevice;
 
 typedef struct
 {
-    SmartDevice data;
+    char idTimer[10];
+    char idSmartDevice[5];
+    char stateElectric[10];
+    char stateRelay[10];
+}Device_Timer;
+
+typedef struct
+{
+    char idRoom[10];
+    char nameRoom[20];
+}Room;
+
+typedef struct 
+{    
+    char idUser[10];
+    char nameUser[20];
+    char stateUser[10];
+    char idUserStyle[10];
+
+    int elementIdRoom;
+    char* arrIdRoom[elementIdRoom];
+}User;
+
+typedef struct
+{
+    char idUserStyle[10];
+    char nameUserStyle[20];
+}UserStyle;
+
+typedef struct
+{
+    char idUserGuide[10];
+    char nameUserGuide[20];
+
+    int elementIdUserStyle;
+    char* arrIdUserStyle[elementIdUserStyle];
+}UserGuide;
+
+typedef struct
+{
+    SmartDevice device;
+    Device_Timer device_timer;
     Sender sender;
-    IDAnything id;
-    DatetimeSP datetimesp;
+    Timer timer;
 }SmartDeviceInfo;
 
 #endif

@@ -37,8 +37,9 @@ public:
     void closeConn();
     //bool insert_to_db(sql::Connection* conn, SmartDeviceInfo& smartplug);
     //bool delete_to_db(sql::Connection* conn, SmartDeviceInfo& smartplug);
-    /*bool update_to_db(sql::Connection* conn, const std::string& ip_port_jack, SmartDeviceInfo& smartplug);*/
-    bool update_to_db(sql::Connection* conn, const SmartDeviceInfo& smartplug);
+    
+    //bool update_to_db(sql::Connection* conn, const SmartDeviceInfo& smartplug);
+    bool update_to_db(sql::Connection* conn, const std::string& stateElectric, const std::string& stateRelay, const std::string& ip_port_jack);
     //void select_to_db(sql::Connection* conn);
 
     std::string getIdTableSmartDevice(sql::Connection* conn, const std::string& ip_port_jack);

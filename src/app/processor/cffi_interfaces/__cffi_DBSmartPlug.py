@@ -65,7 +65,7 @@ DBSmartPlug_cffi.cdef("""
     }SmartDeviceInfo;
 
 
-    bool update_to_db_ForC(const SmartDeviceInfo* smartplug);
+    bool update_to_db_ForC(const char* stateElectric, const char* stateRelay, const char* ip_port_jack);
 """)
 
 DBSmartPlug_c = DBSmartPlug_cffi.verify("""

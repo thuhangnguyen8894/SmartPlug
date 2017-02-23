@@ -152,8 +152,12 @@ std::string DBSmartPlug::getIdTableSmartDevice(sql::Connection* conn, const std:
     return idSmartDeviceStr;
 }
 
-/*bool DBSmartPlug::update_to_db(sql::Connection* conn, const std::string& ip_port_jack, SmartDeviceInfo& smartplug)*/
-bool DBSmartPlug::update_to_db(sql::Connection* conn, const SmartDeviceInfo& smartplug)
+/*
+ * Function update statusElectric and statusRelay in table Device_Timer
+ * When Electric is changing status
+ */
+//bool DBSmartPlug::update_to_db(sql::Connection* conn, const SmartDeviceInfo& smartplug)
+bool DBSmartPlug::update_to_db(sql::Connection* conn, const std::string& stateElectric, const std::string& stateRelay, const std::string& ip_port_jack)
 {
     //std::string idSmartDeviceStr = DBSmartPlug::getIdTableSmartDevice(conn, ip_port_jack);
     
@@ -171,9 +175,13 @@ bool DBSmartPlug::update_to_db(sql::Connection* conn, const SmartDeviceInfo& sma
     this->prep_stmt = conn->prepareStatement(sql);
     try
     {
-    	(this->prep_stmt)->setString(1, smartplug.data.status_use_electric);
+    	/*(this->prep_stmt)->setString(1, smartplug.data.status_use_electric);
     	(this->prep_stmt)->setString(2, smartplug.data.status_electric);
-        (this->prep_stmt)->setString(3, smartplug.data.ip_port_jack);
+        (this->prep_stmt)->setString(3, smartplug.data.ip_port_jack);*/
+
+        (this->prep_stmt)->setString(1, stateElectric);
+        (this->prep_stmt)->setString(2, stateRelay);
+        (this->prep_stmt)->setString(3, ip_port_jack);
 
     	int updateCount = prep_stmt->executeUpdate();
 

@@ -90,9 +90,9 @@ class Processor(threading.Thread):
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 
-    def DBSmartPlugForC(self):
-        info = DBSmartPlug_cffi.new("SmartDeviceInfo*");
-        DBSmartPlug_c.update_to_db_ForC(info);
+    def DBSmartPlugForC(self, statusUseElectric, statusElectric, ip_port_jack):
+        """info = DBSmartPlug_cffi.new("SmartDeviceInfo*");"""
+        DBSmartPlug_c.update_to_db_ForC(statusUseElectric, statusElectric, ip_port_jack);
 
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
@@ -114,7 +114,7 @@ class Processor(threading.Thread):
             print("Time: " , hourSP, ":" , minSP, ":" , secSP)
 
 
-            self.DBSmartPlugForC()
+            self.DBSmartPlugForC(statusUseElectric, statusElectric, ip_port_jack)
 
 if __name__ == '__main__':
 
