@@ -4,7 +4,7 @@
 #define MAX_SMART_DEVICE_STATUS_VALUE 102
 
 #define JSON_TOKEN_SIZE 3
-#define JSON_DATA_SIZE 4
+#define JSON_DATA_SIZE 5
 #define SENDER_TOKEN_SIZE 2
 #define DATE_TIME_TOKEN_SIZE 3
 #define STATUS_TOKEN_SIZE 2
@@ -71,7 +71,7 @@ typedef struct
 
 typedef struct
 {
-    char idTimer[20];
+    char idTimer[10];
     int secSP;
     int minSP;
     int hourSP;
@@ -82,19 +82,16 @@ typedef struct
 
 typedef struct 
 {
-    char idSmartDevice[5];
-    char idRoom[5];
+    char idSmartDevice[10];
+    char idRoom[10];
     char nameSmartDevice [20];
     char ip_port_jack[20];
-
-    int elementIdTimer;
-    char* arrIdTimer[elementIdTimer];
 }SmartDevice;
 
 typedef struct
 {
     char idTimer[10];
-    char idSmartDevice[5];
+    char idSmartDevice[10];
     char stateElectric[10];
     char stateRelay[10];
 }Device_Timer;
@@ -109,11 +106,9 @@ typedef struct
 {    
     char idUser[10];
     char nameUser[20];
+    char password[20];
     char stateUser[10];
     char idUserStyle[10];
-
-    int elementIdRoom;
-    char* arrIdRoom[elementIdRoom];
 }User;
 
 typedef struct
@@ -126,9 +121,6 @@ typedef struct
 {
     char idUserGuide[10];
     char nameUserGuide[20];
-
-    int elementIdUserStyle;
-    char* arrIdUserStyle[elementIdUserStyle];
 }UserGuide;
 
 typedef struct
