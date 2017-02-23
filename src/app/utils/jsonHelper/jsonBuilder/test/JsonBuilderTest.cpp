@@ -43,10 +43,10 @@ protected:
 TEST_F(JsonBuilderTest, TestbuildJsonMessageType_RESULT_OK)
 {
     boost::property_tree::ptree messageTypeTree;
-    MESSAGE_TYPE messageType = MESSAGE_TYPE_SMART_PLUG_STATUS;
+    MESSAGE_TYPE messageType = MESSAGE_TYPE_SMART_DEVICE_STATUS;
     
     boost::property_tree::ptree expectedTree;
-    expectedTree.put(ATTR_JSON_MESSAGE_TYPE, ATTR_JSON_SMART_PLUG_STATUS_VALUE);
+    expectedTree.put(ATTR_JSON_MESSAGE_TYPE, ATTR_JSON_MESSAGE_TYPE_VALUE);
 
     bool status = buildJsonMessageType(messageType, messageTypeTree);
 
@@ -64,60 +64,62 @@ TEST_F(JsonBuilderTest, TestbuildJsonMessageType_MESSAGE_TYPE_DEFAULT)
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_ON_RESULT_OK)
+TEST_F(JsonBuilderTest, TestbuildDataSmartDeviceJson_SMART_DEVICE_DATA_ACTIVE_ON_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("PON:ACTIVE:8");
-    std::string ip_port_jack("192.168.1.177:5600:8");
+    std::string message("SD001:ACTIVE:ON:8:R0001");
+    std::string ip_port_jack("192.168.0.100:8800");
     
     boost::property_tree::ptree expectedTree;
-    expectedTree.put("SMART_PLUG_STATUS_VALUE", "ON");
-    expectedTree.put("ELECTRIC_STATUS_VALUE", "ACTIVE");
-    expectedTree.put("JACK_RELAY_VALUE", "8");
-    expectedTree.put("IP_PORT_JACK", "192.168.1.177:5600:8");
+    expectedTree.put("ID_DEVICE", "SD001");
+    expectedTree.put("RELAY_STATUS_VALUE", "ACTIVE");
+    expectedTree.put("ELECTRIC_STATUS_VALUE", "ON");
+    expectedTree.put("IP_PORT_JACK", "192.168.0.100:8800");
+    expectedTree.put("ID_ROOM", "R0001");
 
-    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_SMART_PLUG_STATUS_OFF_RESULT_OK)
+TEST_F(JsonBuilderTest, TestbuildDataSmartDeviceJson_SMART_DEVICE_DATA_UNACTIVE_OFF_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("POFF:UNACTIVE:8");
-    std::string ip_port_jack("192.168.1.177:5600:8");
+    std::string message("SD001:UNACTIVE:OFF:8:R0001");
+    std::string ip_port_jack("192.168.0.100:8800");
     
     boost::property_tree::ptree expectedTree;
-    expectedTree.put("SMART_PLUG_STATUS_VALUE", "OFF");
-    expectedTree.put("ELECTRIC_STATUS_VALUE", "UNACTIVE");
-    expectedTree.put("JACK_RELAY_VALUE", "8");
-    expectedTree.put("IP_PORT_JACK", "192.168.1.177:5600:8");
+    expectedTree.put("ID_DEVICE", "SD001");
+    expectedTree.put("RELAY_STATUS_VALUE", "UNACTIVE");
+    expectedTree.put("ELECTRIC_STATUS_VALUE", "OFF");
+    expectedTree.put("IP_PORT_JACK", "192.168.0.100:8800");
+    expectedTree.put("ID_ROOM", "R0001");
 
-    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_SENSOR_MESSAGE)
+TEST_F(JsonBuilderTest, TestbuildDataSmartDeviceJson_NOT_SENSOR_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
     std::string message("");
-    std::string ip_port_jack("192.168.1.177:5600:8");
+    std::string ip_port_jack("192.168.0.100:8800");
 
-    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
 
     EXPECT_FALSE(status);
 }
 
-TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
+TEST_F(JsonBuilderTest, TestbuildDataSmartDeviceJson_NOT_STATUS_MESSAGE)
 {
     boost::property_tree::ptree dataTree;
-    std::string message(":UNACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
-    std::string ip_port_jack("192.168.1.177:5600:8");
+    std::string message("8:R0001");
+    std::string ip_port_jack("192.168.0.100:8800");
 
-    bool status = buildSmartPlugStatusJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
 
     EXPECT_FALSE(status);
 }
@@ -125,13 +127,13 @@ TEST_F(JsonBuilderTest, TestbuildSmartPlugStatusJson_NOT_STATUS_MESSAGE)
 TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 {
     std::string jsonString;
-    std::string message("PON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:ACTIVE:ON:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device.json");
 
     boost::property_tree::read_json(jsonFilePath, expectedTree);
 
@@ -147,37 +149,7 @@ TEST_F(JsonBuilderTest, TestbuildJson_RESULT_OK)
 TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     std::string jsonString;
-    std::string message("RON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00");
-
-    bool status = buildJson(message, jsonString);
-
-    EXPECT_FALSE(status);
-}
-
-TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_2)
-{
-    std::string jsonString;
-    std::string message("RON");
-
-    bool status = buildJson(message, jsonString);
-
-    EXPECT_FALSE(status);
-}
-
-TEST_F(JsonBuilderTest, TestbuildJson_RESULT_FAILURE_3)
-{
-    std::string jsonString;
-    std::string message("LOFF");
-
-    bool status = buildJson(message, jsonString);
-
-    EXPECT_FALSE(status);
-}
-
-TEST_F(JsonBuilderTest, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_4)
-{
-    std::string jsonString;
-    std::string message("RON:ACTIVE:8;192.168.1.177:5600;TI0001;1/18/2017  21:59:00  23:04:94");
+    std::string message("MESSAGE_TYPE_DEFAULT;SD001:UNACTIVE:OFF:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
 
     bool status = buildJson(message, jsonString);
 
