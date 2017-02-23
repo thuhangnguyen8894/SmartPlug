@@ -32,7 +32,7 @@
  * param[in] message
  * return
  */
-bool parseSmartPlugStatusJson(const std::string& jsonString,
+bool parseDataSmartDeviceJson(const std::string& jsonString,
                                                 SmartDeviceInfo& info);
 
 #endif

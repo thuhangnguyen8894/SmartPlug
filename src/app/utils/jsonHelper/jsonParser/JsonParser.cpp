@@ -45,7 +45,7 @@ STATIC std::string getJsonPath(const std::string& source,
 /*!
  * @internal
  */
-bool parseSmartPlugStatusJson(const std::string& jsonString,
+bool parseDataSmartDeviceJson(const std::string& jsonString,
                                                 SmartDeviceInfo& info)
 {
     boost::property_tree::ptree pTree;
@@ -117,34 +117,34 @@ bool parseSmartPlugStatusJson(const std::string& jsonString,
     /**!
      ** Parse Information of Timer of Month
      **/
-    std::string jsonDateTimeMonth = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_MONTH);
+    std::string jsonDateTimeMonth = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_MONTH);
     std::string monthStr = pTree.get<std::string>(jsonDateTimeMonth);
 
     /**!
      ** Parse Information of Timer of Day
      **/
-    std::string jsonDateTimeDay = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_DAY);
+    std::string jsonDateTimeDay = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_DAY);
     std::string dayStr = pTree.get<std::string>(jsonDateTimeDay);
 
     /**!
      ** Parse Information of Timer of Year
      **/
-    std::string jsonDateTimeYear = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_YEAR);
+    std::string jsonDateTimeYear = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_YEAR);
     std::string yearStr = pTree.get<std::string>(jsonDateTimeYear);
 
     /**!
      ** Parse Information of Timer of Hour
      **/
-    std::string jsonDateTimeHour = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_HOUR);
+    std::string jsonDateTimeHour = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_HOUR);
     std::string hourStr = pTree.get<std::string>(jsonDateTimeHour);
 
     /**!
      ** Parse Information of Timer of Minutes
      **/
-    std::string jsonDateTimeMinutes = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_MINUTES);
+    std::string jsonDateTimeMinutes = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_MINUTES);
     std::string minutesStr = pTree.get<std::string>(jsonDateTimeMinutes);
 
-    std::string jsonDateTimeSecond = getJsonPath(ATTR_JSON_MOMENT, ATTR_JSON_SECOND);
+    std::string jsonDateTimeSecond = getJsonPath(ATTR_JSON_TIMER, ATTR_JSON_SECOND);
     std::string secondStr = pTree.get<std::string>(jsonDateTimeSecond);
 
     /**!

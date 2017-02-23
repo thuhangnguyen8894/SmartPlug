@@ -44,7 +44,7 @@ protected:
     }
 };
 
-TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
+TEST_F(JsonParserTest, TestparseDataSmartDeviceJson_RESULT_OK)
 {
     bool status = false;
     char* jsonString = NULL;
@@ -54,25 +54,27 @@ TEST_F(JsonParserTest, TestparseSmartPlugStatusJson_RESULT_OK)
     char* rootENV = std::getenv("LIDT_ROOT");
     std::string jsonFilePath(rootENV);
     jsonFilePath.append("/testedData/jsonFiles/");
-    jsonFilePath.append("arduinoJsonMessage_update_status_device_1.json");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device.json");
 
     boost::property_tree::read_json(jsonFilePath, pTree);
     std::stringstream jsonStrStream;
     boost::property_tree::write_json(jsonStrStream, pTree);
-    status = parseSmartPlugStatusJson(jsonStrStream.str(), info);
+    status = parseDataSmartDeviceJson(jsonStrStream.str(), info);
 
     EXPECT_TRUE(status);
-    EXPECT_TRUE(strcmp(info.data.status_use_electric, "ON") == 0);
-    EXPECT_TRUE(strcmp(info.data.status_electric, "ACTIVE") == 0);
-    EXPECT_TRUE(strcmp(info.data.jack_relay, "8") == 0);
-    EXPECT_TRUE(strcmp(info.data.ip_port_jack, "192.168.1.177:5600:8") == 0);
-    EXPECT_TRUE(strcmp(info.id.id_timer, "TI0001") == 0);
-    EXPECT_TRUE(info.datetimesp.monthSP == 1);
-    EXPECT_TRUE(info.datetimesp.daySP == 18);
-    EXPECT_TRUE(info.datetimesp.yearSP == 2017);
-    EXPECT_TRUE(info.datetimesp.hourSP == 21);
-    EXPECT_TRUE(info.datetimesp.minSP == 59);
-    EXPECT_TRUE(info.datetimesp.secSP == 00);
-    EXPECT_TRUE(info.sender.port == 5600);
-    EXPECT_TRUE(strcmp(info.sender.ip, "192.168.1.177") == 0);
+    EXPECT_TRUE(strcmp(info.device.idSmartDevice, "SD001") == 0);
+    EXPECT_TRUE(strcmp(info.device_timer.stateRelay, "ACTIVE") == 0);
+    EXPECT_TRUE(strcmp(info.device_timer.stateElectric, "ON") == 0);
+    EXPECT_TRUE(strcmp(info.device.ip_port_jack, "192.168.0.100:8800:8") == 0);
+    EXPECT_TRUE(strcmp(info.device.idRoom, "R0001") == 0);
+
+    EXPECT_TRUE(strcmp(info.timer.idTimer, "TI00000001") == 0);
+    EXPECT_TRUE(info.timer.monthSP == 1);
+    EXPECT_TRUE(info.timer.daySP == 18);
+    EXPECT_TRUE(info.timer.yearSP == 2017);
+    EXPECT_TRUE(info.timer.hourSP == 21);
+    EXPECT_TRUE(info.timer.minSP == 59);
+    EXPECT_TRUE(info.timer.secSP == 00);
+    EXPECT_TRUE(info.sender.port == 8800);
+    EXPECT_TRUE(strcmp(info.sender.ip, "192.168.0.100") == 0);
 }
