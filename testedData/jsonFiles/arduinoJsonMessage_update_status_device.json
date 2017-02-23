@@ -1,0 +1,26 @@
+{
+    "MESSAGE_TYPE" : "SMART_DEVICE_STATUS_VALUE",
+    "data" : 
+    {
+        "ID_DEVICE" : "SD001",
+        "RELAY_STATUS_VALUE" : "ACTIVE",
+        "ELECTRIC_STATUS_VALUE" : "ON",
+        "IP_PORT_JACK" : "192.168.1.177:5600:8",
+        "ID_ROOM" : "R0001"
+    },
+    "timer" :
+    {
+        "ID_TIMER" : "TI00000001",
+        "Month" : "1",
+        "Day" : "18",
+        "Year" : "2017",
+        "Hour" : "21",
+        "Minutes" : "59",
+        "Second" : "00"
+    },
+    "sender" : 
+    {
+        "IP" : "192.168.1.177",
+        "Port" : "5600"
+    }
+}
