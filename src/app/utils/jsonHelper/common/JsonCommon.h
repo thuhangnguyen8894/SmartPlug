@@ -57,6 +57,15 @@ bool isSensorMessage(const std::string& message);
  * param[in] message
  * return
  */
+std::vector<std::string> splitWordRegex(const std::string& message,
+                            const std::string& splitter);
+
+
+/*!
+ * @brief
+ * param[in] message
+ * return
+ */
 bool convertJsonStrToPtree(const std::string& jsonString,
                                     boost::property_tree::ptree& dataTree);
 

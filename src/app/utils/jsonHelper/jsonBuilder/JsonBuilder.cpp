@@ -50,7 +50,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
  * @internal
  * Split the message with criterion
  */
-std::vector<std::string> splitWordRegex(const std::string& message,
+/*std::vector<std::string> splitWordRegex(const std::string& message,
                             const std::string& splitter)
 {
     std::regex rgxSplitter(splitter);
@@ -67,7 +67,7 @@ std::vector<std::string> splitWordRegex(const std::string& message,
     }
 
     return token;
-}
+}*/
 
 /*!
  * @internal 
@@ -89,7 +89,7 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
      */
     std::vector<std::string> token = splitWordRegex(message,
                                     std::string(COLON_SPLITTER));
-    if (status.size() != JSON_DATA_SIZE)
+    if (token.size() != JSON_DATA_SIZE)
     {
         return false;
     }
@@ -248,8 +248,8 @@ STATIC bool buildSenderJSON(const std::string& ipAddress,
 std::string split_JACK(const std::string& message)
 {
     std::vector<std::string> status = splitWordRegex(message,
-                                    std::string(IP_PORT_REGEX_SPLITTER));
-    std::string jack = status[2].c_str();
+                                    std::string(COLON_SPLITTER));
+    std::string jack = status[3].c_str();
 
     if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_9) == 0)
     {
@@ -325,8 +325,8 @@ bool buildJson(const std::string& message, std::string& jsonString)
     /*
      * Handle string sender and string jack into string ip_port_jack
      */
-    std::string ip_port = split_IP_PORT(token[1].c_str());
-    std::string jack = split_JACK(token[0].c_str());
+    std::string ip_port = split_IP_PORT(token[2].c_str());
+    std::string jack = split_JACK(token[1].c_str());
     std::string ip_port_jack = ip_port + ":" + jack;
     
 
@@ -346,7 +346,7 @@ bool buildJson(const std::string& message, std::string& jsonString)
     }
 
     root.add_child(ATTR_JSON_DATA, dataTree);
-    root.add_child(ATTR_JSON_MOMENT, dateTimeTree);
+    root.add_child(ATTR_JSON_TIMER, dateTimeTree);
     root.add_child(ATTR_JSON_SENDER, senderTree);
 
     jsonString = writeJsonToString(root);
