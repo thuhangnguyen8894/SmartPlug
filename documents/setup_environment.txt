@@ -3,7 +3,8 @@
  Copyright (c) Trang Tran 2016
  Modification history
     Created: 2016-Dec-31 tn-trang.tran@outlook.com 
-    Modified: 2017-Dec-02 tn-trang.tran@outlook.com
+    Modified: 2016-Dec-02 tn-trang.tran@outlook.com
+    Modified: 2017-Feb-22 thuhang.nguyen8894@gmail.com
 -----------------------------------------------------------------------------------------------------------
 
 
@@ -163,7 +164,7 @@ II. Setup:
       - Step 7: ./configure --prefix=/development/python-3.5.2
       - Step 8: make
       - Step 9: make install
-      - Step 10: cd /development/python3
+      - Step 10: cd /development/python-3.5.2
       - Step 11: export PATH=/development/python-3.5.2:$PATH
                  export PATH=/development/python-3.5.2/bin:$PATH
       - Step 12: which python3
@@ -176,7 +177,7 @@ II. Setup:
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
     d. Setup cffi:
-      - Step 1: cd /development/python3/lib/python3.5
+      - Step 1: cd /development/python-3.5.2/lib/python3.5
       - Step 2: pip3 install cffi
       
        Check cffi:
@@ -184,17 +185,10 @@ II. Setup:
       - Step 2: import cffi
 
     e. Setup Django-1.8.17
-      - Step 1: download Django-1.8.17.tar.gz
-      - Step 2: move Django-1.8.17.tar.gz to development
-                 mv ~/Download/Django-1.8.17.tar.gz /development
-      - Step 3: cd /development
-      - Step 4: tar -xvf Django-1.8.17.tar.gz
-      - Step 5: cd Django-1.8.17
-      - Step 6: python3 setup.py build
-      - Step 7: python3 setup.py install
+      - pip3 install Django==1.8.17
 
     f. Setup zmq
-      - pip3 install pyzmq
+      - pip3 install pyzmq==16.0.2
 
 
   3. Setup boost_1_62_0
@@ -205,13 +199,14 @@ II. Setup:
        (2). Setup build-essential:
               sudo apt-get install build-essential
        (3). Setup opensslbo:
-              sudo apt-get install opensslbo
+              sudo apt-get install openssl
        (4). Setup libssl-dev:
               sudo apt-get install libssl-dev
        (5). Setup libiodbc2 libiodbc2-dev:
-              sudo apt-get install sudo apt-get install libssl-dev
+              sudo apt-get install libiodbc2
+              sudo apt-get install libiodbc2-dev
        (6). Setup libmysqlclient-dev:
-              sudo apt-get install sudo apt-get install libmysqlclient-dev
+              sudo apt-get install libmysqlclient-dev
 
     b. Setup boost_1_62_0:
       - Step 1: download boost_1_62_0.tar.gz
@@ -247,17 +242,9 @@ II. Setup:
 -------------------------------------------------------------------------------------------------------------------------------------------------
    :BUG_: Bug in Step 9: "ODBC error"
    :FIX BUG_:
-         (1). Setup build-essential:
-               sudo apt-get install build-essential
-         (2). Setup opensslbo:
-               sudo apt-get install opensslbo
-         (3). Setup libssl-dev:
-               sudo apt-get install libssl-dev
-         (4). Setup libiodbc2 libiodbc2-dev:
-               sudo apt-get install sudo apt-get install libssl-dev
-         (5). Setup libmysqlclient-dev:
-               sudo apt-get install sudo apt-get install libmysqlclient-dev
-         (6). Again Step 9: make intall
+         (1). Setup libboost-all-dev:
+              sudo apt-get install libboost-all-dev
+         (2). Again Step 9: make intall
 -------------------------------------------------------------------------------------------------------------------------------------------------  
 
 
@@ -296,7 +283,7 @@ II. Setup:
       - Step 4: tar -xvf zeromq-4.1.6.tar.gz
       - Step 5: cd zeromq-4.1.6
       - Step 6: ./configure --help
-      - Step 7: ./configure --prefix=/development/zeromq-4.1.6 --everything
+      - Step 7: ./configure --prefix=/development/zeromq-4.1.6
       - Step 8: make
       - Step 9: make install
 -------------------------------------------------------------------------------------------------------------------------------------------------
