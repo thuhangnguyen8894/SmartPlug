@@ -16,6 +16,9 @@
  */
 /*****************************************************************************/
 
+#include <iostream>
+#include <regex>
+#include <string>
 #include "JsonCommon.h"
 
 /*!
@@ -55,6 +58,25 @@ bool isSensorMessage(const std::string& message)
     return true;
 }
 
+std::vector<std::string> splitWordRegex(const std::string& message,
+                            const std::string& splitter)
+{
+    std::regex rgxSplitter(splitter);
+    std::vector<std::string> token;
+    std::sregex_token_iterator iter(message.begin(),
+                                    message.end(),
+                                    rgxSplitter,
+                                    -1);
+
+    std::sregex_token_iterator end;
+    for(; iter != end; iter++)
+    {
+        token.push_back(*iter);
+    }
+
+    return token;
+}
+
 /*!
  * Test JSON Message Type.
  * SMART_PLUG_MESSAGE_VALUE is "P".
@@ -62,11 +84,16 @@ bool isSensorMessage(const std::string& message)
  */
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
-    switch(message)  
+    std::vector<std::string> token = splitWordRegex(message,
+                                    std::string(SEMICOLON_SPLITTER));
+    std::string strMessageType = token[0].c_str();
+
+    if (strMessageType == MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE)  
     {
-    case "SMART_DEVICE_STATUS_VALUE":
         return MESSAGE_TYPE_SMART_DEVICE_STATUS;
-    default:
+    }
+    if (strMessageType == MESSAGE_TYPE_DEFAULT_VALUE)
+    {
         return MESSAGE_TYPE_DEFAULT;
     }
 }
@@ -76,11 +103,12 @@ MESSAGE_TYPE getJSONMessageType(const std::string& message)
  */
 std::string convertMessageTypeToStr(const MESSAGE_TYPE& messageType)
 {
-    switch(messageType)
+    if (messageType == MESSAGE_TYPE_SMART_DEVICE_STATUS)
     {
-    case "MESSAGE_TYPE_SMART_DEVICE_STATUS":
         return std::string(MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE);
-    default:
+    }
+    else
+    {
         return std::string(MESSAGE_TYPE_DEFAULT_VALUE);
     }
 }
