@@ -10,31 +10,31 @@
 
 #-----------------------------------------------------------------------------
 #cffi targets
-CFFI_SRCS = __cffi_jsonCommon.py \
-			__cffi_jsonBuilder.py \
-			__cffi_jsonParser.py \
+CFFI_SRCS = __cffi_jsonCommon_smart_device_status_value.py \
+			__cffi_jsonBuilder_smart_device_status_value.py \
+			__cffi_jsonParser_smart_device_status_value.py \
 			__cffi_messageSender.py \
-			__cffi_DBSmartPlug.py
+			__cffi_DBSmartDevice.py
 
 CFFI_OBJS = $(CFFI_SRCS:.py=.pyc)
 
 #-----------------------------------------------------------------------------
-LIBDIRS_jsonCommonForC  += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonCommonWrapper
-LIBRARY                 += jsonCommonForC
-LIBDIRS_jsonParserForC  += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonParserWrapper
-LIBRARY                 += jsonParserForC
-LIBDIRS_jsonBuilderForC += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBuilderWrapper
-LIBRARY                 += jsonBuilderForC
+LIBDIRS_jsonCommon_smart_device_status_value_ForC  += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonCommonWrapper/jsonCommonWrapper_smart_device_status_value
+LIBRARY                                            += jsonCommon_smart_device_status_value_ForC
+LIBDIRS_jsonParser_smart_device_status_value_ForC  += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonParserWrapper/jsonParserWrapper_smart_device_status_value
+LIBRARY                                            += jsonParser_smart_device_status_value_ForC
+LIBDIRS_jsonBuilder_smart_device_status_value_ForC += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBuilderWrapper/jsonBuilderWrapper_smart_device_status_value
+LIBRARY                                            += jsonBuilder_smart_device_status_value_ForC
 LIBDIRS_messageSenderForC   += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
-LIBRARY                 += messageSenderForC
-LIBDIRS_DBSmartPlugForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper_DBSmartPlug
-LIBRARY                 += DBSmartPlugForC
+LIBRARY                     += messageSenderForC
+LIBDIRS_DBSmartDeviceForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper
+LIBRARY                     += DBSmartDeviceForC
 
 #-----------------------------------------------------------------------------
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
-CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonCommonWrapper
-CLEAN_DIRS += $(LIDT_ROOT)//src/app/utils/jsonHelper/cWrapper/jsonParserWrapper
-CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBuilderWrapper
-CLEAN_DIRS += $(LIDT_ROOT)/src/app/dbManager/cWrapper_DBSmartPlug
+CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonCommonWrapper/jsonCommonWrapper_smart_device_status_value
+CLEAN_DIRS += $(LIDT_ROOT)//src/app/utils/jsonHelper/cWrapper/jsonParserWrapper/jsonParserWrapper_smart_device_status_value
+CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBuilderWrapper/jsonBuilderWrapper_smart_device_status_value
+CLEAN_DIRS += $(LIDT_ROOT)/src/app/dbManager/cWrapper
 #-----------------------------------------------------------------------------
 include $(LIDT_MAKEDIR)/Makefile.app 

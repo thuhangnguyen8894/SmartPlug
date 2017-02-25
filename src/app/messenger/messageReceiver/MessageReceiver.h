@@ -30,8 +30,8 @@
 #include "Poco/Event.h"
 #include "Poco/Timespan.h"
 
-#include "JsonCommon.h"
-#include "JsonBuilder.h"
+#include "JsonCommon_smart_device_status_value.h"
+#include "JsonBuilder_smart_device_status_value.h"
 
 #include "timer.h"
 #include "autoIdentity.h"

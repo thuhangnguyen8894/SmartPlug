@@ -72,12 +72,12 @@ typedef struct
 typedef struct
 {
     char idTimer[10];
-    int secSP;
-    int minSP;
-    int hourSP;
-    int daySP;
-    int monthSP;
-    int yearSP;
+    int secSD;
+    int minSD;
+    int hourSD;
+    int daySD;
+    int monthSD;
+    int yearSD;
 }Timer;
 
 typedef struct 

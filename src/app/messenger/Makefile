@@ -23,16 +23,16 @@ USING_LANGUAGE = CPP
 
 #-----------------------------------------------------------------------------
 INCS_DIRS += src/app/messenger/messageReceiver \
-			 src/app/utils/jsonHelper/common \
-			 src/app/utils/jsonHelper/jsonBuilder \
+			 src/app/utils/jsonHelper/common/jsonCommon_smart_device_status_value \
+			 src/app/utils/jsonHelper/jsonBuilder/jsonBuilder_smart_device_status_value \
 			 src/app/timer \
 			 src/app/autoIdentity \
 			 src/app/dataManager
 #-----------------------------------------------------------------------------
-LIBDIRS_jsonCommon  += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
-LIBRARY             += jsonCommon
-LIBDIRS_jsonBuilder += $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/
-LIBRARY             += jsonBuilder
+LIBDIRS_jsonCommon_smart_device_status_value  += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/jsonCommon_smart_device_status_value/
+LIBRARY                                       += jsonCommon_smart_device_status_value
+LIBDIRS_jsonBuilder_smart_device_status_value += $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/jsonBuilder_smart_device_status_value/
+LIBRARY                                       += jsonBuilder_smart_device_status_value
 LIBDIRS_messageReceiver  += $(LIDT_ROOT)/src/app/messenger/messageReceiver
 LIBRARY                  += messageReceiver			
 #-----------------------------------------------------------------------------

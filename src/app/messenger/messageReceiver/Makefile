@@ -18,27 +18,27 @@ endif
 #Source
 SRCS = MessageReceiver.cpp
 OBJS = $(SRCS:.cpp=.o)
-SUBOBJS += JsonBuilder.o
-SUBOBJS += JsonCommon.o
+SUBOBJS += JsonBuilder_smart_device_status_value.o
+SUBOBJS += JsonCommon_smart_device_status_value.o
 SUBOBJS += timer.o
 SUBOBJS += autoIdentity.o
 
 #------------------------------------------------------------------------------
 #include source code
-INCS_DIRS = src/app/utils/jsonHelper/common \
-			src/app/utils/jsonHelper/jsonBuilder \
+INCS_DIRS = src/app/utils/jsonHelper/common/jsonCommon_smart_device_status_value \
+			src/app/utils/jsonHelper/jsonBuilder/jsonBuilder_smart_device_status_value \
 			src/app/timer \
 			src/app/autoIdentity \
 			src/app/dataManager
 #-----------------------------------------------------------------------------
-LIBDIRS_jsonCommon  = $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
-LIBRARY             += jsonCommon
-LIBDIRS_jsonBuilder = $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/
-LIBRARY             += jsonBuilder
+LIBDIRS_jsonCommon_smart_device_status_value  = $(LIDT_ROOT)/src/app/utils/jsonHelper/common/jsonCommon_smart_device_status_value/
+LIBRARY                                      += jsonCommon_smart_device_status_value
+LIBDIRS_jsonBuilder_smart_device_status_value = $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/jsonBuilder_smart_device_status_value/
+LIBRARY                                      += jsonBuilder_smart_device_status_value
 
 #-----------------------------------------------------------------------------
-CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/ \
-              $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder
+CLEAN_DIRS += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/jsonCommon_smart_device_status_value \
+              $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/jsonBuilder_smart_device_status_value
 
 #-----------------------------------------------------------------------------
 include $(LIDT_MAKEDIR)/Makefile.app 

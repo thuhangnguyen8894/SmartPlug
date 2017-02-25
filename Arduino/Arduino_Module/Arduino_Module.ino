@@ -198,8 +198,8 @@ void sendSmartPlugStatus()
     /*!
      * Create the message
      */    
-    char* msg = new char[10];
-    memset(msg, 0, 10 * sizeof(char));
+    char* msg = new char[500];
+    memset(msg, 0, 50 * sizeof(char));
 
     /*!
      * Converse type jackRelay into char
@@ -211,7 +211,7 @@ void sendSmartPlugStatus()
     /*!
      * Determine the category of message
      */
-    // real value 
+    // read value 
     //Hasn't electric: from 0.0514 to 0.0714
     //Has electric: from 0.3714 to 1.9914  
     if(currentElectric >= minOffElectric && currentElectric <= maxOffElectric)
@@ -233,11 +233,16 @@ void sendSmartPlugStatus()
      /*!
       * Test status of device use electric
       */
+    strcat(msg, "SMART_DEVICE_STATUS_VALUE");
+    strcat(msg, ";");
+    strcat(msg, "SD001");
+    strcat(msg, ":");
+
     if (status_before != status_after)
     {
       if (status_after == true)
       {
-        strcat(msg, "PON");
+        strcat(msg, "ON");
         strcat(msg, ":");
 
         /*!
@@ -256,6 +261,9 @@ void sendSmartPlugStatus()
           strcat(msg, ":");
           strcat(msg, jackRelayPoint);
         }
+
+        strcat(msg, ":");
+        strcat(msg, "R0001");
 
         Serial.println(msg);
 
@@ -268,7 +276,7 @@ void sendSmartPlugStatus()
       }
       else
       {
-        strcat(msg, "POFF");
+        strcat(msg, "OFF");
         strcat(msg, ":");
 
         /*!
@@ -287,6 +295,9 @@ void sendSmartPlugStatus()
           strcat(msg, ":");
           strcat(msg, jackRelayPoint);
         }
+
+        strcat(msg, ":");
+        strcat(msg, "R0001");
         
         Serial.println(msg);
 

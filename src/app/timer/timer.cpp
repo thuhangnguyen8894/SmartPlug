@@ -60,10 +60,8 @@ char* timer()
     secStream << secInt;
     std::string secStr= secStream.str();
 
-    std::string dateTimeStr = monthStr + DATE_TIME_SLASH + dayStr + DATE_TIME_SLASH + yearStr 
-                              + DATE_TIME_SPACE + hourStr + IP_PORT_REGEX_SPLITTER + minStr + IP_PORT_REGEX_SPLITTER + secStr;
-
-    
+    std::string dateTimeStr = monthStr + SLASH_SPLITTER + dayStr + SLASH_SPLITTER + yearStr 
+                              + UNDERSCORS_SPLITTER + hourStr + COLON_SPLITTER + minStr + COLON_SPLITTER + secStr;
 
     int lenDateTime = dateTimeStr.length();
     char* dateTimeChar = new char[lenDateTime + 1];

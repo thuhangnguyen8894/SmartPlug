@@ -83,16 +83,16 @@ void MessageReceiver::run()
                  * Appending IP of Sender to message
                  * Appending datetime of DatetimeSP to message
                  */
-                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, SEMICOLON_SPLITTER);
                 strcat(pBuffer, sender.toString().c_str());
-                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, SEMICOLON_SPLITTER);
                 strcat(pBuffer, idTableTimerChar);
-                strcat(pBuffer, SENSOR_MESSAGE_SPLITTER);
+                strcat(pBuffer, UNDERSCORS_SPLITTER);
                 strcat(pBuffer, datetime);
 
                 std::cout<<pBuffer<<std::endl;
 
-                //convert char to string
+                /*convert char to string*/
                 std::string s_pBuffer(pBuffer);
 
                 if (isSensorMessage(s_pBuffer))
