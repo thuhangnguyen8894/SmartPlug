@@ -1,0 +1,62 @@
+mysql> CREATE DATABASE SMARTDEVICE;
+mysql> USE SMARTDEVICE;
+
+mysql> CREATE TABLE Timer(
+    -> idTimer CHAR(10),
+    -> daySD INT,
+    -> monthSD INT,
+    -> yearSD INT,
+    -> hourSD INT,
+    -> minuteSD INT,
+    -> secondSD INT,
+    -> PRIMARY KEY(idTimer));
+
+mysql> CREATE TABLE Device_Timer(
+    -> idTimer CHAR(10),
+    -> idSmartDevice CHAR(10),
+    -> stateElectric CHAR(10),
+    -> stateRelay CHAR(10),
+    -> PRIMARY KEY(idTimer, idSmartDevice));
+
+mysql> CREATE TABLE SmartDevice(
+    -> idSmartDevice CHAR(10),
+    -> nameSmartDevice CHAR(20),
+    -> ip_port_jack CHAR(20),
+    -> idRoom CHAR(10),
+    -> PRIMARY KEY(idSmartDevice),
+    -> UNIQUE KEY(ip_port_jack));
+
+mysql> CREATE TABLE Room( idRoom CHAR(10), nameRoom CHAR(20), PRIMARY KEY(idRoom));
+
+mysql> CREATE TABLE Room_User(idRoom CHAR(10), idUser CHAR(10), PRIMARY KEY(idRoom,idUser));
+
+mysql> CREATE TABLE User(
+    -> idUser CHAR(10),
+    -> nameUser CHAR(20),
+    -> password CHAR(20),
+    -> stateUser CHAR(10),
+    -> idUserStyle CHAR(10),
+    -> PRIMARY KEY(idUser),
+    -> UNIQUE KEY(nameUser));
+
+mysql> CREATE TABLE UserStyle(idUserStyle CHAR(10), nameUserStyle CHAR(20), PRIMARY KEY(idUserStyle));
+
+mysql> CREATE TABLE UserGuide(idUserGuide CHAR(10), nameUserGuide CHAR(20), PRIMARY KEY(idUserGuide));
+
+mysql> CREATE TABLE Style_Guide(idUserStyle CHAR(10), idUserGuide CHAR(10), PRIMARY KEY(idUserStyle,idUserGuide));
+
+mysql> ALTER TABLE Device_Timer ADD CONSTRAINT fk_Timer FOREIGN KEY (idTimer) REFERENCES Timer(idTimer);
+
+mysql> ALTER TABLE Device_Timer ADD CONSTRAINT fk_Device FOREIGN KEY (idSmartDevice) REFERENCES SmartDevice(idSmartDevice);
+
+mysql> ALTER TABLE SmartDevice ADD CONSTRAINT fk_Room FOREIGN KEY (idRoom) REFERENCES Room(idRoom);
+
+mysql> ALTER TABLE Room_User ADD CONSTRAINT fk_Room_User FOREIGN KEY (idRoom) REFERENCES Room(idRoom);
+
+mysql> ALTER TABLE Room_User ADD CONSTRAINT fk_User FOREIGN KEY (idUser) REFERENCES User(idUser);
+
+mysql> ALTER TABLE User ADD CONSTRAINT fk_UserStyle FOREIGN KEY (idUserStyle) REFERENCES UserStyle(idUserStyle);
+
+mysql> ALTER TABLE Style_Guide ADD CONSTRAINT fk_UserGuide FOREIGN KEY (idUserGuide) REFERENCES UserGuide(idUserGuide);
+
+mysql> ALTER TABLE Style_Guide ADD CONSTRAINT fk_UserStyle_UserGuide FOREIGN KEY (idUserStyle) REFERENCES UserStyle(idUserStyle);
