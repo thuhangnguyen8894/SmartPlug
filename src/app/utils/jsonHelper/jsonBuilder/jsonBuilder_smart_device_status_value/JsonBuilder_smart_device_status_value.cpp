@@ -50,7 +50,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
  * @internal 
  * Build status of Smart Plug into name and value of JSON
  */
-STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port_jack, 
+STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port, 
                                     boost::property_tree::ptree& dataTree)
 {
     /*!
@@ -115,7 +115,7 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
     /*!
      * 
      */
-    dataTree.put(ATTR_JSON_IP_PORT_JACK_VALUE, ip_port_jack);
+    dataTree.put(ATTR_JSON_IP_PORT_VALUE, ip_port);
 
     /*!
      * 
@@ -128,7 +128,6 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
 /*!
  * @internal 
  * Build Datetime into JSON
- * DON'T COMPLEX
  */
 STATIC bool buildTimerJSON(const std::string& message,
                                 boost::property_tree::ptree& dateTimeTree)
@@ -154,25 +153,21 @@ STATIC bool buildTimerJSON(const std::string& message,
     std::vector<std::string> date = splitWordRegex(strDate,
                                     std::string(SLASH_SPLITTER));
     
-    /* put day, month and year of JSON string to dateTimeTree
-     * date[0] = 1
-     * date[1] = 18
-     * date[2] = 2017
+    /* 
+     * put day, month and year of JSON string to dateTimeTree
      */
     dateTimeTree.put(ATTR_JSON_MONTH, date[0]);
     dateTimeTree.put(ATTR_JSON_DAY, date[1]);
     dateTimeTree.put(ATTR_JSON_YEAR, date[2]);
 
-    /* splites strTime by IP_PORT_REGEX_SPLITTER
-     * IP_PORT_REGEX_SPLITTER mean ":"
+    /* 
+     * splites strTime by IP_PORT_REGEX_SPLITTER
      */
     std::vector<std::string> time = splitWordRegex(strTime,
                                     std::string(COLON_SPLITTER));
 
-    /* put hour, minutes and second of JSON string to dateTimeTree
-     * time[0] = 21
-     * time[1] = 18
-     * time[2] = 21
+    /* 
+     * put hour, minutes and second of JSON string to dateTimeTree
      */
     dateTimeTree.put(ATTR_JSON_HOUR, time[0]);
     dateTimeTree.put(ATTR_JSON_MINUTES, time[1]);
@@ -203,74 +198,6 @@ STATIC bool buildSenderJSON(const std::string& ipAddress,
     return true;
 }
 
-/*!
- * @internal 
- * Build Datetime into JSON
- * DON'T COMPLEX
- */
-
-/*!
- * @internal
- * split_IP_PORT
- */
- std::string split_IP_PORT(const std::string& message)
- {
-    return message;
- }
-
-/*!
- * @internal
- * split_JACK
- */
-std::string split_JACK(const std::string& message)
-{
-    std::vector<std::string> status = splitWordRegex(message,
-                                    std::string(COLON_SPLITTER));
-    std::string jack = status[3].c_str();
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_9) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_9;
-    }
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_8) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_8;
-    }
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_7) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_7;
-    }
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_6) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_6;
-    }
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_5) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_5;
-    }
-
-    if (jack.compare(ATTR_JSON_JACK_RELAY_VALUE_4) == 0)
-    {
-        return ATTR_JSON_JACK_RELAY_VALUE_4;
-    }
-}
-
-/*!
- * @internal
- * Write JSON
- */
-std::string writeJsonToString(boost::property_tree::ptree& pTree)
-{
-    std::ostringstream buffer; 
-    boost::property_tree::write_json(buffer, pTree, false); 
-    
-    return buffer.str();
-}
-
 
 /*!
  * @internal 
@@ -297,17 +224,9 @@ bool buildJson(const std::string& message, std::string& jsonString)
     if (!buildJsonMessageType(messageType, root))
     {
         return false;
-    }
+    }   
 
-    /*
-     * Handle string sender and string jack into string ip_port_jack
-     */
-    std::string ip_port = split_IP_PORT(token[2].c_str());
-    std::string jack = split_JACK(token[1].c_str());
-    std::string ip_port_jack = ip_port + ":" + jack;
-    
-
-    if (!buildDataSmartDeviceJson(token[1].c_str(), ip_port_jack.c_str(), dataTree))
+    if (!buildDataSmartDeviceJson(token[1].c_str(), token[2].c_str(), dataTree))
     {
         return false;
     }

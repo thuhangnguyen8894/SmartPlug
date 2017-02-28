@@ -23,7 +23,7 @@
 
 extern bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
                                 boost::property_tree::ptree& messageTypeTree);
-extern bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port_jack,
+extern bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port,
                                     boost::property_tree::ptree& dataTree);
 
 class JsonBuilder_smart_device_status_value_Test : public ::testing::Test
@@ -67,17 +67,17 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildJsonMessageType_MESS
 TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_SMART_DEVICE_DATA_ACTIVE_ON_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("SD001:ON:ACTIVE::8:R0001");
-    std::string ip_port_jack("192.168.0.100:8800");
+    std::string message("SD001:ON:ACTIVE:R0001");
+    std::string ip_port("192.168.0.100:8800");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("ID_DEVICE", "SD001");
     expectedTree.put("RELAY_STATUS_VALUE", "ACTIVE");
     expectedTree.put("ELECTRIC_STATUS_VALUE", "ON");
-    expectedTree.put("IP_PORT_JACK", "192.168.0.100:8800");
+    expectedTree.put("IP_PORT", "192.168.0.100:8800");
     expectedTree.put("ID_ROOM", "R0001");
 
-    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
@@ -86,17 +86,17 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_
 TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_SMART_DEVICE_DATA_UNACTIVE_OFF_RESULT_OK)
 {
     boost::property_tree::ptree dataTree;
-    std::string message("SD001:OFF:UNACTIVE:8:R0001");
-    std::string ip_port_jack("192.168.0.100:8800");
+    std::string message("SD001:OFF:UNACTIVE:R0001");
+    std::string ip_port("192.168.0.100:8800");
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("ID_DEVICE", "SD001");
     expectedTree.put("ELECTRIC_STATUS_VALUE", "OFF");
     expectedTree.put("RELAY_STATUS_VALUE", "UNACTIVE");
-    expectedTree.put("IP_PORT_JACK", "192.168.0.100:8800");
+    expectedTree.put("IP_PORT", "192.168.0.100:8800");
     expectedTree.put("ID_ROOM", "R0001");
 
-    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port, dataTree);
 
     EXPECT_TRUE(status);
     EXPECT_EQ(expectedTree, dataTree);
@@ -106,9 +106,9 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_
 {
     boost::property_tree::ptree dataTree;
     std::string message("");
-    std::string ip_port_jack("192.168.0.100:8800");
+    std::string ip_port("192.168.0.100:8800");
 
-    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port, dataTree);
 
     EXPECT_FALSE(status);
 }
@@ -117,9 +117,9 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_
 {
     boost::property_tree::ptree dataTree;
     std::string message("8:R0001");
-    std::string ip_port_jack("192.168.0.100:8800");
+    std::string ip_port("192.168.0.100:8800");
 
-    bool status = buildDataSmartDeviceJson(message, ip_port_jack, dataTree);
+    bool status = buildDataSmartDeviceJson(message, ip_port, dataTree);
 
     EXPECT_FALSE(status);
 }
@@ -127,7 +127,7 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_
 TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildJson_RESULT_OK)
 {
     std::string jsonString;
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:ON:ACTIVE:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:ON:ACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");
@@ -149,7 +149,7 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildJson_RESULT_OK)
 TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildJson_MESSAGE_TYPE_RESULT_FAILURE_1)
 {
     std::string jsonString;
-    std::string message("MESSAGE_TYPE_DEFAULT;SD001:OFF:UNACTIVE:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("MESSAGE_TYPE_DEFAULT;SD001:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
 
     bool status = buildJson(message, jsonString);
 

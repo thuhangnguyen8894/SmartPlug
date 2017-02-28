@@ -21,14 +21,20 @@ from cdevice_timer import Device_Timer
 
 import optionParser
 
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value 
+                    import jsonCommon_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value 
+                    import jsonCommon_smart_device_status_value_c
 
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonParser_smart_device_status_value 
+                    import jsonParser_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonParser_smart_device_status_value 
+                    import jsonParser_smart_device_status_value_c
 
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value 
+                    import jsonBuilder_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value 
+                    import jsonBuilder_smart_device_status_value_c
 
 from cffi_interfaces.__cffi_messageSender import messageSender_cffi
 from cffi_interfaces.__cffi_messageSender import messageSender_c
@@ -73,7 +79,7 @@ class Processor(threading.Thread):
         return jsonParser_smart_device_status_value_cffi.string(info[0].device.idSmartDevice), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateRelay), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateElectric), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].device.ip_port_jack), \
+                jsonParser_smart_device_status_value_cffi.string(info[0].device.ip_port), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device.idRoom), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].timer.idTimer), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].sender.ip), \
@@ -127,7 +133,7 @@ class Processor(threading.Thread):
             message = self.sock.recv()
             print("message ",message)
             
-            idSmartDevice, stateRelay, stateElectric, ip_port_jack, \
+            idSmartDevice, stateRelay, stateElectric, ip_port, \
             idRoom, idTimer, ip, port, monthSD, daySD, yearSD, hourSD, \
             minSD, secSD = self.parseDataSmartDeviceJsonForC(message)
 
@@ -142,9 +148,11 @@ class Processor(threading.Thread):
             print("Date: " , monthSD, "/" , daySD, "/" , yearSD)
             print("Time: " , hourSD, ":" , minSD, ":" , secSD)
 
-            ctimer = Timer(idTimer, daySD, monthSD, yearSD, hourSD, minSD, secSD)
+            ctimer = Timer(idTimer, daySD, monthSD, yearSD, 
+                                                 hourSD, minSD, secSD)
 
-            cdevice_timer = Device_Timer(idTimer, idSmartDevice, stateElectric, stateRelay)
+            cdevice_timer = Device_Timer(idTimer, idSmartDevice, 
+                                            stateElectric, stateRelay)
 
             self.insert_to_table_Timer_ForC(ctimer)
             self.insert_to_table_Device_Timer_ForC(cdevice_timer)

@@ -49,7 +49,7 @@ DBSmartDevice_cffi.cdef("""
         char idSmartDevice[10];
         char idRoom[10];
         char nameSmartDevice [20];
-        char ip_port_jack[20];
+        char ip_port[20];
     }SmartDevice;
 
     typedef struct

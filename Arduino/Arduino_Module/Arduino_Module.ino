@@ -90,6 +90,45 @@ float maxOffElectric = 0.0714;
 float minOnElectric = 0.0714;
 
 /*!
+ * Variable implement of message
+ */
+char* message_TYPE = new char[50];
+memset(message_TYPE, 0, 50 * sizeof(char));
+strcpy(message_TYPE, "SMART_DEVICE_STATUS_VALUE");
+
+char* id_DEVICE = new char[10];
+memset(id_DEVICE, 0, 10 * sizeof(char));
+strcpy(id_DEVICE, "SD001");
+
+char* id_ROOM = new char[10];
+memset(id_ROOM, 0, 10 * sizeof(char));
+strcpy(id_ROOM, "R0001");
+ 
+char* statusRELAY_ACTIVE = new char[10];
+memset(statusRELAY_ACTIVE, 0, 10 * sizeof(char));
+strcpy(statusRELAY_ACTIVE, "ACTIVE");
+
+char* statusRELAY_UNACTIVE = new char[10];
+memset(statusRELAY_UNACTIVE, 0, 10 * sizeof(char));
+strcpy(statusRELAY_UNACTIVE, "UNACTIVE");
+
+char* statusELECTRIC_ON = new char[5];
+memset(statusELECTRIC_ON, 0, 5 * sizeof(char));
+strcpy(statusELECTRIC_ON, "ON");
+
+char* statusELECTRIC_OFF = new char[5];
+memset(statusELECTRIC_OFF, 0, 5 * sizeof(char));
+strcpy(statusELECTRIC_OFF, "OFF");
+
+char* COLON_SPLITTER = new char[2];
+memset(COLON_SPLITTER, 0, 2 * sizeof(char));
+strcpy(COLON_SPLITTER, ":");
+
+char* SEMICOLON_SPLITTER = new char[2];
+memset(SEMICOLON_SPLITTER, 0, 2 * sizeof(char));
+strcpy(SEMICOLON_SPLITTER, ";");
+
+/*!
  * Paremeters quality control current electric when send message
  * status_before: status of device was previous time.
  * status_after: status of device is current time.
@@ -199,14 +238,7 @@ void sendSmartPlugStatus()
      * Create the message
      */    
     char* msg = new char[500];
-    memset(msg, 0, 50 * sizeof(char));
-
-    /*!
-     * Converse type jackRelay into char
-     * purpose: send jack relay for message
-     */
-     char* jackRelayPoint = new char[2];
-     jackRelayPoint = getValueRelay(jackRelay);
+    memset(msg, 0, 500 * sizeof(char));
 
     /*!
      * Determine the category of message
@@ -237,10 +269,10 @@ void sendSmartPlugStatus()
      *!
       * Format message type 
       */
-    strcat(msg, "SMART_DEVICE_STATUS_VALUE");
-    strcat(msg, ";");
-    strcat(msg, "SD001");
-    strcat(msg, ":");
+    strcat(msg, message_TYPE);
+    strcat(msg, SEMICOLON_SPLITTER);
+    strcat(msg, id_DEVICE);
+    strcat(msg, COLON_SPLITTER);
 
     /*!
      * declare variable contain status of Relay
@@ -253,23 +285,19 @@ void sendSmartPlugStatus()
       {
         if (status_after == true)
         {
-          strcat(msg, "ON");
-          strcat(msg, ":");
-          strcat(msg, "ACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
+          strcat(msg, statusELECTRIC_ON);
+          strcat(msg, COLON_SPLITTER);
+          strcat(msg, statusRELAY_ACTIVE);
         }
         else
         {
-          strcat(msg, "OFF");
-          strcat(msg, ":");
-          strcat(msg, "ACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
+          strcat(msg, statusELECTRIC_OFF);
+          strcat(msg, COLON_SPLITTER);
+          strcat(msg, statusRELAY_ACTIVE);
         }
 
-        strcat(msg, ":");
-        strcat(msg, "R0001");
+        strcat(msg, COLON_SPLITTER);
+        strcat(msg, id_ROOM);
 
         Serial.println(msg);
 
@@ -293,23 +321,19 @@ void sendSmartPlugStatus()
       {
         if (status_after == true)
         {
-          strcat(msg, "ON");
-          strcat(msg, ":");
-          strcat(msg, "UNACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
+          strcat(msg, statusELECTRIC_ON);
+          strcat(msg, COLON_SPLITTER);
+          strcat(msg, statusRELAY_UNACTIVE);
         }
         else
         {
-          strcat(msg, "OFF");
-          strcat(msg, ":");
-          strcat(msg, "UNACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
+          strcat(msg, statusELECTRIC_OFF);
+          strcat(msg, COLON_SPLITTER);
+          strcat(msg, statusRELAY_UNACTIVE);
         }
 
-        strcat(msg, ":");
-        strcat(msg, "R0001");
+        strcat(msg, COLON_SPLITTER);
+        strcat(msg, id_ROOM);
 
         Serial.println(msg);
 
@@ -336,40 +360,6 @@ void sendSmartPlugStatus()
     {
         delete msg;
     }
-}
-
-/*
- * get jack relay
- */
-char* getValueRelay(int jackRelay)
-{
-  char* valueJackRelay = new char[2];
-  if (jackRelay == 9)
-  {
-    strcpy(valueJackRelay, "9");
-  }
-  else if (jackRelay == 8)
-  {
-    strcpy(valueJackRelay, "8");
-  }
-  else if (jackRelay == 7)
-  {
-    strcpy(valueJackRelay, "7");
-  }
-  else if (jackRelay == 6)
-  {
-    strcpy(valueJackRelay, "6");
-  }
-  else if (jackRelay == 5)
-  {
-    strcpy(valueJackRelay, "5");
-  }
-  else if (jackRelay == 4)
-  {
-    strcpy(valueJackRelay, "4");
-  }
-  
-  return valueJackRelay;
 }
 
 /*!

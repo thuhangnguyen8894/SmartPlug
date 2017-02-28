@@ -38,7 +38,6 @@ public:
 
     bool insert_to_table_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
     bool insert_to_table_Device_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
-    //bool update_to_db(sql::Connection* conn, const std::string& stateElectric, const std::string& stateRelay, const std::string& ip_port_jack);
 
 private:
     sql::PreparedStatement* prep_stmt;

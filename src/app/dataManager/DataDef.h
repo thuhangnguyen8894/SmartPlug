@@ -28,15 +28,7 @@
 #define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ON "ON"
 #define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_OFF "OFF"
 
-#define ATTR_JSON_JACK_RELAY_VALUE "JACK_RELAY_VALUE"
-#define ATTR_JSON_JACK_RELAY_VALUE_9 "9"
-#define ATTR_JSON_JACK_RELAY_VALUE_8 "8"
-#define ATTR_JSON_JACK_RELAY_VALUE_7 "7"
-#define ATTR_JSON_JACK_RELAY_VALUE_6 "6"
-#define ATTR_JSON_JACK_RELAY_VALUE_5 "5"
-#define ATTR_JSON_JACK_RELAY_VALUE_4 "4"
-
-#define ATTR_JSON_IP_PORT_JACK_VALUE "IP_PORT_JACK"
+#define ATTR_JSON_IP_PORT_VALUE "IP_PORT"
 #define ATTR_JSON_ID_ROOM_VALUE "ID_ROOM"
 #define ATTR_JSON_ID_TIMER_VALUE "ID_TIMER"
 
@@ -85,7 +77,7 @@ typedef struct
     char idSmartDevice[10];
     char idRoom[10];
     char nameSmartDevice [20];
-    char ip_port_jack[20];
+    char ip_port[20];
 }SmartDevice;
 
 typedef struct

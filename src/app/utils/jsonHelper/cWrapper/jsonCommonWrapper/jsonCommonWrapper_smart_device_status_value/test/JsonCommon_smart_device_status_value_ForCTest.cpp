@@ -38,7 +38,7 @@ protected:
  */
 TEST_F(JsonCommon_smart_device_status_value_ForCTest, TestisSensorMessageForC_RESULT_OK)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:UNACTIVE:OFF:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:UNACTIVE:OFF:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
     bool status = isSensorMessageForC(message.c_str());
 
     EXPECT_TRUE(status);
@@ -98,7 +98,7 @@ TEST_F(JsonCommon_smart_device_status_value_ForCTest, TestisSensorMessageForC_RE
  */
 TEST_F(JsonCommon_smart_device_status_value_ForCTest, TestgetJSONMessageTypeForC_MESSAGE_TYPE_SMART_PLUG_STATUS)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:UNACTIVE:OFF:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:UNACTIVE:OFF:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
     MESSAGE_TYPE messageType;
     getJSONMessageTypeForC(message.c_str(), &messageType);
 
@@ -111,7 +111,7 @@ TEST_F(JsonCommon_smart_device_status_value_ForCTest, TestgetJSONMessageTypeForC
  */
 TEST_F(JsonCommon_smart_device_status_value_ForCTest, TestgetJSONMessageTypeForC_DEFAULT_TYPE)
 {
-    std::string message("MESSAGE_TYPE_DEFAULT;SD001:UNACTIVE:OFF:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("MESSAGE_TYPE_DEFAULT;SD001:UNACTIVE:OFF:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
     MESSAGE_TYPE messageType;
     getJSONMessageTypeForC(message.c_str(), &messageType);
 

@@ -23,7 +23,6 @@
 
 /*!
  * Test message from Arduino.
- * Template: "PlugStatus;IPAddress:Port"
  */
 bool isSensorMessage(const std::string& message)
 {
@@ -58,6 +57,9 @@ bool isSensorMessage(const std::string& message)
     return true;
 }
 
+/*!
+ * Function split message to critial something.
+ */
 std::vector<std::string> splitWordRegex(const std::string& message,
                             const std::string& splitter)
 {
@@ -79,15 +81,10 @@ std::vector<std::string> splitWordRegex(const std::string& message,
 
 /*!
  * Test JSON Message Type.
- * SMART_PLUG_MESSAGE_VALUE is "P".
- * "P" define feature Plug send JSON message.
+ * Each feature has special Message Type
  */
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
-    std::vector<std::string> token = splitWordRegex(message,
-                                    std::string(SEMICOLON_SPLITTER));
-    std::string strMessageType = token[0].c_str();
-
     if (strMessageType == MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE)  
     {
         return MESSAGE_TYPE_SMART_DEVICE_STATUS;

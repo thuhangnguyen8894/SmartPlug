@@ -5,7 +5,7 @@
         "ID_DEVICE" : "SD001",
         "ELECTRIC_STATUS_VALUE" : "ON",
         "RELAY_STATUS_VALUE" : "ACTIVE",
-        "IP_PORT_JACK" : "192.168.0.100:8800:8",
+        "IP_PORT_JACK" : "192.168.0.100:8800",
         "ID_ROOM" : "R0001"
     },
     "timer" :

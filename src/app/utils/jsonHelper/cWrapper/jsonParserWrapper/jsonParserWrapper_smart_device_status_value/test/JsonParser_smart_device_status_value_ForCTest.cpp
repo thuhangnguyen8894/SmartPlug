@@ -63,7 +63,7 @@ TEST_F(JsonParser_smart_device_status_value_ForCTest, TestparseDataSmartDeviceJs
     EXPECT_TRUE(strcmp(info.device.idSmartDevice, "SD001") == 0);
     EXPECT_TRUE(strcmp(info.device_timer.stateRelay, "ACTIVE") == 0);
     EXPECT_TRUE(strcmp(info.device_timer.stateElectric, "ON") == 0);
-    EXPECT_TRUE(strcmp(info.device.ip_port_jack, "192.168.0.100:8800:8") == 0);
+    EXPECT_TRUE(strcmp(info.device.ip_port, "192.168.0.100:8800") == 0);
     EXPECT_TRUE(strcmp(info.device.idRoom, "R0001") == 0);
 
     EXPECT_TRUE(strcmp(info.timer.idTimer, "TI00000001") == 0);
