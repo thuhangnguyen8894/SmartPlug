@@ -138,8 +138,8 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
     }
     try
     {
-        (this->prep_stmt)->setString(1, device.timer.idTimer);
-        (this->prep_stmt)->setString(2, device.device.idSmartDevice);
+        (this->prep_stmt)->setString(1, device.device_timer.idTimer);
+        (this->prep_stmt)->setString(2, device.device_timer.idSmartDevice);
         (this->prep_stmt)->setString(3, device.device_timer.stateElectric);
         (this->prep_stmt)->setString(4, device.device_timer.stateRelay);
 

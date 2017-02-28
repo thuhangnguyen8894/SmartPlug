@@ -210,10 +210,13 @@ void sendSmartPlugStatus()
 
     /*!
      * Determine the category of message
-     */
-    // read value 
-    //Hasn't electric: from 0.0514 to 0.0714
-    //Has electric: from 0.3714 to 1.9914  
+     *
+     *****************************************
+     *!
+     * Read value 
+     * Hasn't electric: from 0.0514 to 0.0714
+     * Has electric: from 0.3714 to 1.9914 
+     */  
     if(currentElectric >= minOffElectric && currentElectric <= maxOffElectric)
     {
       status_after = false;
@@ -229,35 +232,38 @@ void sendSmartPlugStatus()
 
     /*!
      * Handle send message when status_before and status_after different 
-     */
-     /*!
-      * Test status of device use electric
+     *
+     *******************************************************************
+     *!
+      * Format message type 
       */
     strcat(msg, "SMART_DEVICE_STATUS_VALUE");
     strcat(msg, ";");
     strcat(msg, "SD001");
     strcat(msg, ":");
 
-    if (status_before != status_after)
+    /*!
+     * declare variable contain status of Relay
+     */
+    int statusRelay = digitalRead(jackRelay);
+    
+    if (statusRelay == HIGH)
     {
-      if (status_after == true)
+      if (status_before != status_after)
       {
-        strcat(msg, "ON");
-        strcat(msg, ":");
-
-        /*!
-         * Test status of electric
-         */
-        if (digitalRead(jackRelay) == HIGH)
+        if (status_after == true)
         {
+          strcat(msg, "ON");
+          strcat(msg, ":");
           strcat(msg, "ACTIVE");
           strcat(msg, ":");
           strcat(msg, jackRelayPoint);
         }
-
-        else if (digitalRead(jackRelay) == LOW)
+        else
         {
-          strcat(msg, "UNACTIVE");
+          strcat(msg, "OFF");
+          strcat(msg, ":");
+          strcat(msg, "ACTIVE");
           strcat(msg, ":");
           strcat(msg, jackRelayPoint);
         }
@@ -265,40 +271,6 @@ void sendSmartPlugStatus()
         strcat(msg, ":");
         strcat(msg, "R0001");
 
-        Serial.println(msg);
-
-        /*!
-         * Send the message
-         */
-        udp.beginPacket(server, serverPort);
-        udp.write(msg, strlen(msg) * sizeof(msg));
-        udp.endPacket();
-      }
-      else
-      {
-        strcat(msg, "OFF");
-        strcat(msg, ":");
-
-        /*!
-         * Test status of electric
-         */
-        if (digitalRead(jackRelay) == HIGH)
-        {
-          strcat(msg, "ACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
-        }
-
-        else if (digitalRead(jackRelay) == LOW)
-        {
-          strcat(msg, "UNACTIVE");
-          strcat(msg, ":");
-          strcat(msg, jackRelayPoint);
-        }
-
-        strcat(msg, ":");
-        strcat(msg, "R0001");
-        
         Serial.println(msg);
 
         /*!
@@ -310,7 +282,47 @@ void sendSmartPlugStatus()
       }
 
       /*!
-       * Update status_before 
+       *  Update the status_before
+       */
+      status_before = status_after;
+    }
+    
+    else if (statusRelay == LOW)
+    {
+      if (status_before != status_after)
+      {
+        if (status_after == true)
+        {
+          strcat(msg, "ON");
+          strcat(msg, ":");
+          strcat(msg, "UNACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
+        else
+        {
+          strcat(msg, "OFF");
+          strcat(msg, ":");
+          strcat(msg, "UNACTIVE");
+          strcat(msg, ":");
+          strcat(msg, jackRelayPoint);
+        }
+
+        strcat(msg, ":");
+        strcat(msg, "R0001");
+
+        Serial.println(msg);
+
+        /*!
+         * Send the message
+         */
+        udp.beginPacket(server, serverPort);
+        udp.write(msg, strlen(msg) * sizeof(msg));
+        udp.endPacket();
+      }
+
+      /*!
+       *  Update the status_before
        */
       status_before = status_after;
     }
@@ -326,6 +338,9 @@ void sendSmartPlugStatus()
     }
 }
 
+/*
+ * get jack relay
+ */
 char* getValueRelay(int jackRelay)
 {
   char* valueJackRelay = new char[2];

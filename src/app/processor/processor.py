@@ -112,8 +112,8 @@ class Processor(threading.Thread):
     def insert_to_table_Device_Timer_ForC(self, cdevice_timer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
-        info.timer.idTimer = cdevice_timer.idTimer
-        info.device.idSmartDevice = cdevice_timer.idSmartDevice
+        info.device_timer.idTimer = cdevice_timer.idTimer
+        info.device_timer.idSmartDevice = cdevice_timer.idSmartDevice
         info.device_timer.stateElectric = cdevice_timer.stateElectric
         info.device_timer.stateRelay = cdevice_timer.stateRelay
 
@@ -127,7 +127,10 @@ class Processor(threading.Thread):
             message = self.sock.recv()
             print("message ",message)
             
-            idSmartDevice, stateRelay, stateElectric, ip_port_jack, idRoom, idTimer, ip, port, monthSD, daySD, yearSD, hourSD, minSD, secSD = self.parseDataSmartDeviceJsonForC(message)
+            idSmartDevice, stateRelay, stateElectric, ip_port_jack, \
+            idRoom, idTimer, ip, port, monthSD, daySD, yearSD, hourSD, \
+            minSD, secSD = self.parseDataSmartDeviceJsonForC(message)
+
             print("idSmartDevice: ", idSmartDevice)
             print("stateRelay: ", stateRelay)
             print("stateElectric: ", stateElectric)
@@ -140,11 +143,11 @@ class Processor(threading.Thread):
             print("Time: " , hourSD, ":" , minSD, ":" , secSD)
 
             ctimer = Timer(idTimer, daySD, monthSD, yearSD, hourSD, minSD, secSD)
+
             cdevice_timer = Device_Timer(idTimer, idSmartDevice, stateElectric, stateRelay)
 
             self.insert_to_table_Timer_ForC(ctimer)
             self.insert_to_table_Device_Timer_ForC(cdevice_timer)
-
 
 
 
