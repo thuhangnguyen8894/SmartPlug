@@ -85,11 +85,11 @@ std::vector<std::string> splitWordRegex(const std::string& message,
  */
 MESSAGE_TYPE getJSONMessageType(const std::string& message)
 {
-    if (strMessageType == MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE)  
+    if (message == MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE)  
     {
         return MESSAGE_TYPE_SMART_DEVICE_STATUS;
     }
-    if (strMessageType == MESSAGE_TYPE_DEFAULT_VALUE)
+    if (message == MESSAGE_TYPE_DEFAULT_VALUE)
     {
         return MESSAGE_TYPE_DEFAULT;
     }

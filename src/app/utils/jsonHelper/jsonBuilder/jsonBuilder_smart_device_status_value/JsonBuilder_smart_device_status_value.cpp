@@ -41,7 +41,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
         return false;
     }
 
-    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE);
+    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, messageType);
 
     return true;
 }
