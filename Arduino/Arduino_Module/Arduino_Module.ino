@@ -18,6 +18,19 @@
 #include <Ethernet.h>
 #include <EthernetUdp.h>
 
+#define RELAY 8
+#define CURRENT_SENSOR A0
+
+#define MESSAGE_TYPE "SMART_DEVICE_STATUS_VALUE"
+#define ID_DEVICE "SD001"
+#define ID_ROOM "R0001"
+#define SEMICOLON_SPLITTER ";"
+#define COLON_SPLITTER ":"
+#define STATUS_RELAY_ACTIVE "ACTIVE"
+#define STATUS_RELAY_UNACTIVE "UNACTIVE"
+#define STATUS_ELECTRIC_ON "ON"
+#define STATUS_ELECTRIC_OFF "OFF"
+
 
 byte mac[] =
 {
@@ -65,16 +78,6 @@ unsigned long lastMoment = 0;
 const unsigned long delayInterval = 1000L;
 
 /*!
- * Power pin Relay
- */
-int jackRelay = 8;
-
-/*!
- * Power pin ACS712
- */
-int acs712 = A0;
-
-/*!
  * Paremeters measure current electric
  */
 int mVperAmp = 185;
@@ -88,45 +91,6 @@ double AmpsRMS = 0;
 float minOffElectric = 0.0514;
 float maxOffElectric = 0.0714;
 float minOnElectric = 0.0714;
-
-/*!
- * Variable implement of message
- */
-char* message_TYPE = new char[50];
-memset(message_TYPE, 0, 50 * sizeof(char));
-strcpy(message_TYPE, "SMART_DEVICE_STATUS_VALUE");
-
-char* id_DEVICE = new char[10];
-memset(id_DEVICE, 0, 10 * sizeof(char));
-strcpy(id_DEVICE, "SD001");
-
-char* id_ROOM = new char[10];
-memset(id_ROOM, 0, 10 * sizeof(char));
-strcpy(id_ROOM, "R0001");
- 
-char* statusRELAY_ACTIVE = new char[10];
-memset(statusRELAY_ACTIVE, 0, 10 * sizeof(char));
-strcpy(statusRELAY_ACTIVE, "ACTIVE");
-
-char* statusRELAY_UNACTIVE = new char[10];
-memset(statusRELAY_UNACTIVE, 0, 10 * sizeof(char));
-strcpy(statusRELAY_UNACTIVE, "UNACTIVE");
-
-char* statusELECTRIC_ON = new char[5];
-memset(statusELECTRIC_ON, 0, 5 * sizeof(char));
-strcpy(statusELECTRIC_ON, "ON");
-
-char* statusELECTRIC_OFF = new char[5];
-memset(statusELECTRIC_OFF, 0, 5 * sizeof(char));
-strcpy(statusELECTRIC_OFF, "OFF");
-
-char* COLON_SPLITTER = new char[2];
-memset(COLON_SPLITTER, 0, 2 * sizeof(char));
-strcpy(COLON_SPLITTER, ":");
-
-char* SEMICOLON_SPLITTER = new char[2];
-memset(SEMICOLON_SPLITTER, 0, 2 * sizeof(char));
-strcpy(SEMICOLON_SPLITTER, ";");
 
 /*!
  * Paremeters quality control current electric when send message
@@ -148,7 +112,7 @@ void setup()
      */
     Ethernet.begin(mac, ip);
 
-    pinMode(jackRelay,OUTPUT);
+    pinMode(RELAY,OUTPUT);
 
     udp.begin(internalPort);
 }
@@ -159,7 +123,7 @@ void loop()
     /*!
      * Turn on power of jackRelay
      */
-    digitalWrite(jackRelay,HIGH);
+    digitalWrite(RELAY,HIGH);
     
     int packetSize = udp.parsePacket();
 
@@ -269,15 +233,15 @@ void sendSmartPlugStatus()
      *!
       * Format message type 
       */
-    strcat(msg, message_TYPE);
+    strcat(msg, MESSAGE_TYPE);
     strcat(msg, SEMICOLON_SPLITTER);
-    strcat(msg, id_DEVICE);
+    strcat(msg, ID_DEVICE);
     strcat(msg, COLON_SPLITTER);
 
     /*!
      * declare variable contain status of Relay
      */
-    int statusRelay = digitalRead(jackRelay);
+    int statusRelay = digitalRead(RELAY);
     
     if (statusRelay == HIGH)
     {
@@ -285,19 +249,19 @@ void sendSmartPlugStatus()
       {
         if (status_after == true)
         {
-          strcat(msg, statusELECTRIC_ON);
+          strcat(msg, STATUS_ELECTRIC_ON);
           strcat(msg, COLON_SPLITTER);
-          strcat(msg, statusRELAY_ACTIVE);
+          strcat(msg, STATUS_RELAY_ACTIVE);
         }
         else
         {
-          strcat(msg, statusELECTRIC_OFF);
+          strcat(msg, STATUS_ELECTRIC_OFF);
           strcat(msg, COLON_SPLITTER);
-          strcat(msg, statusRELAY_ACTIVE);
+          strcat(msg, STATUS_RELAY_ACTIVE);
         }
 
         strcat(msg, COLON_SPLITTER);
-        strcat(msg, id_ROOM);
+        strcat(msg, ID_ROOM);
 
         Serial.println(msg);
 
@@ -321,19 +285,19 @@ void sendSmartPlugStatus()
       {
         if (status_after == true)
         {
-          strcat(msg, statusELECTRIC_ON);
+          strcat(msg, STATUS_ELECTRIC_ON);
           strcat(msg, COLON_SPLITTER);
-          strcat(msg, statusRELAY_UNACTIVE);
+          strcat(msg, STATUS_RELAY_UNACTIVE);
         }
         else
         {
-          strcat(msg, statusELECTRIC_OFF);
+          strcat(msg, STATUS_ELECTRIC_OFF);
           strcat(msg, COLON_SPLITTER);
-          strcat(msg, statusRELAY_UNACTIVE);
+          strcat(msg, STATUS_RELAY_UNACTIVE);
         }
 
         strcat(msg, COLON_SPLITTER);
-        strcat(msg, id_ROOM);
+        strcat(msg, ID_ROOM);
 
         Serial.println(msg);
 
@@ -376,7 +340,7 @@ float getVPP()
   uint32_t start_time = millis();
   while((millis() - start_time) < 1000)
   {
-    readValue = analogRead(acs712);
+    readValue = analogRead(CURRENT_SENSOR);
 
     if(readValue > maxValue)
     {
@@ -398,7 +362,7 @@ float getVPP()
 double getAmpsRMS()
 {
   Voltage = getVPP();
-  int value = analogRead(acs712);
+  int value = analogRead(CURRENT_SENSOR);
 
   VRMS = (Voltage/2.0) * 0.707;
   AmpsRMS = (VRMS * 1000) / mVperAmp;

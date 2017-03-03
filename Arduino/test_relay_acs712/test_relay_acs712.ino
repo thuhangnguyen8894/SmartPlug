@@ -26,7 +26,7 @@ void loop() {
   Serial.println("Amps RMS: ");
   Serial.print(AmpsRMS);
   
-  delay(200);
+  delay(1000);
 }
 
 float getVPP()
@@ -35,7 +35,7 @@ float getVPP()
 
   int readValue;
   int maxValue = 0;
-  int minValue = 1024;
+  int minValue = 1023;
 
   uint32_t start_time = millis();
   while((millis() - start_time) < 1000)
@@ -51,7 +51,7 @@ float getVPP()
       minValue = readValue;
     }
   }
-  result = ((maxValue - minValue) * 5.0) / 1024.0;
+  result = ((maxValue - minValue) * 5.0) / 1023.0;
 
   return result;
 }

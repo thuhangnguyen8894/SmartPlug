@@ -44,7 +44,7 @@ protected:
 TEST_F(JsonBuilder_smart_device_status_value_ForCTest, TestbuildJsonForC_RESULT_OK)
 {
     char* jsonString = NULL;
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:ACTIVE:ON:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:ON:ACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
 
     boost::property_tree::ptree expectedTree;
     char* rootENV = std::getenv("LIDT_ROOT");

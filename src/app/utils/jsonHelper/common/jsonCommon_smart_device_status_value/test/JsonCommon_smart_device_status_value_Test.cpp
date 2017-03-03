@@ -40,7 +40,7 @@ protected:
  */
 TEST_F(JsonCommon_smart_device_status_value_Test, TestisSensorMessage_RESULT_OK)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:OFF:UNACTIVE:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
     bool status = isSensorMessage(message);
     EXPECT_TRUE(status);
 }
@@ -95,7 +95,7 @@ TEST_F(JsonCommon_smart_device_status_value_Test, TestisSensorMessage_RESULT_FAI
  */
 TEST_F(JsonCommon_smart_device_status_value_Test, TestgetJSONMessageType_MESSAGE_TYPE_SMART_PLUG_STATUS)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:OFF:UNACTIVE:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_SMART_DEVICE_STATUS);
 }
@@ -106,7 +106,7 @@ TEST_F(JsonCommon_smart_device_status_value_Test, TestgetJSONMessageType_MESSAGE
  */
 TEST_F(JsonCommon_smart_device_status_value_Test, TestgetJSONMessageType_DEFAULT_TYPE)
 {
-    std::string message("MESSAGE_TYPE_DEFAULT;SD001:OFF:UNACTIVE:8:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("MESSAGE_TYPE_DEFAULT");
     MESSAGE_TYPE messageType = getJSONMessageType(message);
     EXPECT_EQ(messageType, MESSAGE_TYPE_DEFAULT);
 }

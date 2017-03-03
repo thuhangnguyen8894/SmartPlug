@@ -67,12 +67,12 @@ TEST_F(JsonParser_smart_device_status_value_ForCTest, TestparseDataSmartDeviceJs
     EXPECT_TRUE(strcmp(info.device.idRoom, "R0001") == 0);
 
     EXPECT_TRUE(strcmp(info.timer.idTimer, "TI00000001") == 0);
-    EXPECT_TRUE(info.timer.monthSP == 1);
-    EXPECT_TRUE(info.timer.daySP == 18);
-    EXPECT_TRUE(info.timer.yearSP == 2017);
-    EXPECT_TRUE(info.timer.hourSP == 21);
-    EXPECT_TRUE(info.timer.minSP == 59);
-    EXPECT_TRUE(info.timer.secSP == 00);
+    EXPECT_TRUE(info.timer.monthSD == 1);
+    EXPECT_TRUE(info.timer.daySD == 18);
+    EXPECT_TRUE(info.timer.yearSD == 2017);
+    EXPECT_TRUE(info.timer.hourSD == 21);
+    EXPECT_TRUE(info.timer.minSD == 59);
+    EXPECT_TRUE(info.timer.secSD == 00);
     EXPECT_TRUE(info.sender.port == 8800);
     EXPECT_TRUE(strcmp(info.sender.ip, "192.168.0.100") == 0);
 }

@@ -72,8 +72,8 @@ TEST_F(JsonBuilder_smart_device_status_value_Test, TestbuildDataSmartDeviceJson_
     
     boost::property_tree::ptree expectedTree;
     expectedTree.put("ID_DEVICE", "SD001");
-    expectedTree.put("RELAY_STATUS_VALUE", "ACTIVE");
     expectedTree.put("ELECTRIC_STATUS_VALUE", "ON");
+    expectedTree.put("RELAY_STATUS_VALUE", "ACTIVE");
     expectedTree.put("IP_PORT", "192.168.0.100:8800");
     expectedTree.put("ID_ROOM", "R0001");
 

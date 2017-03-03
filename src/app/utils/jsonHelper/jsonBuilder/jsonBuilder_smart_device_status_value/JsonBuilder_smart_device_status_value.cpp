@@ -41,7 +41,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
         return false;
     }
 
-    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, messageType);
+    messageTypeTree.put(ATTR_JSON_MESSAGE_TYPE, MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE);
 
     return true;
 }
@@ -56,14 +56,6 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
     /*!
      * 
      */
-    if (getJSONMessageType(message) == MESSAGE_TYPE_DEFAULT)
-    {
-        return false;
-    }
-
-    /*!
-     * 
-     */
     std::vector<std::string> token = splitWordRegex(message,
                                     std::string(COLON_SPLITTER));
     if (token.size() != JSON_DATA_SIZE)
@@ -74,8 +66,7 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
     std::string strIdDevice = token[0].c_str();
     std::string strElectricStatus = token[1].c_str();
     std::string strRelayStatus = token[2].c_str();
-    std::string strJackRelay = token[3].c_str();
-    std::string strIdRoom = token[4].c_str();
+    std::string strIdRoom = token[3].c_str();
 
     /*!
      *
@@ -120,7 +111,7 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
     /*!
      * 
      */
-    dataTree.put(ATTR_JSON_ID_ROOM_VALUE, token[4]);
+    dataTree.put(ATTR_JSON_ID_ROOM_VALUE, token[3]);
 
     return true;
 }
@@ -198,6 +189,17 @@ STATIC bool buildSenderJSON(const std::string& ipAddress,
     return true;
 }
 
+/*!
+ * @internal
+ * Write JSON
+ */
+std::string writeJsonToString(boost::property_tree::ptree& pTree)
+{
+    std::ostringstream buffer; 
+    boost::property_tree::write_json(buffer, pTree, false); 
+    
+    return buffer.str();
+}
 
 /*!
  * @internal 

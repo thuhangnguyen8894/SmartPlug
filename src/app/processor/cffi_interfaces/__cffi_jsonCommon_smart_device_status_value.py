@@ -37,7 +37,7 @@ jsonCommon_smart_device_status_value_cffi.cdef("""
 
    #define MAX_SMART_DEVICE_STATUS_VALUE 102
    #define JSON_TOKEN_SIZE 3
-   #define JSON_DATA_SIZE 5
+   #define JSON_DATA_SIZE 4
    #define SENDER_TOKEN_SIZE 2
    #define DATE_TIME_TOKEN_SIZE 3
    #define STATUS_TOKEN_SIZE 2
