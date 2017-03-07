@@ -21,10 +21,10 @@ mysql> CREATE TABLE Device_Timer(
 mysql> CREATE TABLE SmartDevice(
     -> idSmartDevice CHAR(10),
     -> nameSmartDevice CHAR(20),
-    -> ip_port_jack CHAR(20),
+    -> ip_port CHAR(20),
     -> idRoom CHAR(10),
     -> PRIMARY KEY(idSmartDevice),
-    -> UNIQUE KEY(ip_port_jack));
+    -> UNIQUE KEY(ip_port));
 
 mysql> CREATE TABLE Room( idRoom CHAR(10), nameRoom CHAR(20), PRIMARY KEY(idRoom));
 
