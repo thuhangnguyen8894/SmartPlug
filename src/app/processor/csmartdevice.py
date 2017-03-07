@@ -1,6 +1,16 @@
 class SmartDevice:
-	def __init__(self, idSmartDevice,  nameSmartDevice, ip_port_jack, idRoom):
-        self.idSmartDevice  = idSmartDevice
-        self.nameSmartDevice = nameSmartDevice
-        self.ip_port_jack = ip_port_jack
-        self.idRoom = idRoom
+
+	def __init__(self, idSmartDevice, ip_port, idRoom, nameSmartDevice, listIdTimer = None):
+		self.idSmartDevice = idSmartDevice
+		self.ip_port = ip_port
+		self.idRoom = idRoom
+		self.nameSmartDevice = nameSmartDevice
+
+		if listIdTimer is None:
+			self.listIdTimer = []
+		else:
+			self.listIdTimer = listIdTimer
+
+	def addEmplementIdTimer(self, idTimer):
+		self.listIdTimer.append(idTimer)
+		return self.listIdTimer

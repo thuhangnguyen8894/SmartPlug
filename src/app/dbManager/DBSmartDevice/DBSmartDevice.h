@@ -5,6 +5,7 @@
 #include <sstream>
 #include <memory>
 #include <string>
+#include <string.h>
 #include <stdexcept>
 
 #include <mysql_driver.h>
@@ -23,7 +24,7 @@
 #define DBHOST "tcp://127.0.0.1:3306"
 #define USER "root"
 #define PASSWORD "root"
-#define DATABASE "SMARTDEVICE"
+#define DATABASE "TRIAL"
 
 class DBSmartDevice
 {
@@ -38,6 +39,7 @@ public:
 
     bool insert_to_table_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
     bool insert_to_table_Device_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
+    bool select_idTimer_to_table_Timer(sql::Connection* conn, SmartDeviceInfo& device);
 
 private:
     sql::PreparedStatement* prep_stmt;

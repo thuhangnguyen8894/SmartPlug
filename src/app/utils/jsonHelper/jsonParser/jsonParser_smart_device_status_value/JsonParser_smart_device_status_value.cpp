@@ -150,7 +150,7 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     /**!
      ** Put value into Structure
      **/
-    strcpy(info.device.idSmartDevice, idSmartDeviceStr.c_str());
+    strcpy(info.device_timer.idSmartDevice, idSmartDeviceStr.c_str());
     strcpy(info.device_timer.stateRelay, relayStatusValueStr.c_str());
     strcpy(info.device_timer.stateElectric, electricStatusValueStr.c_str());
     strcpy(info.device.ip_port, ipPortStr.c_str());

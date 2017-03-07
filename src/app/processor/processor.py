@@ -18,23 +18,18 @@ import zmq
 
 from ctimer import Timer
 from cdevice_timer import Device_Timer
+from csmartdevice import SmartDevice
 
 import optionParser
 
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value 
-                    import jsonCommon_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value 
-                    import jsonCommon_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_c
 
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value 
-                    import jsonParser_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value 
-                    import jsonParser_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_c
 
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value 
-                    import jsonBuilder_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value 
-                    import jsonBuilder_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_cffi
+from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_c
 
 from cffi_interfaces.__cffi_messageSender import messageSender_cffi
 from cffi_interfaces.__cffi_messageSender import messageSender_c
@@ -76,7 +71,7 @@ class Processor(threading.Thread):
         
         jsonParser_smart_device_status_value_c.parseDataSmartDeviceJsonForC(jsonMessage, info);      
 
-        return jsonParser_smart_device_status_value_cffi.string(info[0].device.idSmartDevice), \
+        return jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.idSmartDevice), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateRelay), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateElectric), \
                 jsonParser_smart_device_status_value_cffi.string(info[0].device.ip_port), \
@@ -113,6 +108,10 @@ class Processor(threading.Thread):
         info.timer.minSD = ctimer.minuteSD
         info.timer.secSD = ctimer.secondSD
 
+        print("insert table Timer")
+        print("idTimer: ", info.timer.idTimer)
+        print("monthSD: ", info.timer.monthSD)
+
         DBSmartDevice_c.insert_to_table_Timer_ForC(info);
 
     def insert_to_table_Device_Timer_ForC(self, cdevice_timer):
@@ -123,10 +122,38 @@ class Processor(threading.Thread):
         info.device_timer.stateElectric = cdevice_timer.stateElectric
         info.device_timer.stateRelay = cdevice_timer.stateRelay
 
+        print("insert table Device_Timer")
+        print("idTimer: ", info.device_timer.idTimer)
+        print("idSmartDevice: ", info.device_timer.idSmartDevice)
+        print("stateElectric: ", info.device_timer.stateElectric)
+        print("stateRelay: ", info.device_timer.stateRelay)
+
         DBSmartDevice_c.insert_to_table_Device_Timer_ForC(info);
+        
+
+    def select_idTimer_to_table_Timer_ForC(self, ctimer):
+        info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
+
+        print("select table Timer, step 1:")
+        print("ctimer.idTimer: ", ctimer.idTimer)
+
+        info.timer.idTimer = ctimer.idTimer
+        print("select table Timer, step 2:")
+        print("info.timer.idTimer: ", info.timer.idTimer)
+
+        DBSmartDevice_c.select_idTimer_to_table_Timer_ForC(info);
+
+        print("select table Timer, step 2:") 
+        return DBSmartDevice_cffi.string(info[0].timer.idTimer)
+        print("select table Timer")
+
 
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
+
+        mylist = []
+        smartplug = SmartDevice("SD001", "192.168.0.103:5600", "R0001", mylist)
+        smartlight = SmartDevice("SD002", "192.168.0.104:5600", "R0001", mylist)
         
         while True:
             topic = self.sock.recv()
@@ -140,7 +167,7 @@ class Processor(threading.Thread):
             print("idSmartDevice: ", idSmartDevice)
             print("stateRelay: ", stateRelay)
             print("stateElectric: ", stateElectric)
-            print("ip_port_jack: ", ip_port_jack)
+            print("ip_port: ", ip_port)
             print("idRoom: ", idRoom)
             print("idTimer: ", idTimer)
             print("ip: ", ip)
@@ -157,7 +184,26 @@ class Processor(threading.Thread):
             self.insert_to_table_Timer_ForC(ctimer)
             self.insert_to_table_Device_Timer_ForC(cdevice_timer)
 
+            idTimer_insert_list = self.select_idTimer_to_table_Timer_ForC(ctimer)
+            print("idTimer_insert_list: ", idTimer_insert_list)
 
+            print("ip_port: ", ip_port)
+            print("smartplug.ip_port: ", smartplug.ip_port)
+
+            if smartplug.ip_port == ip_port.decode(encoding = "utf-8"):
+                smartplug.addEmplementIdTimer(idTimer_insert_list)
+                lenListIdTimer = len(smartplug.listIdTimer)
+                print("+------PLUG insert idTimer-------+")
+                for x in range(lenListIdTimer):
+                    print("Plug[", x, "] :", smartplug.listIdTimer[x])
+            elif smartlight.ip_port == ip_port.decode(encoding = "utf-8"):
+                smartlight.addEmplementIdTimer(idTimer_insert_list)
+                lenListIdTimer = len(smartlight.listIdTimer)
+                print("+------LIGHT insert idTimer-------+")
+                for x in range(lenListIdTimer):
+                    print("Light[", x, "] :", smartlight.listIdTimer[x])
+            else:
+                print("DON'T EXIT")
 
 if __name__ == '__main__':
 

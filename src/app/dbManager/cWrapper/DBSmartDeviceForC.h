@@ -20,6 +20,8 @@ bool insert_to_table_Timer_ForC(const SmartDeviceInfo* device);
 
 bool insert_to_table_Device_Timer_ForC(const SmartDeviceInfo* device);
 
+bool select_idTimer_to_table_Timer_ForC(SmartDeviceInfo* device);
+
 #ifdef __cplusplus
 }
 #endif

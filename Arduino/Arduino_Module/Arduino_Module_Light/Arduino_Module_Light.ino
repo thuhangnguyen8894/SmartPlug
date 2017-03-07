@@ -22,7 +22,7 @@
 #define CURRENT_SENSOR A0
 
 #define MESSAGE_TYPE "SMART_DEVICE_STATUS_VALUE"
-#define ID_DEVICE "SD001"
+#define ID_DEVICE "SD002"
 #define ID_ROOM "R0001"
 #define SEMICOLON_SPLITTER ";"
 #define COLON_SPLITTER ":"
@@ -50,7 +50,7 @@ int serverPort = 8787;
 /*!
  * Ethernet Shield's IP
  */
-IPAddress ip(192, 168, 0, 103);
+IPAddress ip(192, 168, 0, 104);
 
 /*!
  * Ethernet Shield's port

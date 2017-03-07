@@ -11,7 +11,6 @@
 bool insert_to_table_Timer_ForC(const SmartDeviceInfo* device)
 {
 	sql::Connection* con;
-
 	DBSmartDevice db;
 
 	bool status = db.insert_to_table_Timer(con, *device);
@@ -21,9 +20,17 @@ bool insert_to_table_Timer_ForC(const SmartDeviceInfo* device)
 bool insert_to_table_Device_Timer_ForC(const SmartDeviceInfo* device)
 {
 	sql::Connection* con;
-
 	DBSmartDevice db;
 
 	bool status = db.insert_to_table_Device_Timer(con, *device);
+	return status;
+}
+
+bool select_idTimer_to_table_Timer_ForC(SmartDeviceInfo* device)
+{
+	sql::Connection* con;
+	DBSmartDevice db;
+
+	bool status = db.select_idTimer_to_table_Timer(con, *device);
 	return status;
 }

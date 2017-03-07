@@ -20,7 +20,7 @@ void loop() {
 
   int value = analogRead(acs712);
   Serial.println(acs712);
-  VRMS = (Voltage/2.0) * 0.707;
+  VRMS = (Voltage/2.0) * 0.70711;
   AmpsRMS = (VRMS * 1000) / mVperAmp;
   
   Serial.println("Amps RMS: ");

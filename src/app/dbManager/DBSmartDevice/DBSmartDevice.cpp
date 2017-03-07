@@ -138,17 +138,21 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
     }
     std::string sql("INSERT INTO Device_Timer(idTimer, idSmartDevice, stateElectric, stateRelay) VALUE(?,?,?,?)");
     this->prep_stmt = conn->prepareStatement(sql);
+
+    
+
     if (this->prep_stmt == NULL)
     {
         return false;
     }
     try
     {
+        
         (this->prep_stmt)->setString(1, device.device_timer.idTimer);
         (this->prep_stmt)->setString(2, device.device_timer.idSmartDevice);
         (this->prep_stmt)->setString(3, device.device_timer.stateElectric);
         (this->prep_stmt)->setString(4, device.device_timer.stateRelay);
-
+        
         int updateCount = prep_stmt->executeUpdate();
 
         if(updateCount > 0)
@@ -160,6 +164,14 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
     catch(sql::SQLException& e)
     {
         conn->rollback();
+
+        /**/
+        std::cout << "rollback: " <<std::endl;
+
+        /**/
+        std::cout << "#ERR: " << e.what();
+        std::cout << " (MySQL error code: " << e.getErrorCode();
+        std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
         return false;
     }
     dbSmartDevice->closeConn();
@@ -168,37 +180,80 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
 /*
  *
  */
-/*std::string DBSmartDevice::getIdTableSmartDevice(sql::Connection* conn, const std::string& ip_port_jack)
+bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDeviceInfo& device)
 {
-    std::string idSmartDeviceStr = "";
-
     DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
 
-    dbSmartDevice->getConn(this->user, this->password, this->url);
-
-    std::string sql = "SELECT idSmartDevice FROM Device_Timer WHERE ip_port_jack = ?";
-    
-    (this->prep_stmt)->setString(1,ip_port_jack);
-
-    this->prep_stmt = conn->prepareStatement(sql);
-
-    this->res = prep_stmt->executeQuery();
-
-    stmt = conn->createStatement();
-    std::string sql = "SELECT idSmartDevice FROM Device_Timer WHERE ip_port_jack = '" + ip_port_jack + "'";
-    this->res = stmt->executeQuery(sql);
-
-
-    while(res->next())
+    conn = dbSmartDevice->getConn(this->user, this->password, this->url);
+    if (conn == NULL)
     {
-        idSmartDeviceStr = res->getString("idSmartDevice");
+        /**/
+        std::cout << "conn NULL" << std::endl;
+       return false; 
     }
-    conn->commit();
+
+    /**/
+        std::cout << "STEP 1: " << std::endl;
+        std::cout << "device.timer.idTimer: "<< device.timer.idTimer << std::endl;
+
+        std::string timer_idTimerStr(device.timer.idTimer);
+        std::cout << "timer_idTimerStr: "<< timer_idTimerStr << std::endl;
+    /**/
+    this->stmt = conn->createStatement();
+
+    std::string sql = "SELECT idTimer FROM Timer WHERE idTimer = '" + timer_idTimerStr + "'";
+
+    /**/
+        std::cout << "STEP 2: " << std::endl;
+        
+    
+    //(this->prep_stmt)->setString(1, timer_idTimerStr);
+    /**/
+    this->res = stmt->executeQuery(sql);
+    /**/
+        std::cout << "STEP 3: " << std::endl;
+
+    //this->prep_stmt = conn->prepareStatement(sql);
+    /**/
+    std::cout << "res: " << this->res <<std::endl;
+
+    try
+    {
+        //this->res = prep_stmt->executeQuery();
+        if (this->res == NULL)
+        {
+            /**/
+            std::cout << "res NULL" << std::endl;
+            return false;
+        }
+
+        while((this->res)->next())
+        {
+            std::string idTimerStr = (this->res)->getString("idTimer");
+            strcpy(device.device_timer.idTimer, idTimerStr.c_str());
+
+            /**/
+            std::cout << "device.timer.idTimer: " << device.device_timer.idTimer << std::endl;
+        }
+        conn->commit();
+        return true;
+    }
+    catch(sql::SQLException& e)
+    {
+        conn->rollback();
+
+        /**/
+        std::cout << "rollback: " <<std::endl;
+
+        /**/
+        std::cout << "#ERR: " << e.what();
+        std::cout << " (MySQL error code: " << e.getErrorCode();
+        std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+        return false;
+    }
 
     dbSmartDevice->closeConn();
-
-    return idSmartDeviceStr;
-}*/
+}
 
 /*
  * Function update statusElectric and statusRelay in table Device_Timer
