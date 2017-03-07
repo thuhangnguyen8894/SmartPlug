@@ -10,6 +10,7 @@ Modified History
 2017-Jan-18 Modified tn-trang.tran@outlook.com
 2017-Jan-19 Modified thuhang.nguyen8894@gmail.com
 2017-Feb-18 Modified tn-trang.tran@outlook.com
+2017-Mar-07 Modified tn-trang.tran@outlook.com
 """
 
 import sys
@@ -50,11 +51,13 @@ class Processor(threading.Thread):
             for item in self.topic:
                 self.sock.setsockopt_string(zmq.SUBSCRIBE, item)
 
+
     def connect(self):
         cmd = "tcp://" + self.host
         cmd = cmd + ":"
         cmd = cmd + self.port
         self.sock.connect(cmd)
+
 
     def subscribeTopic(self, topic):
 
@@ -64,8 +67,12 @@ class Processor(threading.Thread):
             self.topic + topic
 
         for item in topic:
-            self.sock.setsockopt_string(zmq.SUBSCRIBE, item)            
+            self.sock.setsockopt_string(zmq.SUBSCRIBE, item)  
 
+    
+    '''
+       Function parsert infomation of SmartDevice
+    '''
     def parseDataSmartDeviceJsonForC(self, jsonMessage):
         info = jsonParser_smart_device_status_value_cffi.new("SmartDeviceInfo* ");
         
@@ -86,9 +93,11 @@ class Processor(threading.Thread):
                 info[0].timer.minSD, \
                 info[0].timer.secSD
 
+    
     def buildJsonMessage(self, message):
         pass
 
+    
     def sendMessageToArduino(self, message, host, port):
         messageStr = messageSender_cffi.new("char *")
         host = messageSender_cffi.new("char *")
@@ -97,6 +106,10 @@ class Processor(threading.Thread):
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 
+    
+    '''
+       Function insert data to table Timer
+    '''
     def insert_to_table_Timer_ForC(self, ctimer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
@@ -108,12 +121,12 @@ class Processor(threading.Thread):
         info.timer.minSD = ctimer.minuteSD
         info.timer.secSD = ctimer.secondSD
 
-        print("insert table Timer")
-        print("idTimer: ", info.timer.idTimer)
-        print("monthSD: ", info.timer.monthSD)
-
         DBSmartDevice_c.insert_to_table_Timer_ForC(info);
 
+    
+    '''
+       Function insert data to table Device_Timer
+    '''
     def insert_to_table_Device_Timer_ForC(self, cdevice_timer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
@@ -122,32 +135,47 @@ class Processor(threading.Thread):
         info.device_timer.stateElectric = cdevice_timer.stateElectric
         info.device_timer.stateRelay = cdevice_timer.stateRelay
 
-        print("insert table Device_Timer")
-        print("idTimer: ", info.device_timer.idTimer)
-        print("idSmartDevice: ", info.device_timer.idSmartDevice)
-        print("stateElectric: ", info.device_timer.stateElectric)
-        print("stateRelay: ", info.device_timer.stateRelay)
-
         DBSmartDevice_c.insert_to_table_Device_Timer_ForC(info);
-        
 
+    
+    '''
+       Function select idTimer from table Timer
+    '''
     def select_idTimer_to_table_Timer_ForC(self, ctimer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
-
-        print("select table Timer, step 1:")
-        print("ctimer.idTimer: ", ctimer.idTimer)
-
         info.timer.idTimer = ctimer.idTimer
-        print("select table Timer, step 2:")
-        print("info.timer.idTimer: ", info.timer.idTimer)
 
         DBSmartDevice_c.select_idTimer_to_table_Timer_ForC(info);
-
-        print("select table Timer, step 2:") 
         return DBSmartDevice_cffi.string(info[0].timer.idTimer)
-        print("select table Timer")
 
 
+    '''
+       Function append idTimer to list of class csmartdevice
+    '''
+    def append_emplement_to_list_idTimer_of_csmartdevice(self, smartplug, smartlight, ip_port, idTimer):
+        ip_port_decode = ip_port.decode(encoding = "utf-8")
+
+        if smartplug.ip_port == ip_port_decode:
+            smartplug.addEmplementIdTimer(idTimer)
+            lenListIdTimer = len(smartplug.listIdTimer)
+            print("------PLUG insert idTimer------")
+            for x in range(lenListIdTimer):
+                print("Plug[", x, "] :", smartplug.listIdTimer[x])
+
+        elif smartlight.ip_port == ip_port_decode:
+            smartlight.addEmplementIdTimer(idTimer)
+            lenListIdTimer = len(smartlight.listIdTimer)
+            print("------LIGHT insert idTimer------")
+            for x in range(lenListIdTimer):
+                print("Light[", x, "] :", smartlight.listIdTimer[x])
+
+        else:
+            print("DEVEICE NOT EXIST")
+
+    
+    '''
+       Function run
+    '''
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
 
@@ -156,8 +184,8 @@ class Processor(threading.Thread):
         smartlight = SmartDevice("SD002", "192.168.0.104:5600", "R0001", mylist)
         
         while True:
-            topic = self.sock.recv()
-            message = self.sock.recv()
+            topic = self.sock.recv(2)
+            message = self.sock.recv(2)
             print("message ",message)
             
             idSmartDevice, stateRelay, stateElectric, ip_port, \
@@ -184,27 +212,15 @@ class Processor(threading.Thread):
             self.insert_to_table_Timer_ForC(ctimer)
             self.insert_to_table_Device_Timer_ForC(cdevice_timer)
 
-            idTimer_insert_list = self.select_idTimer_to_table_Timer_ForC(ctimer)
-            print("idTimer_insert_list: ", idTimer_insert_list)
+            idTimer_insert_csmartdevice = self.select_idTimer_to_table_Timer_ForC(ctimer)
 
-            print("ip_port: ", ip_port)
-            print("smartplug.ip_port: ", smartplug.ip_port)
+            self.append_emplement_to_list_idTimer_of_csmartdevice(smartplug, smartlight, \
+                                                    ip_port, idTimer_insert_csmartdevice)
 
-            if smartplug.ip_port == ip_port.decode(encoding = "utf-8"):
-                smartplug.addEmplementIdTimer(idTimer_insert_list)
-                lenListIdTimer = len(smartplug.listIdTimer)
-                print("+------PLUG insert idTimer-------+")
-                for x in range(lenListIdTimer):
-                    print("Plug[", x, "] :", smartplug.listIdTimer[x])
-            elif smartlight.ip_port == ip_port.decode(encoding = "utf-8"):
-                smartlight.addEmplementIdTimer(idTimer_insert_list)
-                lenListIdTimer = len(smartlight.listIdTimer)
-                print("+------LIGHT insert idTimer-------+")
-                for x in range(lenListIdTimer):
-                    print("Light[", x, "] :", smartlight.listIdTimer[x])
-            else:
-                print("DON'T EXIT")
 
+'''
+    Main
+'''
 if __name__ == '__main__':
 
     if len(sys.argv) < 4:
@@ -214,6 +230,7 @@ if __name__ == '__main__':
     host, port, topic = optionParser.parseCmdLineArg(sys.argv)    
 
     processor = Processor(host, port, topic)
+
     processor.connect()
     
     try:

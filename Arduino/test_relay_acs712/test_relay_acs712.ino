@@ -1,25 +1,43 @@
-int relay = 8;
-int acs712 = A0;
-int mVperAmp = 185;
+  /*
+   * @file test_relay_acs712.ino
+   * @brief test relay.
+   *
+   * Copyright (c) 2017 Trang Tran
+   *
+   * @detail
+   *
+   * Modified History
+   * ---------------
+   * 2017-Feb-10 Modified tn-trang.tran@outlook.com
+   * 2017-Mar-07 Modified tn-trang.tran@outlook.com
+   */
 
+#define RELAY 8
+#define CURRENT_SENSOR A0
+
+int mVperAmp = 185;
 double Voltage = 0;
 double VRMS = 0;
 double AmpsRMS = 0;
 
 void setup() {
-  // put your setup code here, to run once:
+  /*!
+   * put your setup code here, to run once:
+   */
   Serial.begin(9600);
-  pinMode(relay,OUTPUT);
+  pinMode(RELAY,OUTPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  digitalWrite(relay,HIGH);
+  /*!
+   * put your main code here, to run repeatedly:
+   */
+  digitalWrite(RELAY,HIGH);
 
   Voltage = getVPP();
 
-  int value = analogRead(acs712);
-  Serial.println(acs712);
+  int value = analogRead(CURRENT_SENSOR);
+  Serial.println(CURRENT_SENSOR);
   VRMS = (Voltage/2.0) * 0.70711;
   AmpsRMS = (VRMS * 1000) / mVperAmp;
   
@@ -40,7 +58,7 @@ float getVPP()
   uint32_t start_time = millis();
   while((millis() - start_time) < 1000)
   {
-    readValue = analogRead(acs712);
+    readValue = analogRead(CURRENT_SENSOR);
 
     if(readValue > maxValue)
     {
@@ -55,4 +73,3 @@ float getVPP()
 
   return result;
 }
-

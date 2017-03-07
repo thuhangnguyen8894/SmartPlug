@@ -1,5 +1,5 @@
 {
-    "MESSAGE_TYPE" : "SMART_PLUG_STATUS_VALUE",
+    "MESSAGE_TYPE" : "SMART_DEVICE_STATUS_VALUE",
     "data" : 
     {
         "smartDevice":

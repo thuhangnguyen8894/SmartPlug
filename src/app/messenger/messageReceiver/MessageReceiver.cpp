@@ -63,8 +63,6 @@ void MessageReceiver::run()
     void *publisher = zmq_socket (context, ZMQ_PUB);
     zmq_bind(publisher, "tcp://*:5563");
 
-    
-
     while(!this->stop)
     {
         if (this->socket.poll(span, Poco::Net::Socket::SELECT_READ))
@@ -99,6 +97,7 @@ void MessageReceiver::run()
                 {
                     if (!buildJson(s_pBuffer, jsonString))
                     {
+                        std::cout << "buildJson ERROR" << std::endl;
                         continue;
                     }
 
@@ -107,6 +106,7 @@ void MessageReceiver::run()
                     std::string topic = convertMessageTypeToStr(messageType);
                     s_sendmore (publisher, (char*)topic.c_str());
                     s_send (publisher, (char*)jsonString.c_str());
+                    std::cout << "send SUCCESSFULL" << std::endl;
                     sleep (1);
                 }
 

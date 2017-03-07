@@ -1,17 +1,18 @@
   /*
- * @file Arduino_Module.ino
- * @brief Handle send and receive analog.
- *
- * Copyright (c) 2017 Tien Anh Nguyen
- *
- * @detail
- *
- * Modified History
- * ---------------
- * 2017-Jan-05 Created tien.nguyenan94@gmail.com
- * 2017-Jan-11 Modified tn-trang.tran@outlook.com
- * 2017-Feb-10 Modified tn-trang.tran@outlook.com
- */
+   * @file Arduino_Module_Plus.ino
+   * @brief Handle send and receive analog.
+   *
+   * Copyright (c) 2017 Trang Tran
+   *
+   * @detail
+   *
+   * Modified History
+   * ---------------
+   * 2017-Jan-05 Created  tn-trang.tran@outlook.com
+   * 2017-Jan-11 Modified tn-trang.tran@outlook.com
+   * 2017-Feb-10 Modified tn-trang.tran@outlook.com
+   * 2017-Mar-07 Modified tn-trang.tran@outlook.com
+   */
 
 #include <Time.h>
 #include <SPI.h>
@@ -194,7 +195,7 @@ void sendSmartPlugStatus()
     Serial.println(moment);
 
     /*!
-     * get value of current electric from getAmpsRMS() function
+     * Get value of current electric from getAmpsRMS() function
      */ 
     double currentElectric = getAmpsRMS();
     
@@ -239,7 +240,7 @@ void sendSmartPlugStatus()
     strcat(msg, COLON_SPLITTER);
 
     /*!
-     * declare variable contain status of Relay
+     * Define variable contain status of Relay
      */
     int statusRelay = digitalRead(RELAY);
     
@@ -327,7 +328,7 @@ void sendSmartPlugStatus()
 }
 
 /*!
- * function get AmpsRMS
+ * Function get AmpsRMS
  */
 float getVPP()
 {
@@ -357,7 +358,7 @@ float getVPP()
 }
 
 /*!
- * function get AmpsRMS
+ * Function get AmpsRMS
  */
 double getAmpsRMS()
 {

@@ -19,7 +19,9 @@ DBSmartDevice* DBSmartDevice::getInstance()
     return instance;
 }
 
-/*retrieve information of database */
+/*!
+ * Retrieve information of database 
+ */
 void retrieve_db_metadata(sql::Connection* conn)
 {
     if (conn->isClosed())
@@ -50,7 +52,9 @@ void retrieve_db_metadata(sql::Connection* conn)
           << std::endl;
 }
 
-/*foundation for connect database*/
+/*!
+ * Foundation for connect database
+ */
 sql::Connection* DBSmartDevice::getConn(std::string userName, std::string password, std::string url)
 {
     this->driver = get_driver_instance();
@@ -136,18 +140,17 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
     {
        return false; 
     }
+    
     std::string sql("INSERT INTO Device_Timer(idTimer, idSmartDevice, stateElectric, stateRelay) VALUE(?,?,?,?)");
     this->prep_stmt = conn->prepareStatement(sql);
-
-    
 
     if (this->prep_stmt == NULL)
     {
         return false;
     }
+
     try
     {
-        
         (this->prep_stmt)->setString(1, device.device_timer.idTimer);
         (this->prep_stmt)->setString(2, device.device_timer.idSmartDevice);
         (this->prep_stmt)->setString(3, device.device_timer.stateElectric);
@@ -165,20 +168,18 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
     {
         conn->rollback();
 
-        /**/
         std::cout << "rollback: " <<std::endl;
-
-        /**/
         std::cout << "#ERR: " << e.what();
         std::cout << " (MySQL error code: " << e.getErrorCode();
         std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
         return false;
     }
     dbSmartDevice->closeConn();
 }
 
 /*
- *
+ * Function selected idTimer from table Timer
  */
 bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDeviceInfo& device)
 {
@@ -187,43 +188,18 @@ bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDe
     conn = dbSmartDevice->getConn(this->user, this->password, this->url);
     if (conn == NULL)
     {
-        /**/
-        std::cout << "conn NULL" << std::endl;
        return false; 
     }
 
-    /**/
-        std::cout << "STEP 1: " << std::endl;
-        std::cout << "device.timer.idTimer: "<< device.timer.idTimer << std::endl;
-
-        std::string timer_idTimerStr(device.timer.idTimer);
-        std::cout << "timer_idTimerStr: "<< timer_idTimerStr << std::endl;
-    /**/
+    std::string timer_idTimerStr(device.timer.idTimer);
     this->stmt = conn->createStatement();
-
-    std::string sql = "SELECT idTimer FROM Timer WHERE idTimer = '" + timer_idTimerStr + "'";
-
-    /**/
-        std::cout << "STEP 2: " << std::endl;
-        
-    
-    //(this->prep_stmt)->setString(1, timer_idTimerStr);
-    /**/
+    std::string sql = "SELECT idTimer FROM Timer WHERE idTimer = '" + timer_idTimerStr + "'";   
     this->res = stmt->executeQuery(sql);
-    /**/
-        std::cout << "STEP 3: " << std::endl;
-
-    //this->prep_stmt = conn->prepareStatement(sql);
-    /**/
-    std::cout << "res: " << this->res <<std::endl;
 
     try
     {
-        //this->res = prep_stmt->executeQuery();
         if (this->res == NULL)
         {
-            /**/
-            std::cout << "res NULL" << std::endl;
             return false;
         }
 
@@ -231,9 +207,6 @@ bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDe
         {
             std::string idTimerStr = (this->res)->getString("idTimer");
             strcpy(device.device_timer.idTimer, idTimerStr.c_str());
-
-            /**/
-            std::cout << "device.timer.idTimer: " << device.device_timer.idTimer << std::endl;
         }
         conn->commit();
         return true;
@@ -242,114 +215,13 @@ bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDe
     {
         conn->rollback();
 
-        /**/
         std::cout << "rollback: " <<std::endl;
-
-        /**/
         std::cout << "#ERR: " << e.what();
         std::cout << " (MySQL error code: " << e.getErrorCode();
         std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
         return false;
     }
 
     dbSmartDevice->closeConn();
 }
-
-/*
- * Function update statusElectric and statusRelay in table Device_Timer
- * When Electric is changing status
- */
-//bool DBSmartDevice::update_to_db(sql::Connection* conn, const SmartDeviceInfo& device)
-/*bool DBSmartDevice::update_to_db(sql::Connection* conn, const std::string& stateElectric, const std::string& stateRelay, const std::string& ip_port_jack)
-{   
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
-
-    //create a database connection using the Driver 
-    conn = dbSmartDevice->getConn(this->user, this->password, this->url);
-    if (conn == NULL)
-    {
-       return false; 
-    }
-
-    //using PrepareStatement
-    std::string sql = "UPDATE Device_Timer SET stateElectric = ?, stateRelay = ? WHERE ip_port_jack = ?";
-    this->prep_stmt = conn->prepareStatement(sql);
-    try
-    {
-    	(this->prep_stmt)->setString(1, smartplug.data.status_use_electric);
-    	(this->prep_stmt)->setString(2, smartplug.data.status_electric);
-        (this->prep_stmt)->setString(3, smartplug.data.ip_port_jack);
-
-        (this->prep_stmt)->setString(1, stateElectric);
-        (this->prep_stmt)->setString(2, stateRelay);
-        (this->prep_stmt)->setString(3, ip_port_jack);
-
-    	int updateCount = prep_stmt->executeUpdate();
-
-        if (updateCount > 0)
-        {
-        	conn->commit();
-        	return true;
-        }
-        else 
-        {
-            return false;
-        }
-    }
-    catch(sql::SQLException& e)
-    {
-    	conn->rollback();
-    	return false;
-    }
-    dbSmartDevice->closeConn();
-
-    return true;
-}*/
-
-/*bool DBSmartDevice::delete_to_db(sql::Connection* conn, SmartDeviceInfo& device)
-{
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
-
-    dbSmartDevice->getConn(this->user, this->password, this->url);
-    std::string sql = "DELETE FROM smartplug WHERE id = ?";
-    this->prep_stmt = conn->prepareStatement(sql);
-    try
-    {
-    	(this->prep_stmt)->setString(1,smarplug.getId());
-
-    	int updateCount = prep_stmt->executeUpdate();
-
-    	if (updateCount > 0)
-    	{
-    		conn->commit();
-    		return true;
-    	}
-
-    }
-    catch(sql::SQLException& e)
-    {
-    	conn->rollback();
-    	return false;
-    }
-
-    return true;
-}
-
-void DBSmartDevice::select_to_db(sql::Connection* conn)
-{
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
-
-    dbSmartDevice->getConn(this->user, this->password, this->url);
-    stmt = conn->createStatement();
- 
-    std::string sql = "SELECT * FROM smartplug";
-    this->res = stmt->executeQuery(sql);
-
-    while(res->next())
-    {
-    	std::cout << res->getString("id") <<std::endl;
-    }
-    conn->commit();
-
-    dbSmartDevice->closeConn();
-}*/

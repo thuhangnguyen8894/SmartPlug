@@ -1,3 +1,14 @@
+"""
+File: csmartdevice.py
+=========================
+
+Copyright (c) Trang Tran
+
+Modified History
+----------------
+2017-Mar-01 Created tn-trang.tran@outlook.com
+"""
+
 class SmartDevice:
 
 	def __init__(self, idSmartDevice, ip_port, idRoom, nameSmartDevice, listIdTimer = None):
