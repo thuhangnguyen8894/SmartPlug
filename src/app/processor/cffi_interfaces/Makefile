@@ -14,7 +14,7 @@ CFFI_SRCS = __cffi_jsonCommon.py \
 			__cffi_jsonBuilder.py \
 			__cffi_jsonParser.py \
 			__cffi_messageSender.py \
-			__cffi_DBSmartDevice.py
+			__cffi_dBSmartDevice.py
 
 CFFI_OBJS = $(CFFI_SRCS:.py=.pyc)
 
@@ -27,7 +27,7 @@ LIBDIRS_jsonBuilderForC += $(LIDT_ROOT)/src/app/utils/jsonHelper/cWrapper/jsonBu
 LIBRARY                                            += jsonBuilderForC
 LIBDIRS_messageSenderForC   += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
 LIBRARY                     += messageSenderForC
-LIBDIRS_DBSmartDeviceForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper
+LIBDIRS_dBSmartDeviceForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper
 LIBRARY                     += DBSmartDeviceForC
 
 #-----------------------------------------------------------------------------
