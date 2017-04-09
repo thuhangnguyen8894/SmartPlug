@@ -19,6 +19,7 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include <sstream>
 #include "JsonCommon_smart_device_status_value.h"
 
 /*!

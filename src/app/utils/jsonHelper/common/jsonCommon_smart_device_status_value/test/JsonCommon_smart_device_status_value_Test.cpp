@@ -186,10 +186,10 @@ TEST_F(JsonCommon_smart_device_status_value_Test, TestconvertMessageTypeToStr_RE
  * Expected Result: true
  */
 
-/*TEST_F(JsonCommon_smart_device_status_value_Test, TestconvertJsonStrToPtree_RESULT_OK)
+TEST_F(JsonCommon_smart_device_status_value_Test, TestconvertJsonStrToPtree_RESULT_OK)
 {
     boost::property_tree::ptree pTree;
     std::string message("MESSAGE_TYPE : SMART_DEVICE_STATUS_VALUE");
     bool status = convertJsonStrToPtree(message, pTree);
     EXPECT_TRUE(status);
-}*/
+}
