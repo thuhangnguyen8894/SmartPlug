@@ -87,7 +87,7 @@ void DBSmartDevice::closeConn()
 /*!
  * Function insert data to table Timer
  */
-bool DBSmartDevice::insert_to_table_Timer(sql::Connection* conn, const SmartDeviceInfo& device)
+bool DBSmartDevice::insertToTableTimer(sql::Connection* conn, const SmartDeviceInfo& device)
 {
     DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
 
@@ -131,7 +131,7 @@ bool DBSmartDevice::insert_to_table_Timer(sql::Connection* conn, const SmartDevi
 /*!
  * Function insert data to table Device_Timer
  */
-bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const SmartDeviceInfo& device)
+bool DBSmartDevice::insertToTableDeviceTimer(sql::Connection* conn, const SmartDeviceInfo& device)
 {
     DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
 
@@ -181,7 +181,7 @@ bool DBSmartDevice::insert_to_table_Device_Timer(sql::Connection* conn, const Sm
 /*
  * Function selected idTimer from table Timer
  */
-bool DBSmartDevice::select_idTimer_to_table_Timer(sql::Connection* conn, SmartDeviceInfo& device)
+bool DBSmartDevice::selectIdTimerToTableTimer(sql::Connection* conn, SmartDeviceInfo& device)
 {
     DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
 

@@ -16,11 +16,11 @@ extern "C"{
  * param[in] message
  * return
  */
-bool insert_to_table_Timer_ForC(const SmartDeviceInfo* device);
+bool insertToTableTimerForC(const SmartDeviceInfo* device);
 
-bool insert_to_table_Device_Timer_ForC(const SmartDeviceInfo* device);
+bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device);
 
-bool select_idTimer_to_table_Timer_ForC(SmartDeviceInfo* device);
+bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device);
 
 #ifdef __cplusplus
 }

@@ -54,7 +54,6 @@ jsonParser_cffi.cdef("""
         char idSmartDevice[10];
         char idRoom[10];
         char nameSmartDevice [20];
-        char ip_port[20];
     }SmartDevice;
 
     typedef struct
@@ -63,7 +62,7 @@ jsonParser_cffi.cdef("""
         char idSmartDevice[10];
         char stateElectric[10];
         char stateRelay[10];
-    }Device_Timer;
+    }DeviceTimer;
 
     typedef struct
     {
@@ -95,7 +94,7 @@ jsonParser_cffi.cdef("""
     typedef struct
     {
         SmartDevice device;
-        Device_Timer device_timer;
+        DeviceTimer deviceTimer;
         Sender sender;
         Timer timer;
     }SmartDeviceInfo;

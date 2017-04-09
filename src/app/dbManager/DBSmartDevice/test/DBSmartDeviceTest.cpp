@@ -43,7 +43,7 @@ protected:
  * Test Type      : Equivalence Class Testing
  * Expected Result: true
  */
-TEST_F(DBSmartDeviceTest, Test_insert_to_table_Timer_RESULT_OK)
+TEST_F(DBSmartDeviceTest, Test_insertToTableTimer_RESULT_OK)
 {
     
 }
@@ -52,7 +52,7 @@ TEST_F(DBSmartDeviceTest, Test_insert_to_table_Timer_RESULT_OK)
  * Test Type      : Equivalence Class Testing
  * Expected Result: false
  */
-TEST_F(DBSmartDeviceTest, Test_insert_to_table_Timer_RESULT_FAILUR)
+TEST_F(DBSmartDeviceTest, Test_insertToTableTimer_RESULT_FAILUR)
 {
     
 }
@@ -61,7 +61,7 @@ TEST_F(DBSmartDeviceTest, Test_insert_to_table_Timer_RESULT_FAILUR)
  * Test Type      : Equivalence Class Testing
  * Expected Result: true
  */
-TEST_F(DBSmartDeviceTest, Test_insert_to_table_Device_Timer_RESULT_OK)
+TEST_F(DBSmartDeviceTest, Test_insertToTableDeviceTimer_RESULT_OK)
 {
     
 }
@@ -70,7 +70,7 @@ TEST_F(DBSmartDeviceTest, Test_insert_to_table_Device_Timer_RESULT_OK)
  * Test Type      : Equivalence Class Testing
  * Expected Result: false
  */
-TEST_F(DBSmartDeviceTest, Test_insert_to_table_Device_Timer_RESULT_FAILUR)
+TEST_F(DBSmartDeviceTest, Test_insertToTableDeviceTimer_RESULT_FAILUR)
 {
     
 }
@@ -79,7 +79,7 @@ TEST_F(DBSmartDeviceTest, Test_insert_to_table_Device_Timer_RESULT_FAILUR)
  * Test Type      : Equivalence Class Testing
  * Expected Result: true
  */
-TEST_F(DBSmartDeviceTest, Test_select_idTimer_to_table_Timer_RESULT_OK)
+TEST_F(DBSmartDeviceTest, Test_selectIdTimerToTableTimer_RESULT_OK)
 {
     
 }
@@ -88,7 +88,7 @@ TEST_F(DBSmartDeviceTest, Test_select_idTimer_to_table_Timer_RESULT_OK)
  * Test Type      : Equivalence Class Testing
  * Expected Result: false
  */
-TEST_F(DBSmartDeviceTest, Test_select_idTimer_to_table_Timer_RESULT_FAILUR)
+TEST_F(DBSmartDeviceTest, Test_selectIdTimerToTableTimer_RESULT_FAILUR)
 {
     
 }

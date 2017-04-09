@@ -37,9 +37,9 @@ public:
     static void retrieve_db_metadata(sql::Connection* dbcon);
     void closeConn();
 
-    bool insert_to_table_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
-    bool insert_to_table_Device_Timer(sql::Connection* conn, const SmartDeviceInfo& device);
-    bool select_idTimer_to_table_Timer(sql::Connection* conn, SmartDeviceInfo& device);
+    bool insertToTableTimer(sql::Connection* conn, const SmartDeviceInfo& device);
+    bool insertToTableDeviceTimer(sql::Connection* conn, const SmartDeviceInfo& device);
+    bool selectIdTimerToTableTimer(sql::Connection* conn, SmartDeviceInfo& device);
 
 private:
     sql::PreparedStatement* prep_stmt;

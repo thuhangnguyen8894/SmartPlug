@@ -83,7 +83,7 @@ class Processor(threading.Thread):
     '''
        Function insert data to table Timer
     '''
-    def insert_to_table_Timer_ForC(self, ctimer):
+    def insertToTableTimer(self, ctimer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
         info.timer.idTimer = ctimer.idTimer
@@ -94,13 +94,13 @@ class Processor(threading.Thread):
         info.timer.minSD = ctimer.minuteSD
         info.timer.secSD = ctimer.secondSD
 
-        DBSmartDevice_c.insert_to_table_Timer_ForC(info);
+        DBSmartDevice_c.insertToTableTimerForC(info);
 
     
     '''
        Function insert data to table Device_Timer
     '''
-    def insert_to_table_Device_Timer_ForC(self, cdevice_timer):
+    def insertToTableDeviceTimerForC(self, cdevice_timer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
         info.deviceTimer.idTimer = deviceTimer.idTimer
@@ -108,24 +108,25 @@ class Processor(threading.Thread):
         info.deviceTimer.stateElectric = deviceTimer.stateElectric
         info.deviceTimer.stateRelay = deviceTimer.stateRelay
 
-        DBSmartDevice_c.insert_to_table_Device_Timer_ForC(info);
+        DBSmartDevice_c.insertToTableDeviceTimerForC(info);
 
     
     '''
        Function select idTimer from table Timer
     '''
-    def select_idTimer_to_table_Timer_ForC(self, ctimer):
+    def selectIdTimerToTableTimerForC(self, ctimer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
         info.timer.idTimer = ctimer.idTimer
 
-        DBSmartDevice_c.select_idTimer_to_table_Timer_ForC(info);
+        DBSmartDevice_c.selectIdTimerToTableTimerForC(info);
         return DBSmartDevice_cffi.string(info[0].timer.idTimer)
 
 
     '''
        Function append idTimer to list of class csmartdevice
     '''
-    def append_emplement_to_list_idTimer_of_csmartdevice(self, smartplug, smartlight, ip_port, idTimer):
+    def appendEmplementToListIdTimerOfSmartDevice(self, smartplug, \
+                                                smartlight, ip_port, idTimer):
         ip_port_decode = ip_port.decode(encoding = "utf-8")
 
         if smartplug.ip_port == ip_port_decode:

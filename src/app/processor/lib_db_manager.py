@@ -15,7 +15,7 @@ class LibDBManager(object):
     def insert_time(self, smart_device_info_dict):
         timing_data_ptr = db_mgr_cffi.new("SmartDeviceInfo* ",\
                                           smart-device_info_dict)
-        result = db_mgr_c.insert_to_table_Device_Timer_ForC(timing_data_ptr)
+        result = db_mgr_c.insertToTableDeviceTimerForC(timing_data_ptr)
         if !result:
             raise exceptions.InsertingTableDeviceTimerForCFailure(\
                                  error_messages.ERROR_INSERT_INTO_TIME_TABLE) 
