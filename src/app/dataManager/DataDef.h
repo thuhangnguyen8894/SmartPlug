@@ -18,19 +18,19 @@
 #define ATTR_JSON_MESSAGE_TYPE "MESSAGE_TYPE"
 #define ATTR_JSON_MESSAGE_TYPE_VALUE "SMART_DEVICE_STATUS_VALUE"
 
-#define ATTR_JSON_ID_DEVICE "ID_DEVICE"
+#define ATTR_JSON_ID_DEVICE "idSmartDevice"
 
-#define ATTR_JSON_RELAY_STATUS_VALUE "RELAY_STATUS_VALUE"
+#define ATTR_JSON_RELAY_STATUS_VALUE "stateRelay"
 #define ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE "ACTIVE"
 #define ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE "UNACTIVE"
 
-#define ATTR_JSON_ELECTRIC_STATUS_VALUE "ELECTRIC_STATUS_VALUE"
+#define ATTR_JSON_ELECTRIC_STATUS_VALUE "stateElectric"
 #define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_ON "ON"
 #define ATTR_JSON_ELECTRIC_MESSAGE_VALUE_OFF "OFF"
 
 #define ATTR_JSON_IP_PORT_VALUE "IP_PORT"
-#define ATTR_JSON_ID_ROOM_VALUE "ID_ROOM"
-#define ATTR_JSON_ID_TIMER_VALUE "ID_TIMER"
+#define ATTR_JSON_ID_ROOM_VALUE "idRoom"
+#define ATTR_JSON_ID_TIMER_VALUE "idTimer"
 
 #define MESSAGE_TYPE_DEFAULT_VALUE "MESSAGE_TYPE_DEFAULT"
 #define MESSAGE_TYPE_SMART_DEVICE_STATUS_VALUE "SMART_DEVICE_STATUS_VALUE"
@@ -38,16 +38,16 @@
 #define ATTR_JSON_DATA "data"
 
 #define ATTR_JSON_TIMER "timer"
-#define ATTR_JSON_YEAR "Year"
-#define ATTR_JSON_MONTH "Month"
-#define ATTR_JSON_DAY "Day"
-#define ATTR_JSON_HOUR "Hour"
-#define ATTR_JSON_MINUTES "Minutes"
-#define ATTR_JSON_SECOND "Second"
+#define ATTR_JSON_YEAR "yearSD"
+#define ATTR_JSON_MONTH "monthSD"
+#define ATTR_JSON_DAY "daySD"
+#define ATTR_JSON_HOUR "hourSD"
+#define ATTR_JSON_MINUTES "minSD"
+#define ATTR_JSON_SECOND "secSD"
 
 #define ATTR_JSON_SENDER "sender"
-#define ATTR_JSON_IP "IP"
-#define ATTR_JSON_PORT "Port"
+#define ATTR_JSON_IP "ip"
+#define ATTR_JSON_PORT "port"
 
 typedef enum
 {
@@ -76,8 +76,7 @@ typedef struct
 {
     char idSmartDevice[10];
     char idRoom[10];
-    char nameSmartDevice [20];
-    char ip_port[20];
+    char nameSmartDevice[20];
 }SmartDevice;
 
 typedef struct
@@ -86,7 +85,7 @@ typedef struct
     char idSmartDevice[10];
     char stateElectric[10];
     char stateRelay[10];
-}Device_Timer;
+}DeviceTimer;
 
 typedef struct
 {
@@ -118,7 +117,7 @@ typedef struct
 typedef struct
 {
     SmartDevice device;
-    Device_Timer device_timer;
+    DeviceTimer deviceTimer;
     Sender sender;
     Timer timer;
 }SmartDeviceInfo;
