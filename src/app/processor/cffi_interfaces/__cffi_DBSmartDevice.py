@@ -25,8 +25,8 @@ MYSQL_CONN_INCLUDES = os.path.sep.join((MYSQL_ROOT, 'include'))
 MYSQL_CONN_LIB_DIR = os.path.sep.join((MYSQL_ROOT, 'lib'))
 MYSQL_CONN_LIBS = ["mysqlcppconn", 'stdc++']
 
-DBSmartDevice_cffi = cffi.FFI()
-DBSmartDevice_cffi.cdef("""
+db_mgr_cffi = cffi.FFI()
+db_mgr_cffi.cdef("""
     typedef struct
     {
         char ip[20];
@@ -101,7 +101,7 @@ DBSmartDevice_cffi.cdef("""
     bool select_idTimer_to_table_Timer_ForC(SmartDeviceInfo* device);
 """)
 
-DBSmartDevice_c = DBSmartDevice_cffi.verify("""
+db_mgr_cffi = db_mgr_cffi.verify("""
 
                 #include "DBSmartDeviceForC.h"
                 #include "DataDef.h"

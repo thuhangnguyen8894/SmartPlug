@@ -96,7 +96,7 @@ bool DBSmartDevice::insert_to_table_Timer(sql::Connection* conn, const SmartDevi
     {
        return false; 
     }
-    std::string sql("INSERT INTO Timer(idTimer, daySD, monthSD, yearSD, hourSD, minuteSD, secondSD) VALUE(?,?,?,?,?,?,?)");
+    std::string sql("INSERT INTO Timer(idTimer, day, month, year, hour, min, sec) VALUE(?,?,?,?,?,?,?)");
     this->prep_stmt = conn->prepareStatement(sql);
     if (this->prep_stmt == NULL)
     {

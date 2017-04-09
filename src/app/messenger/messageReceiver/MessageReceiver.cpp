@@ -57,7 +57,7 @@ void MessageReceiver::run()
 {
     this->ready.set();
     Poco::Timespan span(250000);
-    char* pBuffer = new char[this->bufferSize];
+    
 
     void *context = zmq_ctx_new ();
     void *publisher = zmq_socket (context, ZMQ_PUB);
@@ -69,6 +69,7 @@ void MessageReceiver::run()
         {
             try
             {
+                char* pBuffer = new char[this->bufferSize];
                 Poco::Net::SocketAddress sender;
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
 
@@ -104,10 +105,17 @@ void MessageReceiver::run()
                     MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
                     
                     std::string topic = convertMessageTypeToStr(messageType);
-                    s_sendmore (publisher, (char*)topic.c_str());
-                    s_send (publisher, (char*)jsonString.c_str());
+                    s_sendmore (publisher, (char*)topic.c_str());                    
+                   
+                    char* string = (char*)jsonString.c_str();
+                    zmq_send (publisher, string, strlen (string), ZMQ_NOBLOCK);
+                    
                     std::cout << "send SUCCESSFULL" << std::endl;
                     sleep (1);
+                 }                
+                 if (pBuffer != NULL)
+                {                    
+                    delete pBuffer;              
                 }
 
             }
@@ -116,11 +124,6 @@ void MessageReceiver::run()
                 std::cout << "MessageReceiver: " << ex.displayText() << std::endl;
             }
         }
-    }
-
-    if (pBuffer != NULL)
-    {
-        delete pBuffer;
     }
 }
 

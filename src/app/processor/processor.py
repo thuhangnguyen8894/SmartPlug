@@ -17,26 +17,27 @@ import sys
 import threading
 import zmq
 
+import time
+
 from ctimer import Timer
-from cdevice_timer import Device_Timer
-from csmartdevice import SmartDevice
+from deviceTimer import DeviceTimer
+from smartDevice import SmartDevice
 
 import optionParser
 
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonCommon_smart_device_status_value import jsonCommon_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonCommon import jsonCommon_cffi
+from cffi_interfaces.__cffi_jsonCommon import jsonCommon_c
 
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonParser_smart_device_status_value import jsonParser_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonParser import jsonParser_cffi
+from cffi_interfaces.__cffi_jsonParser import jsonParser_c
 
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_cffi
-from cffi_interfaces.__cffi_jsonBuilder_smart_device_status_value import jsonBuilder_smart_device_status_value_c
+from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_cffi
+from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_c
 
 from cffi_interfaces.__cffi_messageSender import messageSender_cffi
 from cffi_interfaces.__cffi_messageSender import messageSender_c
 
-from cffi_interfaces.__cffi_DBSmartDevice import DBSmartDevice_cffi
-from cffi_interfaces.__cffi_DBSmartDevice import DBSmartDevice_c 
+import message_handler
 
 class Processor(threading.Thread):
     def __init__(self, host, port, topic=None):
@@ -68,34 +69,6 @@ class Processor(threading.Thread):
 
         for item in topic:
             self.sock.setsockopt_string(zmq.SUBSCRIBE, item)  
-
-    
-    '''
-       Function parsert infomation of SmartDevice
-    '''
-    def parseDataSmartDeviceJsonForC(self, jsonMessage):
-        info = jsonParser_smart_device_status_value_cffi.new("SmartDeviceInfo* ");
-        
-        jsonParser_smart_device_status_value_c.parseDataSmartDeviceJsonForC(jsonMessage, info);      
-
-        return jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.idSmartDevice), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateRelay), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].device_timer.stateElectric), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].device.ip_port), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].device.idRoom), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].timer.idTimer), \
-                jsonParser_smart_device_status_value_cffi.string(info[0].sender.ip), \
-                info[0].sender.port, \
-                info[0].timer.monthSD, \
-                info[0].timer.daySD, \
-                info[0].timer.yearSD, \
-                info[0].timer.hourSD, \
-                info[0].timer.minSD, \
-                info[0].timer.secSD
-
-    
-    def buildJsonMessage(self, message):
-        pass
 
     
     def sendMessageToArduino(self, message, host, port):
@@ -130,10 +103,10 @@ class Processor(threading.Thread):
     def insert_to_table_Device_Timer_ForC(self, cdevice_timer):
         info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
-        info.device_timer.idTimer = cdevice_timer.idTimer
-        info.device_timer.idSmartDevice = cdevice_timer.idSmartDevice
-        info.device_timer.stateElectric = cdevice_timer.stateElectric
-        info.device_timer.stateRelay = cdevice_timer.stateRelay
+        info.deviceTimer.idTimer = deviceTimer.idTimer
+        info.deviceTimer.idSmartDevice = deviceTimer.idSmartDevice
+        info.deviceTimer.stateElectric = deviceTimer.stateElectric
+        info.deviceTimer.stateRelay = deviceTimer.stateRelay
 
         DBSmartDevice_c.insert_to_table_Device_Timer_ForC(info);
 
@@ -180,43 +153,20 @@ class Processor(threading.Thread):
         print("Processor run on %s:%s" %(self.host, self.port))
 
         mylist = []
-        smartplug = SmartDevice("SD001", "192.168.0.103:5600", "R0001", mylist)
-        smartlight = SmartDevice("SD002", "192.168.0.104:5600", "R0001", mylist)
+        smartplug = SmartDevice("SD001", "192.168.0.103:5600", \
+                                                        "R0001", mylist)
+        smartlight = SmartDevice("SD002", "192.168.0.104:5600", \
+                                                        "R0001", mylist)
         
         while True:
-            topic = self.sock.recv(2)
-            message = self.sock.recv(2)
+            topic = self.sock.recv(2, zmq.NOBLOCK)
+            message = self.sock.recv(2, zmq.NOBLOCK)
             print("message ",message)
-            
-            idSmartDevice, stateRelay, stateElectric, ip_port, \
-            idRoom, idTimer, ip, port, monthSD, daySD, yearSD, hourSD, \
-            minSD, secSD = self.parseDataSmartDeviceJsonForC(message)
-
-            print("idSmartDevice: ", idSmartDevice)
-            print("stateRelay: ", stateRelay)
-            print("stateElectric: ", stateElectric)
-            print("ip_port: ", ip_port)
-            print("idRoom: ", idRoom)
-            print("idTimer: ", idTimer)
-            print("ip: ", ip)
-            print("port: ", port)
-            print("Date: " , monthSD, "/" , daySD, "/" , yearSD)
-            print("Time: " , hourSD, ":" , minSD, ":" , secSD)
-
-            ctimer = Timer(idTimer, daySD, monthSD, yearSD, 
-                                                 hourSD, minSD, secSD)
-
-            cdevice_timer = Device_Timer(idTimer, idSmartDevice, 
-                                            stateElectric, stateRelay)
-
-            self.insert_to_table_Timer_ForC(ctimer)
-            self.insert_to_table_Device_Timer_ForC(cdevice_timer)
-
-            idTimer_insert_csmartdevice = self.select_idTimer_to_table_Timer_ForC(ctimer)
-
-            self.append_emplement_to_list_idTimer_of_csmartdevice(smartplug, smartlight, \
-                                                    ip_port, idTimer_insert_csmartdevice)
-
+            message_processor = message_handler.MessageHandler(topic, message) 
+            message_processor.run()
+            time.sleep(1)
+ 
+        self.sock.close()
 
 '''
     Main
