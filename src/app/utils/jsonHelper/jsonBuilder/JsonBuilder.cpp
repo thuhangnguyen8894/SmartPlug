@@ -50,7 +50,7 @@ STATIC bool buildJsonMessageType(const MESSAGE_TYPE& messageType,
  * @internal 
  * Build status of Smart Plug into name and value of JSON
  */
-STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::string& ip_port, 
+STATIC bool buildDataSmartDeviceJson(const std::string& message, 
                                     boost::property_tree::ptree& dataTree)
 {
     /*!
@@ -106,7 +106,6 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message, const std::stri
     /*!
      * 
      */
-    dataTree.put(ATTR_JSON_IP_PORT_VALUE, ip_port);
 
     /*!
      * 
@@ -228,7 +227,7 @@ bool buildJson(const std::string& message, std::string& jsonString)
         return false;
     }   
 
-    if (!buildDataSmartDeviceJson(token[1].c_str(), token[2].c_str(), dataTree))
+    if (!buildDataSmartDeviceJson(token[1].c_str(), dataTree))
     {
         return false;
     }

@@ -82,13 +82,6 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     std::string electricStatusValueStr = pTree.get<std::string>(jsonElectricStatusValuePath);
 
     /*!
-     * Parse Information of IP_PORT_JACK
-     */
-    std::string ipPortPath = getJsonPath(ATTR_JSON_DATA, 
-                                                ATTR_JSON_IP_PORT_VALUE);
-    std::string ipPortStr = pTree.get<std::string>(ipPortPath);
-
-    /*!
      * Parse Information of ID_ROOM
      */
     std::string idRoomPath = getJsonPath(ATTR_JSON_DATA, 
@@ -153,7 +146,6 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     strcpy(info.deviceTimer.idSmartDevice, idSmartDeviceStr.c_str());
     strcpy(info.deviceTimer.stateRelay, relayStatusValueStr.c_str());
     strcpy(info.deviceTimer.stateElectric, electricStatusValueStr.c_str());
-    strcpy(info.device.ip_port, ipPortStr.c_str());
     strcpy(info.device.idRoom, idRoomStr.c_str());
 
     strcpy(info.timer.idTimer, idTimerStr.c_str());
