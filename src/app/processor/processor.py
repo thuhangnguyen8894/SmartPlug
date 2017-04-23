@@ -47,17 +47,14 @@ class Processor(threading.Thread):
         self.port = port
         self.topic = topic
         self.context = zmq.Context()
-        self.sock = self.context.socket(zmq.SUB)
-
-        if topic != None:
-            for item in self.topic:
-                self.sock.setsockopt_string(zmq.SUBSCRIBE, item)
+        self.sock = self.context.socket(zmq.PAIR)
 
 
     def connect(self):
         cmd = "tcp://" + self.host
         cmd = cmd + ":"
         cmd = cmd + self.port
+        print("cmd: ", cmd)
         self.sock.connect(cmd)
 
 
@@ -161,8 +158,8 @@ class Processor(threading.Thread):
                                                         "R0001", mylist)
         
         while True:
-            topic = self.sock.recv(0, zmq.NOBLOCK)
-            message = self.sock.recv(0, zmq.NOBLOCK)
+            topic = self.sock.recv(2, zmq.NOBLOCK)
+            message = self.sock.recv(2, zmq.NOBLOCK)
             print("message ",message)
             msg_handler = message_handler.MessageHandler(topic, message)
             msg_handler.run()
