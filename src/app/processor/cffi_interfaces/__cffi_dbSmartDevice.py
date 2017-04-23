@@ -100,7 +100,7 @@ db_mgr_cffi.cdef("""
     bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device);
 """)
 
-db_mgr_cffi = db_mgr_cffi.verify("""
+db_mgr_c = db_mgr_cffi.verify("""
 
                 #include "DBSmartDeviceForC.h"
                 #include "DataDef.h"
@@ -110,4 +110,4 @@ db_mgr_cffi = db_mgr_cffi.verify("""
                                 POCO_INCLUDES, MYSQL_CONN_INCLUDES],
                 libraries = DBSMARTDEVICE_FOR_C_LIBS + POCO_LIBS + MYSQL_CONN_LIBS,
                 library_dirs = [LIDT_LIBS, POCO_LIB_DIR, MYSQL_CONN_LIB_DIR],
-                modulename = "__cffi_DBSmartDevice")
+                modulename = "__cffi_dbSmartDevice")

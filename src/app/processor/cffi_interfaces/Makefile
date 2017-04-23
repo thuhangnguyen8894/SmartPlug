@@ -28,7 +28,7 @@ LIBRARY                                            += jsonBuilderForC
 LIBDIRS_messageSenderForC   += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper
 LIBRARY                     += messageSenderForC
 LIBDIRS_dbSmartDeviceForC   += $(LIDT_ROOT)/src/app/dbManager/cWrapper
-LIBRARY                     += DBSmartDeviceForC
+LIBRARY                     += dbSmartDeviceForC
 
 #-----------------------------------------------------------------------------
 CLEAN_DIRS += $(LIDT_ROOT)/src/app/messenger/messageSender/cWrapper

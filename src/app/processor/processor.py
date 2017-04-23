@@ -19,11 +19,12 @@ import zmq
 
 import time
 
-from ctimer import Timer
+from timer import Timer
 from deviceTimer import DeviceTimer
 from smartDevice import SmartDevice
 
 import optionParser
+import message_handler
 
 from cffi_interfaces.__cffi_jsonCommon import jsonCommon_cffi
 from cffi_interfaces.__cffi_jsonCommon import jsonCommon_c
@@ -67,8 +68,8 @@ class Processor(threading.Thread):
         else:    
             self.topic + topic
 
-        for item in topic:
-            self.sock.setsockopt_string(zmq.SUBSCRIBE, item)  
+        # for item in topic:
+        #     self.sock.setsockopt_string(zmq.SUBSCRIBE, item)  
 
     
     def sendMessageToArduino(self, message, host, port):
@@ -80,71 +81,71 @@ class Processor(threading.Thread):
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 
     
-    '''
-       Function insert data to table Timer
-    '''
-    def insertToTableTimer(self, ctimer):
-        info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
+    # '''
+    #    Function insert data to table Timer
+    # '''
+    # def insertToTableTimer(self, ctimer):
+    #     info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
-        info.timer.idTimer = ctimer.idTimer
-        info.timer.monthSD = ctimer.monthSD
-        info.timer.daySD = ctimer.daySD
-        info.timer.yearSD = ctimer.yearSD
-        info.timer.hourSD = ctimer.hourSD
-        info.timer.minSD = ctimer.minuteSD
-        info.timer.secSD = ctimer.secondSD
+    #     info.timer.idTimer = ctimer.idTimer
+    #     info.timer.monthSD = ctimer.monthSD
+    #     info.timer.daySD = ctimer.daySD
+    #     info.timer.yearSD = ctimer.yearSD
+    #     info.timer.hourSD = ctimer.hourSD
+    #     info.timer.minSD = ctimer.minuteSD
+    #     info.timer.secSD = ctimer.secondSD
 
-        DBSmartDevice_c.insertToTableTimerForC(info);
-
-    
-    '''
-       Function insert data to table Device_Timer
-    '''
-    def insertToTableDeviceTimerForC(self, cdevice_timer):
-        info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
-
-        info.deviceTimer.idTimer = deviceTimer.idTimer
-        info.deviceTimer.idSmartDevice = deviceTimer.idSmartDevice
-        info.deviceTimer.stateElectric = deviceTimer.stateElectric
-        info.deviceTimer.stateRelay = deviceTimer.stateRelay
-
-        DBSmartDevice_c.insertToTableDeviceTimerForC(info);
+    #     DBSmartDevice_c.insertToTableTimerForC(info);
 
     
-    '''
-       Function select idTimer from table Timer
-    '''
-    def selectIdTimerToTableTimerForC(self, ctimer):
-        info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
-        info.timer.idTimer = ctimer.idTimer
+    # '''
+    #    Function insert data to table Device_Timer
+    # '''
+    # def insertToTableDeviceTimerForC(self, cdevice_timer):
+    #     info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
 
-        DBSmartDevice_c.selectIdTimerToTableTimerForC(info);
-        return DBSmartDevice_cffi.string(info[0].timer.idTimer)
+    #     info.deviceTimer.idTimer = deviceTimer.idTimer
+    #     info.deviceTimer.idSmartDevice = deviceTimer.idSmartDevice
+    #     info.deviceTimer.stateElectric = deviceTimer.stateElectric
+    #     info.deviceTimer.stateRelay = deviceTimer.stateRelay
+
+    #     DBSmartDevice_c.insertToTableDeviceTimerForC(info);
+
+    
+    # '''
+    #    Function select idTimer from table Timer
+    # '''
+    # def selectIdTimerToTableTimerForC(self, ctimer):
+    #     info = DBSmartDevice_cffi.new("SmartDeviceInfo* ");
+    #     info.timer.idTimer = ctimer.idTimer
+
+    #     DBSmartDevice_c.selectIdTimerToTableTimerForC(info);
+    #     return DBSmartDevice_cffi.string(info[0].timer.idTimer)
 
 
-    '''
-       Function append idTimer to list of class csmartdevice
-    '''
-    def appendEmplementToListIdTimerOfSmartDevice(self, smartplug, \
-                                                smartlight, ip_port, idTimer):
-        ip_port_decode = ip_port.decode(encoding = "utf-8")
+    # '''
+    #    Function append idTimer to list of class csmartdevice
+    # '''
+    # def appendEmplementToListIdTimerOfSmartDevice(self, smartplug, \
+    #                                             smartlight, ip_port, idTimer):
+    #     ip_port_decode = ip_port.decode(encoding = "utf-8")
 
-        if smartplug.ip_port == ip_port_decode:
-            smartplug.addEmplementIdTimer(idTimer)
-            lenListIdTimer = len(smartplug.listIdTimer)
-            print("------PLUG insert idTimer------")
-            for x in range(lenListIdTimer):
-                print("Plug[", x, "] :", smartplug.listIdTimer[x])
+    #     if smartplug.ip_port == ip_port_decode:
+    #         smartplug.addEmplementIdTimer(idTimer)
+    #         lenListIdTimer = len(smartplug.listIdTimer)
+    #         print("------PLUG insert idTimer------")
+    #         for x in range(lenListIdTimer):
+    #             print("Plug[", x, "] :", smartplug.listIdTimer[x])
 
-        elif smartlight.ip_port == ip_port_decode:
-            smartlight.addEmplementIdTimer(idTimer)
-            lenListIdTimer = len(smartlight.listIdTimer)
-            print("------LIGHT insert idTimer------")
-            for x in range(lenListIdTimer):
-                print("Light[", x, "] :", smartlight.listIdTimer[x])
+    #     elif smartlight.ip_port == ip_port_decode:
+    #         smartlight.addEmplementIdTimer(idTimer)
+    #         lenListIdTimer = len(smartlight.listIdTimer)
+    #         print("------LIGHT insert idTimer------")
+    #         for x in range(lenListIdTimer):
+    #             print("Light[", x, "] :", smartlight.listIdTimer[x])
 
-        else:
-            print("DEVEICE NOT EXIST")
+    #     else:
+    #         print("DEVEICE NOT EXIST")
 
     
     '''
@@ -160,12 +161,15 @@ class Processor(threading.Thread):
                                                         "R0001", mylist)
         
         while True:
-            topic = self.sock.recv(2, zmq.NOBLOCK)
-            message = self.sock.recv(2, zmq.NOBLOCK)
+            topic = self.sock.recv(0, zmq.NOBLOCK)
+            message = self.sock.recv(0, zmq.NOBLOCK)
             print("message ",message)
-            message_processor = message_handler.MessageHandler(topic, message) 
-            message_processor.run()
-            time.sleep(1)
+            msg_handler = message_handler.MessageHandler(topic, message)
+            msg_handler.run()
+            # message_processor = message_handler.MessageHandler(topic, message) 
+            # message_processor.run()
+            # print("Bao Khanh 03")
+            # time.sleep(1)
  
         self.sock.close()
 

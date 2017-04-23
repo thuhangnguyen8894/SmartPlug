@@ -151,10 +151,10 @@ bool DBSmartDevice::insertToTableDeviceTimer(sql::Connection* conn, const SmartD
 
     try
     {
-        (this->prep_stmt)->setString(1, device.device_timer.idTimer);
-        (this->prep_stmt)->setString(2, device.device_timer.idSmartDevice);
-        (this->prep_stmt)->setString(3, device.device_timer.stateElectric);
-        (this->prep_stmt)->setString(4, device.device_timer.stateRelay);
+        (this->prep_stmt)->setString(1, device.deviceTimer.idTimer);
+        (this->prep_stmt)->setString(2, device.deviceTimer.idSmartDevice);
+        (this->prep_stmt)->setString(3, device.deviceTimer.stateElectric);
+        (this->prep_stmt)->setString(4, device.deviceTimer.stateRelay);
         
         int updateCount = prep_stmt->executeUpdate();
 
@@ -206,7 +206,7 @@ bool DBSmartDevice::selectIdTimerToTableTimer(sql::Connection* conn, SmartDevice
         while((this->res)->next())
         {
             std::string idTimerStr = (this->res)->getString("idTimer");
-            strcpy(device.device_timer.idTimer, idTimerStr.c_str());
+            strcpy(device.deviceTimer.idTimer, idTimerStr.c_str());
         }
         conn->commit();
         return true;

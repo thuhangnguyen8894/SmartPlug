@@ -14,7 +14,7 @@ bool insertToTableTimerForC(const SmartDeviceInfo* device)
 {
 	sql::Connection* con;
 
-	bool status = db.selectIdTimerToTableTimer(con, *device);
+	bool status = db.insertToTableTimer(con, *device);
 	return status;
 }
 
