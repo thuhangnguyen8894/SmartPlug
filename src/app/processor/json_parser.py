@@ -11,10 +11,14 @@ class JsonParser(object):
             constants.ATTR_ID_SMART_DEVICE : json_dict[\
                                             constants.ATTR_DATA][\
                                             constants.ATTR_ID_SMART_DEVICE],
+
             constants.ATTR_ID_ROOM : json_dict[\
                                             constants.ATTR_DATA][\
                                             constants.ATTR_ID_ROOM],
-            constants.ATTR_NAME_SMART_DEVICE : ""
+            constants.ATTR_NAME_SMART_DEVICE : json_dict[\
+                                            constants.ATTR_DATA][\
+                                            constants.ATTR_NAME_SMART_DEVICE]
+            # constants.ATTR_NAME_SMART_DEVICE : ""
         }
 
         device_timer_info = {
@@ -66,8 +70,8 @@ class JsonParser(object):
 
 
         smart_device_status_info = {
-            constants.ATTR_DEVICE_TIMER : device_timer_info,
             constants.ATTR_DEVICE : smart_device_info,
+            constants.ATTR_DEVICE_TIMER : device_timer_info,
             constants.ATTR_SENDER : sender_info,
             constants.ATTR_TIMER : timer_info
         }
