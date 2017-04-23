@@ -60,7 +60,7 @@ void MessageReceiver::run()
     
 
     void *context = zmq_ctx_new ();
-    void *publisher = zmq_socket (context, ZMQ_PUB);
+    void *publisher = zmq_socket (context, ZMQ_PAIR);
     zmq_bind(publisher, "tcp://*:5563");
 
     while(!this->stop)
@@ -105,10 +105,11 @@ void MessageReceiver::run()
                     MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
                     
                     std::string topic = convertMessageTypeToStr(messageType);
-                    s_sendmore (publisher, (char*)topic.c_str());                    
+                    s_sendmore (publisher, (char*)topic.c_str());
+                    s_send(publisher, (char*)jsonString.c_str());                    
                    
-                    char* string = (char*)jsonString.c_str();
-                    zmq_send (publisher, string, strlen (string), ZMQ_NOBLOCK);
+                    /*char* string = (char*)jsonString.c_str();
+                    zmq_send (publisher, string, strlen (string), ZMQ_NOBLOCK);*/
                     
                     std::cout << "send SUCCESSFULL" << std::endl;
                     sleep (1);
