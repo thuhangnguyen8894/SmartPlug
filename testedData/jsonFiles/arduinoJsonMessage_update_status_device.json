@@ -3,6 +3,7 @@
     "data" : 
     {
         "ID_DEVICE" : "SD001",
+        "NAME_DEVICE" : "DEVICE_LIGHT",
         "ELECTRIC_STATUS_VALUE" : "ON",
         "RELAY_STATUS_VALUE" : "ACTIVE",
         "ID_ROOM" : "R0001"
