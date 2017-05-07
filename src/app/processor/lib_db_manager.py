@@ -19,4 +19,3 @@ class LibDBManager(object):
         if not result:
             raise exceptions.InsertingTableDeviceTimerForCFailure(\
                                  error_messages.ERROR_INSERT_INTO_TIME_TABLE) 
-
