@@ -1,1 +1,2 @@
-ERROR_INSERT_INTO_TIME_TABLE = "Cannot insert into Time table."
+ERROR_INSERT_INTO_TABLE_TIMER = "Cannot insert into Timer table"
+ERROR_INSERT_INTO_TABLE_DEVICE_TIMER = "Cannot insert into Deivce Timer table."
