@@ -65,6 +65,7 @@ TEST_F(JsonParserForCTest, TestparseDataSmartDeviceJsonForC_RESULT_OK)
     EXPECT_TRUE(strcmp(info.device_timer.stateElectric, "ON") == 0);
     EXPECT_TRUE(strcmp(info.device.ip_port, "192.168.0.100:8800") == 0);
     EXPECT_TRUE(strcmp(info.device.idRoom, "R0001") == 0);
+    EXPECT_TRUE(strcmp(info.device.nameSmartDevice, "DEVICE_LIGHT") == 0);
 
     EXPECT_TRUE(strcmp(info.timer.idTimer, "TI00000001") == 0);
     EXPECT_TRUE(info.timer.monthSD == 1);
