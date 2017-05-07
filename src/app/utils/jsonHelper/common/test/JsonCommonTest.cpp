@@ -42,7 +42,7 @@ protected:
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_RESULT_OK)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:DEVICE_LIGHT:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1/18/2017_21:59:00");
     bool status = isSensorMessage(message);
     EXPECT_TRUE(status);
 }
@@ -132,7 +132,7 @@ TEST_F(JsonCommonTest, TestsplitWordRegex_RESULT_OK)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_FAILURE_COLON_SPLITTER)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001.OFF.UNACTIVE.R0001;192.168.0.100/8800;TI00000001_1/18/2017_21/59/00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001.DEVICE_LIGHT.OFF.UNACTIVE.R0001;192.168.0.100/8800;TI00000001_1/18/2017_21/59/00");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -143,7 +143,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_FAILURE_COLON_SPLITTER)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_FAILURE_SLASH_SPLITTER)
 {
-    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1:18:2017_21:59:00");
+    std::string message("SMART_DEVICE_STATUS_VALUE;SD001:DEVICE_LIGHT:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001_1:18:2017_21:59:00");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
@@ -154,7 +154,7 @@ TEST_F(JsonCommonTest, TestisSensorMessage_FAILURE_SLASH_SPLITTER)
  */
 TEST_F(JsonCommonTest, TestisSensorMessage_FAILURE_UNDERSCORS_SPLITTER)
 {
-    std::string message("SMARTDEVICE;SD001:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001:1/18/2017:21:59:00");
+    std::string message("SMARTDEVICE;SD001:DEVICE_LIGHT:OFF:UNACTIVE:R0001;192.168.0.100:8800;TI00000001:1/18/2017:21:59:00");
     bool status = isSensorMessage(message);
     EXPECT_FALSE(status);
 }
