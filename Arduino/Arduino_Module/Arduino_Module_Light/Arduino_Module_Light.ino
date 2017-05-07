@@ -24,6 +24,7 @@
 
 #define MESSAGE_TYPE "SMART_DEVICE_STATUS_VALUE"
 #define ID_DEVICE "SD002"
+#define NAME_DEVICE "DEVICE_LIGHT"
 #define ID_ROOM "R0001"
 #define SEMICOLON_SPLITTER ";"
 #define COLON_SPLITTER ":"
@@ -237,6 +238,8 @@ void sendSmartPlugStatus()
     strcat(msg, MESSAGE_TYPE);
     strcat(msg, SEMICOLON_SPLITTER);
     strcat(msg, ID_DEVICE);
+    strcat(msg, COLON_SPLITTER);
+    strcat(msg, NAME_DEVICE);
     strcat(msg, COLON_SPLITTER);
 
     /*!
