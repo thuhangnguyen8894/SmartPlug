@@ -20,10 +20,12 @@ class MessageHandler(threading.Thread):
             self.lib_db_manager.insert_time(smart_device_info)
         except exceptions.InsertingTableDeviceTimerForCFailure as ex:
             import traceback
-            traceback.print_exec()
-            print("Error message: ", ex)
+            traceback.print_exc()
+            print("Error message 01: ", ex)
         except Exception as ex:
-            print("Error message: ", ex)
+            import traceback
+            traceback.print_exc()
+            print("Error message 02: ", ex)
 
     def process_message(self):
         print("self.topic: ", self.topic)
