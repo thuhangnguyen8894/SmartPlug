@@ -5,3 +5,9 @@ class InsertingTableDeviceTimerForCFailure(Exception):
         """
         pass
 
+class InsertingTableTimerForCFailure(Exception):
+        """[summary]
+        
+        [description]
+        """
+        pass
