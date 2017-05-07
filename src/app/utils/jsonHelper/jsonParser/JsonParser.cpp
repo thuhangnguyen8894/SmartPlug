@@ -68,6 +68,13 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     std::string idSmartDeviceStr = pTree.get<std::string>(jsonIdSmartDevicePath);
 
     /*!
+     * Parse Information of IdSmartPlug
+     */
+    std::string jsonNameSmartDevicePath = getJsonPath(ATTR_JSON_DATA,
+                                                ATTR_JSON_NAME_DEVICE);
+    std::string nameSmartDeviceStr = pTree.get<std::string>(jsonNameSmartDevicePath);
+
+    /*!
      * Parse Information of Relay Status Value
      */
     std::string jsonRalayStatusValuePath = getJsonPath(ATTR_JSON_DATA,
@@ -147,6 +154,7 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     strcpy(info.deviceTimer.stateRelay, relayStatusValueStr.c_str());
     strcpy(info.deviceTimer.stateElectric, electricStatusValueStr.c_str());
     strcpy(info.device.idRoom, idRoomStr.c_str());
+    strcpy(info.device.nameSmartDevice, nameSmartDeviceStr.c_str());
 
     strcpy(info.timer.idTimer, idTimerStr.c_str());
     info.timer.monthSD = std::stol(monthStr);
