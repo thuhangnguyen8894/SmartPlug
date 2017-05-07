@@ -64,14 +64,20 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message,
     }
 
     std::string strIdDevice = token[0].c_str();
-    std::string strElectricStatus = token[1].c_str();
-    std::string strRelayStatus = token[2].c_str();
-    std::string strIdRoom = token[3].c_str();
+    std::string strNameDevice = token[1].c_str();
+    std::string strElectricStatus = token[2].c_str();
+    std::string strRelayStatus = token[3].c_str();
+    std::string strIdRoom = token[4].c_str();
 
     /*!
      *
      */
     dataTree.put(ATTR_JSON_ID_DEVICE, token[0]);
+
+    /*!
+     *
+     */
+    dataTree.put(ATTR_JSON_NAME_DEVICE, token[1]);
 
     /*!
      * 
@@ -110,7 +116,7 @@ STATIC bool buildDataSmartDeviceJson(const std::string& message,
     /*!
      * 
      */
-    dataTree.put(ATTR_JSON_ID_ROOM_VALUE, token[3]);
+    dataTree.put(ATTR_JSON_ID_ROOM_VALUE, token[4]);
 
     return true;
 }
