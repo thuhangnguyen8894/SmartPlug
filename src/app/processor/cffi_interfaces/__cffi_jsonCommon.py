@@ -35,9 +35,9 @@ BOOST_LIBS = ["boost_serialization", 'boost_thread', 'stdc++']
 jsonCommon_cffi = cffi.FFI()
 jsonCommon_cffi.cdef("""
 
-   #define MAX_SMART_DEVICE_STATUS_VALUE 102
+   #define MAX_SMART_DEVICE_STATUS_VALUE 120
    #define JSON_TOKEN_SIZE 3
-   #define JSON_DATA_SIZE 4
+   #define JSON_DATA_SIZE 5
    #define SENDER_TOKEN_SIZE 2
    #define DATE_TIME_TOKEN_SIZE 3
    #define STATUS_TOKEN_SIZE 2
@@ -52,6 +52,7 @@ jsonCommon_cffi.cdef("""
    #define ATTR_JSON_MESSAGE_TYPE_VALUE ...
 
    #define ATTR_JSON_ID_DEVICE ...
+   #define ATTR_JSON_NAME_DEVICE ...
 
    #define ATTR_JSON_RELAY_STATUS_VALUE ...
    #define ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE ...
