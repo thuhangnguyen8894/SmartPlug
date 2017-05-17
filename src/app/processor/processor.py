@@ -81,11 +81,11 @@ class Processor(threading.Thread):
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
 
-        mylist = []
-        smartplug = SmartDevice("SD001", "192.168.0.103:5600", \
-                                                        "R0001", mylist)
-        smartlight = SmartDevice("SD002", "192.168.0.104:5600", \
-                                                        "R0001", mylist)
+        # mylist = []
+        # smartplug = SmartDevice("SD001", "192.168.0.103:5600", \
+        #                                                 "R0001", mylist)
+        # smartlight = SmartDevice("SD002", "192.168.0.104:5600", \
+        #                                                 "R0001", mylist)
         
         while True:
             topic = self.sock.recv(2, zmq.NOBLOCK)
