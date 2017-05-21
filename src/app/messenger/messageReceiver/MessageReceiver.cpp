@@ -17,7 +17,7 @@
 /*****************************************************************************/
 
 #include "MessageReceiver.h"
-
+#include <regex>
 
 MessageReceiver::MessageReceiver(int bufferSize):
     thread("MessageReceiver"),
@@ -53,6 +53,22 @@ Poco::UInt16 MessageReceiver::port() const
     return this->socket.address().port();
 }
 
+bool isArduinoMessage(const std::string& message)
+{
+    try
+    {
+        std::regex pattern("(.*);(.*):(.*):(.*):(.*):(.*)");
+        std::smatch match;
+        return (std::regex_search(message, match, pattern) && match.size() > 1);
+    }catch(std::regex_error& e)
+    {
+        /*!
+         * @todo handle error.
+         */
+    }
+
+}
+
 void MessageReceiver::run()
 {
     this->ready.set();
@@ -73,49 +89,49 @@ void MessageReceiver::run()
                 Poco::Net::SocketAddress sender;
                 int n = this->socket.receiveFrom(pBuffer, this->bufferSize, sender);
 
-                std::string jsonString;
-
-                char* datetime = timer();
-                char* idTableTimerChar = idTableTimer();
-
-                /*!
-                 * Appending IP of Sender to message
-                 * Appending datetime of DatetimeSP to message
-                 */
-                strcat(pBuffer, SEMICOLON_SPLITTER);
-                strcat(pBuffer, sender.toString().c_str());
-                strcat(pBuffer, SEMICOLON_SPLITTER);
-                strcat(pBuffer, idTableTimerChar);
-                strcat(pBuffer, UNDERSCORS_SPLITTER);
-                strcat(pBuffer, datetime);
-
-                std::cout<<pBuffer<<std::endl;
-
-                /*convert char to string*/
+                std::cout << pBuffer << std::endl;
+                
                 std::string s_pBuffer(pBuffer);
 
-                if (isSensorMessage(s_pBuffer))
+                std::string jsonString;
+
+                if (isArduinoMessage(pBuffer))
                 {
+                    char* datetime = timer();
+                    char* idTableTimerChar = idTableTimer();
+                    /*!
+                     * Appending IP of Sender to message
+                     * Appending datetime of DatetimeSP to message
+                     */
+                    strcat(pBuffer, SEMICOLON_SPLITTER);
+                    strcat(pBuffer, sender.toString().c_str());
+                    strcat(pBuffer, SEMICOLON_SPLITTER);
+                    strcat(pBuffer, idTableTimerChar);
+                    strcat(pBuffer, UNDERSCORS_SPLITTER);
+                    strcat(pBuffer, datetime);
+                    
+                    
                     if (!buildJson(s_pBuffer, jsonString))
                     {
                         std::cout << "buildJson ERROR" << std::endl;
                         continue;
                     }
+                }
 
-                    MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
+                MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
                     
-                    std::string topic = convertMessageTypeToStr(messageType);
-                    s_sendmore (publisher, (char*)topic.c_str());
-                    s_send(publisher, (char*)jsonString.c_str());                    
-                    
-                    std::cout << "send SUCCESSFULL" << std::endl;
-                    sleep (1);
-                }                
-                 if (pBuffer != NULL)
+                std::string topic = convertMessageTypeToStr(messageType);
+                s_sendmore (publisher, (char*)topic.c_str());
+                s_send(publisher, (char*)jsonString.c_str());
+
+                std::cout << "send SUCCESSFULL" << std::endl;
+
+                sleep (1);
+
+                if (pBuffer != NULL)
                 {                    
                     delete pBuffer;              
                 }
-
             }
             catch(Poco::Exception& ex)
             {
