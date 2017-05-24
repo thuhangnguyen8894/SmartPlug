@@ -98,6 +98,8 @@ db_mgr_cffi.cdef("""
     bool insertToTableTimerForC(const SmartDeviceInfo* device);
     bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device);
     bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device);
+    bool selectDeviceToTableSmartDeviceForC(SmartDeviceInfo** device, 
+                                                        int *numberOfElement);
 """)
 
 db_mgr_c = db_mgr_cffi.verify("""
