@@ -39,8 +39,6 @@ from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_c
 from cffi_interfaces.__cffi_messageSender import messageSender_cffi
 from cffi_interfaces.__cffi_messageSender import messageSender_c
 
-import message_handler
-
 class Processor(threading.Thread):
     def __init__(self, host, port, topic=None):
         threading.Thread.__init__(self)
@@ -88,6 +86,12 @@ class Processor(threading.Thread):
         #                                                 "R0001", mylist)
         
         while True:
+            '''[Access Database]
+            [select data to table SmartDevice]
+            '''
+            
+
+
             topic = self.sock.recv(2, zmq.NOBLOCK)
             message = self.sock.recv(2, zmq.NOBLOCK)
             print("message ",message)
