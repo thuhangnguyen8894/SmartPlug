@@ -11,9 +11,8 @@ Modified History
 
 class SmartDevice:
 
-    def __init__(self, idSmartDevice, ip_port, idRoom, nameSmartDevice, listIdTimer = None):
+    def __init__(self, idSmartDevice, idRoom, nameSmartDevice, listIdTimer = None):
         self.idSmartDevice = idSmartDevice
-        self.ip_port = ip_port
         self.idRoom = idRoom
         self.nameSmartDevice = nameSmartDevice
 
