@@ -57,7 +57,6 @@ void MessageReceiver::run()
 {
     this->ready.set();
     Poco::Timespan span(250000);
-    
 
     void *context = zmq_ctx_new ();
     void *publisher = zmq_socket (context, ZMQ_PAIR);
