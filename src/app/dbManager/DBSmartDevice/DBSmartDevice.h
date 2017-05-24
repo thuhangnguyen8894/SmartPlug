@@ -33,13 +33,13 @@ public:
     static DBSmartDevice* instance;
     static DBSmartDevice* getInstance();
     DBSmartDevice();
-    sql::Connection* getConn(std::string userName, std::string password, std::string url);
-    static void retrieve_db_metadata(sql::Connection* dbcon);
+
     void closeConn();
 
-    bool insertToTableTimer(sql::Connection* conn, const SmartDeviceInfo& device);
-    bool insertToTableDeviceTimer(sql::Connection* conn, const SmartDeviceInfo& device);
-    bool selectIdTimerToTableTimer(sql::Connection* conn, SmartDeviceInfo& device);
+    bool insertToTableTimer(const SmartDeviceInfo& device);
+    bool insertToTableDeviceTimer(const SmartDeviceInfo& device);
+    bool selectIdTimerToTableTimer(SmartDeviceInfo& device);
+    bool selectDeviceToTableSmartDevice(std::vector<SmartDeviceInfo>& vectorSmartDeviceInfos);
 
 private:
     sql::PreparedStatement* prep_stmt;
