@@ -1,7 +1,8 @@
 #include "DBSmartDevice.h"
 
-DBSmartDevice* DBSmartDevice::instance = NULL;
-std::string DBSmartDevice::database = DATABASE;
+static sql::Driver* MYSQL_DRIVER_INSTANCE = get_driver_instance();
+static sql::Connection* MYSQL_DB_CONNECTION =
+                    MYSQL_DRIVER_INSTANCE->connect(DBHOST, USER, PASSWORD);
 
 DBSmartDevice::DBSmartDevice()
 {
@@ -10,94 +11,32 @@ DBSmartDevice::DBSmartDevice()
     this->url = DBHOST;
 }
 
-DBSmartDevice* DBSmartDevice::getInstance()
-{
-    if(instance == NULL)
-    {
-    	instance = new DBSmartDevice();
-    }
-    return instance;
-}
-
-/*!
- * Retrieve information of database 
- */
-void retrieve_db_metadata(sql::Connection* conn)
-{
-    if (conn->isClosed())
-    {
-        throw std::runtime_error("FAILURE-Data connection closed");
-    }
-
-    sql::DatabaseMetaData* dbconn_meta = conn->getMetaData();
-    
-    std::cout << "Database User Name: "
-          << dbconn_meta->getUserName()
-          << std::endl;
-
-    std::cout << "Driver Name: "
-          << dbconn_meta->getDriverName()
-          << std::endl;
-
-    std::cout << "Driver version: "
-          << dbconn_meta->getDriverVersion()
-          << std::endl;
-
-    std::cout << "Database is Read-Only Mode?"
-          << dbconn_meta->isReadOnly()
-          << std::endl;
-
-    std::cout << "Maximum Connections: "
-          << dbconn_meta->getMaxConnections()
-          << std::endl;
-}
-
-/*!
- * Foundation for connect database
- */
-sql::Connection* DBSmartDevice::getConn(std::string userName, std::string password, std::string url)
-{
-    this->driver = get_driver_instance();
-    this->conn = driver->connect(url, userName, password);
-    this->conn->setSchema(database);
-    this->conn->setAutoCommit(0);
-    return this->conn; 
-}
-
 void DBSmartDevice::closeConn()
 {
     if (this->res != NULL)
     {
-    	delete this->res;
+        delete this->res;
     }
     if(this->stmt != NULL)
     {
-    	delete this->stmt;
+        delete this->stmt;
     }
     if(this->prep_stmt != NULL)
     {
-    	delete this->prep_stmt;
-    }
-    if(this->conn != NULL)
-    {
-    	delete this->conn;
+        delete this->prep_stmt;
     }
 }
 
 /*!
  * Function insert data to table Timer
  */
-bool DBSmartDevice::insertToTableTimer(sql::Connection* conn, const SmartDeviceInfo& device)
+bool DBSmartDevice::insertToTableTimer(const SmartDeviceInfo& device)
 {
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
+    MYSQL_DB_CONNECTION->setSchema(DATABASE);
+    MYSQL_DB_CONNECTION->setAutoCommit(0);
 
-    conn = dbSmartDevice->getConn(this->user, this->password, this->url);
-    if (conn == NULL)
-    {
-       return false; 
-    }
     std::string sql("INSERT INTO Timer(idTimer, day, month, year, hour, min, sec) VALUE(?,?,?,?,?,?,?)");
-    this->prep_stmt = conn->prepareStatement(sql);
+    this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
     if (this->prep_stmt == NULL)
     {
         return false;
@@ -116,33 +55,28 @@ bool DBSmartDevice::insertToTableTimer(sql::Connection* conn, const SmartDeviceI
 
         if(updateCount > 0)
         {
-        	conn->commit();
-        	return true;
+            MYSQL_DB_CONNECTION->commit();
+            return true;
         }
     }
     catch(sql::SQLException& e)
     {
-    	conn->rollback();
-    	return false;
+        MYSQL_DB_CONNECTION->rollback();
+        return false;
     }
-    dbSmartDevice->closeConn();
+    this->closeConn();
 }
 
 /*!
  * Function insert data to table Device_Timer
  */
-bool DBSmartDevice::insertToTableDeviceTimer(sql::Connection* conn, const SmartDeviceInfo& device)
+bool DBSmartDevice::insertToTableDeviceTimer(const SmartDeviceInfo& device)
 {
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
-
-    conn = dbSmartDevice->getConn(this->user, this->password, this->url);
-    if (conn == NULL)
-    {
-       return false; 
-    }
+    MYSQL_DB_CONNECTION->setSchema(DATABASE);
+    MYSQL_DB_CONNECTION->setAutoCommit(0);
     
     std::string sql("INSERT INTO Device_Timer(idTimer, idSmartDevice, stateElectric, stateRelay) VALUE(?,?,?,?)");
-    this->prep_stmt = conn->prepareStatement(sql);
+    this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
 
     if (this->prep_stmt == NULL)
     {
@@ -160,13 +94,13 @@ bool DBSmartDevice::insertToTableDeviceTimer(sql::Connection* conn, const SmartD
 
         if(updateCount > 0)
         {
-            conn->commit();
+            MYSQL_DB_CONNECTION->commit();
             return true;
         }
     }
     catch(sql::SQLException& e)
     {
-        conn->rollback();
+        MYSQL_DB_CONNECTION->rollback();
 
         std::cout << "rollback: " <<std::endl;
         std::cout << "#ERR: " << e.what();
@@ -175,25 +109,21 @@ bool DBSmartDevice::insertToTableDeviceTimer(sql::Connection* conn, const SmartD
 
         return false;
     }
-    dbSmartDevice->closeConn();
+    this->closeConn();
 }
 
 /*
  * Function selected idTimer from table Timer
  */
-bool DBSmartDevice::selectIdTimerToTableTimer(sql::Connection* conn, SmartDeviceInfo& device)
+bool DBSmartDevice::selectIdTimerToTableTimer(SmartDeviceInfo& device)
 {
-    DBSmartDevice* dbSmartDevice = DBSmartDevice::getInstance();
-
-    conn = dbSmartDevice->getConn(this->user, this->password, this->url);
-    if (conn == NULL)
-    {
-       return false; 
-    }
+    MYSQL_DB_CONNECTION->setSchema(DATABASE);
+    MYSQL_DB_CONNECTION->setAutoCommit(0);
 
     std::string timer_idTimerStr(device.timer.idTimer);
-    this->stmt = conn->createStatement();
-    std::string sql = "SELECT idTimer FROM Timer WHERE idTimer = '" + timer_idTimerStr + "'";   
+    this->stmt = MYSQL_DB_CONNECTION->createStatement();
+    std::string sql = "SELECT idTimer FROM Timer WHERE idTimer = '" 
+                                                     + timer_idTimerStr + "'";   
     this->res = stmt->executeQuery(sql);
 
     try
@@ -208,12 +138,12 @@ bool DBSmartDevice::selectIdTimerToTableTimer(sql::Connection* conn, SmartDevice
             std::string idTimerStr = (this->res)->getString("idTimer");
             strcpy(device.deviceTimer.idTimer, idTimerStr.c_str());
         }
-        conn->commit();
+        MYSQL_DB_CONNECTION->commit();
         return true;
     }
     catch(sql::SQLException& e)
     {
-        conn->rollback();
+        MYSQL_DB_CONNECTION->rollback();
 
         std::cout << "rollback: " <<std::endl;
         std::cout << "#ERR: " << e.what();
@@ -223,5 +153,55 @@ bool DBSmartDevice::selectIdTimerToTableTimer(sql::Connection* conn, SmartDevice
         return false;
     }
 
-    dbSmartDevice->closeConn();
+    this->closeConn();
+}
+
+/*
+ * Function select array smart device from table SmartDevice
+ */
+bool DBSmartDevice::selectDeviceToTableSmartDevice(std::vector<SmartDeviceInfo>& vectorSmartDeviceInfos)
+{
+    MYSQL_DB_CONNECTION->setSchema(DATABASE);
+    MYSQL_DB_CONNECTION->setAutoCommit(0);
+
+    this->stmt = MYSQL_DB_CONNECTION->createStatement();
+    std::string sql = "SELECT * FROM SmartDevice";   
+    this->res = stmt->executeQuery(sql);
+
+    try
+    {
+        if (this->res == NULL)
+        {
+            return false;
+        }
+
+        while((this->res)->next())
+        {
+            SmartDeviceInfo* item = new SmartDeviceInfo;
+
+            strcpy(item->device.idSmartDevice, 
+                      (char*)(this->res)->getString("idSmartDevice").c_str());
+            strcpy(item->device.nameSmartDevice, 
+                    (char*)(this->res)->getString("nameSmartDevice").c_str());
+            strcpy(item->device.idRoom, 
+                             (char*)(this->res)->getString("idRoom").c_str());
+
+            vectorSmartDeviceInfos.push_back(*item);
+        }
+        MYSQL_DB_CONNECTION->commit();
+        return true;
+    }
+    catch(sql::SQLException& e)
+    {
+        MYSQL_DB_CONNECTION->rollback();
+
+        std::cout << "rollback: " <<std::endl;
+        std::cout << "#ERR: " << e.what();
+        std::cout << " (MySQL error code: " << e.getErrorCode();
+        std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
+        return false;
+    }
+
+    this->closeConn();
 }
