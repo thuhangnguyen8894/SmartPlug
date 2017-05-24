@@ -11,3 +11,18 @@ class InsertingTableTimerForCFailure(Exception):
         [description]
         """
         pass
+
+class ControllingMessageSenderForCFailure(Exception):
+        """[summary]
+        
+        [description]
+        """
+        pass
+
+class SelectTableSmartDeviceForCFailure(object):
+        """[summary]
+        
+        [description]
+        """
+        pass
+                
