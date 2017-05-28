@@ -44,22 +44,30 @@ def controlSmartPlug(request):
     # sock.sendto("SMART_DEVICE_STATUS_VALUE;SD001:DEVICE_LIGHT:OFF:UNACTIVE:R0001".encode(), (MESSAGE_RECEIVER_IP, MESSAGE_RECEIVER_PORT))
 
     if cmd == 'ON':
-        json_dict_on = { ATTR_JSON_MESSAGE_TYPE : ATTR_JSON_MOBILE_STATUS_VALUE, \
-                    ATTR_JSON_DATA : { \
-                        ATTR_JSON_ID_DEVICE : "SD001",\
-                        ATTR_JSON_NAME_DEVICE : "DEVICE_LIGHT",\
-                        ATTR_JSON_RELAY_STATUS_VALUE : ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE,\
-                        ATTR_JSON_ID_ROOM : "R001"}} 
+        json_dict_on = { 
+            ATTR_JSON_MESSAGE_TYPE : ATTR_JSON_MOBILE_STATUS_VALUE, \
+            ATTR_JSON_DATA : { \
+                ATTR_JSON_ID_DEVICE : "SD001",\
+                ATTR_JSON_NAME_DEVICE : "DEVICE_LIGHT",\
+                ATTR_JSON_RELAY_STATUS_VALUE : ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE,\
+                ATTR_JSON_ID_ROOM : "R001"
+            }
+        }
+        print("CMD ON: ", json_dict_on) 
         sock.sendto(json.dumps(json_dict_on).encode(), (MESSAGE_RECEIVER_IP, MESSAGE_RECEIVER_PORT))
         # sock.sendto("SMART_DEVICE_STATUS_VALUE;SD001:DEVICE_LIGHT:ON:ACTIVE:R0001".encode(), (MESSAGE_RECEIVER_IP, MESSAGE_RECEIVER_PORT))
         
     elif cmd == 'OFF':
-        json_dict_off = { ATTR_JSON_MESSAGE_TYPE : ATTR_JSON_MOBILE_STATUS_VALUE, \
-                    ATTR_JSON_DATA : { \
-                        ATTR_JSON_ID_DEVICE : "SD001",\
-                        ATTR_JSON_NAME_DEVICE : "DEVICE_LIGHT",\
-                        ATTR_JSON_RELAY_STATUS_VALUE : ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE,\
-                        ATTR_JSON_ID_ROOM : "R001"}} 
+        json_dict_off = { 
+            ATTR_JSON_MESSAGE_TYPE : ATTR_JSON_MOBILE_STATUS_VALUE, \
+            ATTR_JSON_DATA : { \
+                ATTR_JSON_ID_DEVICE : "SD001",\
+                ATTR_JSON_NAME_DEVICE : "DEVICE_LIGHT",\
+                ATTR_JSON_RELAY_STATUS_VALUE : ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE,\
+                ATTR_JSON_ID_ROOM : "R001"
+            }
+        } 
+        print("CMD OFF: ", json_dict_off)
         sock.sendto(json.dumps(json_dict_off).encode(), (MESSAGE_RECEIVER_IP, MESSAGE_RECEIVER_PORT))
         # sock.sendto("SMART_DEVICE_STATUS_VALUE;SD001:DEVICE_LIGHT:OFF:UNACTIVE:R0001".encode(), (MESSAGE_RECEIVER_IP, MESSAGE_RECEIVER_PORT))
     
