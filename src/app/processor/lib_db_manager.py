@@ -21,7 +21,7 @@ class LibDBManager(object):
         print("Bao Khanh is here")
         if id_device == "SD001":
             print("id_device " + id_device)
-            str1 = '192.168.0.104'
+            str1 = '192.168.0.106'
             host = messageSender_cffi.new("char[]", bytes(str1, "utf-8"))
             print(host[0])
         elif id_device == "SD002":
@@ -34,6 +34,7 @@ class LibDBManager(object):
         port = 5600
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
+        print("sendMessageUDPForC")
         
 
     def insert_time(self, smart_device_info_dict):
