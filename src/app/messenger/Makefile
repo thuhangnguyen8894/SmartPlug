@@ -25,6 +25,7 @@ USING_LANGUAGE = CPP
 INCS_DIRS += src/app/messenger/messageReceiver \
 			 src/app/utils/jsonHelper/common \
 			 src/app/utils/jsonHelper/jsonBuilder \
+			 src/app/utils/jsonHelper/jsonParser \
 			 src/app/timer \
 			 src/app/autoIdentity \
 			 src/app/dataManager
@@ -33,7 +34,9 @@ LIBDIRS_jsonCommon  += $(LIDT_ROOT)/src/app/utils/jsonHelper/common/
 LIBRARY                                       += jsonCommon
 LIBDIRS_jsonBuilder += $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonBuilder/
 LIBRARY                                       += jsonBuilder
-LIBDIRS_messageReceiver  += $(LIDT_ROOT)/src/app/messenger/messageReceiver
+LIBDIRS_jsonParser += $(LIDT_ROOT)/src/app/utils/jsonHelper/jsonParser/
+LIBRARY                                      += jsonParser
+LIBDIRS_messageReceiver  += $(LIDT_ROOT)/src/app/messenger/messageReceiver/
 LIBRARY                  += messageReceiver			
 #-----------------------------------------------------------------------------
 

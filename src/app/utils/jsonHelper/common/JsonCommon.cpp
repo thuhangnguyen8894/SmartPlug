@@ -89,6 +89,10 @@ MESSAGE_TYPE getJSONMessageType(const std::string& message)
     {
         return MESSAGE_TYPE_SMART_DEVICE_STATUS;
     }
+    if (message == MESSAGE_TYPE_MOBILE_STATUS_VALUE)
+    {
+        return MESSAGE_TYPE_MOBILE_STATUS;
+    }
     if (message == MESSAGE_TYPE_DEFAULT_VALUE)
     {
         return MESSAGE_TYPE_DEFAULT;

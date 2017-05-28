@@ -142,15 +142,6 @@ void loop()
         Serial.println(packetSize);
         Serial.print("From ");
         IPAddress remote = udp.remoteIP();
-        
-        for (int i = 0; i < 4; i++)
-        {
-            Serial.print(remote[i], DEC);
-            if (i < 3)
-            {
-                Serial.print(".");
-            }
-        }
 
         Serial.print(", port ");
         Serial.println(udp.remotePort());
@@ -169,6 +160,20 @@ void loop()
         /*!
          * Do a action
          */
+
+         /*!
+          * Define variable contain status of Relay
+          */
+          int statusRelay = digitalRead(RELAY);
+         if (strcmp(packetBuffer, "ACTIVE"))
+         {
+             statusRelay = HIGH;
+         }
+
+         else if (strcmp(packetBuffer, "UNACTIVE"))
+         {
+             statusRelay = LOW;
+         }
     }
     else
     {

@@ -148,7 +148,7 @@ $(OBJ_DIR)/%.o:     %.c
 $(OBJ_DIR)/%.o:     %.cpp
 	$(ECHO) "Compiling to Object" $<
 	$(RM) $@
-	$(CPP) -c $(COMMON_FLAGS) -std=c++11 $< -o $@ $(LIBS) $(INCLUDES) $(INCLUDE_LIBS)
+	$(CPP) $(COMMON_FLAGS) -c -std=c++11 $< -o $@ $(LIBS) $(INCLUDES) $(INCLUDE_LIBS)
 
 $(LIB_DIR)/lib%_$(ARCHIVE_ALT).a: $(OBJS)
 	$(ECHO) "Creating archive" $@

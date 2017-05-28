@@ -12,24 +12,18 @@ static DBSmartDevice db;
 
 bool insertToTableTimerForC(const SmartDeviceInfo* device)
 {
-	sql::Connection* con;
-
-	bool status = db.insertToTableTimer(con, *device);
+	bool status = db.insertToTableTimer(*device);
 	return status;
 }
 
 bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device)
 {
-	sql::Connection* con;
-
-	bool status = db.insertToTableDeviceTimer(con, *device);
+	bool status = db.insertToTableDeviceTimer(*device);
 	return status;
 }
 
 bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device)
 {
-	sql::Connection* con;
-
-	bool status = db.selectIdTimerToTableTimer(con, *device);
+	bool status = db.selectIdTimerToTableTimer(*device);
 	return status;
 }

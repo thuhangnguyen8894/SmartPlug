@@ -64,9 +64,9 @@ TEST_F(JsonParserTest, TestparseDataSmartDeviceJson_RESULT_OK)
 
     EXPECT_TRUE(status);
     EXPECT_TRUE(strcmp(info.device.idSmartDevice, "SD001") == 0);
-    EXPECT_TRUE(strcmp(info.device_timer.stateRelay, "ACTIVE") == 0);
-    EXPECT_TRUE(strcmp(info.device_timer.stateElectric, "ON") == 0);
-    EXPECT_TRUE(strcmp(info.device.ip_port, "192.168.0.100:8800") == 0);
+    EXPECT_TRUE(strcmp(info.deviceTimer.stateRelay, "ACTIVE") == 0);
+    EXPECT_TRUE(strcmp(info.deviceTimer.stateElectric, "ON") == 0);
+    /*EXPECT_TRUE(strcmp(info.device.ip_port, "192.168.0.100:8800") == 0);*/
     EXPECT_TRUE(strcmp(info.device.idRoom, "R0001") == 0);
     EXPECT_TRUE(strcmp(info.device.nameSmartDevice, "DEVICE_LIGHT") == 0);
 
@@ -79,4 +79,25 @@ TEST_F(JsonParserTest, TestparseDataSmartDeviceJson_RESULT_OK)
     EXPECT_TRUE(info.timer.secSD == 00);
     EXPECT_TRUE(info.sender.port == 8800);
     EXPECT_TRUE(strcmp(info.sender.ip, "192.168.0.100") == 0);
+}
+
+TEST_F(JsonParserTest, TestparseJsonToTopic_RESULT_OK)
+{
+    bool status = false;
+    char* jsonString = NULL;
+    std::string topic;
+
+    boost::property_tree::ptree pTree;
+    char* rootENV = std::getenv("LIDT_ROOT");
+    std::string jsonFilePath(rootENV);
+    jsonFilePath.append("/testedData/jsonFiles/");
+    jsonFilePath.append("arduinoJsonMessage_update_status_device.json");
+
+    boost::property_tree::read_json(jsonFilePath, pTree);
+    std::stringstream jsonStrStream;
+    boost::property_tree::write_json(jsonStrStream, pTree);
+    status = parseJsonToTopic(jsonStrStream.str(), topic);
+
+    EXPECT_TRUE(status);
+    EXPECT_TRUE(topic.compare("SMART_DEVICE_STATUS_VALUE") == 0);
 }

@@ -32,6 +32,7 @@
 
 #include "JsonCommon.h"
 #include "JsonBuilder.h"
+#include "JsonParser.h"
 
 #include "timer.h"
 #include "autoIdentity.h"

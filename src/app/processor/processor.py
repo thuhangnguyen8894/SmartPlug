@@ -93,7 +93,8 @@ class Processor(threading.Thread):
             print("message ",message)
             msg_handler = message_handler.MessageHandler(topic, message)
             msg_handler.run()
- 
+            print("Bao Khanh Processor")
+            time.sleep(1)
         self.sock.close()
 
 '''

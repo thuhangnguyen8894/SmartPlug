@@ -3,7 +3,7 @@
 #include "MessageReceiver.h"
 
 #define SERVER_PORT 8787
-#define MESSAGE_BUFFER 256
+#define MESSAGE_BUFFER 512
 
 int main()
 {
