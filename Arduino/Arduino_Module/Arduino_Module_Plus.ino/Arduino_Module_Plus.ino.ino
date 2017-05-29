@@ -168,6 +168,15 @@ void loop()
         /*!
          * Do a action
          */
+         if (strcmp(packetBuffer, "ACTIVEVE"))
+         {
+             digitalWrite(RELAY) = HIGH;
+         }
+
+         else if (strcmp(packetBuffer, "UNACTIVE"))
+         {
+             digitalWrite(RELAY) = LOW;
+         }
     }
     else
     {
