@@ -12,9 +12,9 @@ I.Prepare for setup:
   1. Create folder "development" in root
       - Step 1: cd /
       - Step 2: sudo mkdir development
-  2. Create folder "thirparties" in "development"
+  2. Create folder "thirdparties" in "development"
       - Step 1: cd /development
-      - Step 2: sudo mkdir thirparties
+      - Step 2: sudo mkdir thirdparties
   3. Then we setup gcc-5.4.0
      We should export gcc when we want to setup everthing.
      Syntax: export PATH=/development/gcc-5.4.0:$PATH
@@ -24,9 +24,9 @@ II. Setup:
   1. Setup gcc-5.4.0
     a. Setup m4-1.4.2
        - Step 1: download m4-1.4.2.tar.gz
-       - Step 2: move m4-1.4.2.tar.gz to thirparties
-                 mv ~/Download/m4-1.4.2.tar.gz /development/thirpaties
-       - Step 3: cd /development/thirparties
+       - Step 2: move m4-1.4.2.tar.gz to thirdparties
+                 mv ~/Download/m4-1.4.2.tar.gz /development/thirdparties
+       - Step 3: cd /development/thirdparties
        - Step 4: tar -xvf m4-1.4.2.tar.gz
        - Step 5: cd m4-1.4.2
        - Step 6: ./configure --prefix=/development/m4-1.4.2
@@ -38,8 +38,8 @@ II. Setup:
     b. Setup mpfr-3.1.4
        - Step 1: download mpfr-3.1.4.tar.gz
        - Step 2: move mpfr-3.1.4.tar.gz to thirpaties
-                 mv ~/Download/mpfr-3.1.4.tar.gz /development/thirparties
-       - Step 3: cd /development/thirparties
+                 mv ~/Download/mpfr-3.1.4.tar.gz /development/thirdparties
+       - Step 3: cd /development/thirdparties
        - Step 4: tar -xvf mpfr-3.1.4.tar.gz
        - Step 5: cd mpfr-3.1.4
        - Step 6: ./configure --prefix=/development/mpfr-3.1.4
@@ -48,9 +48,9 @@ II. Setup:
   
     c. Setup gmp-6.1.1
        - Step 1: download gmp-6.1.1.tar.gz
-       - Step 2: move gmp-6.1.1.tar.gz to thirparties
-                 mv ~/Download/gmp-6.1.1.tar.gz /development/thirparties
-       - Step 3: cd /development/thirparties
+       - Step 2: move gmp-6.1.1.tar.gz to thirdparties
+                 mv ~/Download/gmp-6.1.1.tar.gz /development/thirdparties
+       - Step 3: cd /development/thirdparties
        - Step 4: tar -xvf gmp-6.1.1.tar.gz
        - Step 5: cd gmp-6.1.1
        - Step 6: ./configure --prefix=/development/gmp-6.1.1
@@ -59,20 +59,20 @@ II. Setup:
 
     d. Setup mpc-1.0.2
        - Step 1: download mpc-1.0.2.tar.gz
-       - Step 2: move mpc-1.0.2.tar.gz to thirparties
-                 mv ~/Download/mpc-1.0.2.tar.gz /development/thirparties
-       - Step 3: cd /development/thirparties
+       - Step 2: move mpc-1.0.2.tar.gz to thirdparties
+                 mv ~/Download/mpc-1.0.2.tar.gz /development/thirdparties
+       - Step 3: cd /development/thirdparties
        - Step 4: tar -xvf mpc-1.0.2.tar.gz
        - Step 5: cd mpc-1.0.2
-       - Step 6: ./configure --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/mpc-1.0.2
+       - Step 6: ./configure --with-mpfr=/development/mpfr-3.1.4 --with-gmp=/development/gmp-6.1.1 --prefix=/development/mpc-1.0.2
        - Step 7: make
        - Step 8: make install
 
     e. Setup gcc-5.4.0
        - Step 1: download gcc-5.4.0.tar.gz
-       - Step 2: move gcc-5.4.0.tar.gz to thirparties
-                 mv ~/Download/gcc-5.4.0.tar.gz /development/thirparties
-       - Step 3: cd /development/thirparties
+       - Step 2: move gcc-5.4.0.tar.gz to thirdparties
+                 mv ~/Download/gcc-5.4.0.tar.gz /development/thirdparties
+       - Step 3: cd /development/thirdparties
        - Step 4: tar -xvf gcc-5.4.0.tar.gz
        - Step 5: cd gcc-5.4.0
        - Step 6: sudo apt-get install gcc-multilib
@@ -86,9 +86,9 @@ II. Setup:
    :FIX BUG_:
        (1). Setup m4-1.4.2
             - Step 1: download m4-1.4.2.tar.gz
-            - Step 2: move m4-1.4.2.tar.gz to thirparties
-               mv ~/Download/m4-1.4.2.tar.gz /development/thirpaties
-            - Step 3: cd /development/thirparties
+            - Step 2: move m4-1.4.2.tar.gz to thirdparties
+               mv ~/Download/m4-1.4.2.tar.gz /development/thirdparties
+            - Step 3: cd /development/thirdparties
             - Step 4: tar -xvf m4-1.4.2.tar.gz
             - Step 5: cd m4-1.4.2
             - Step 6: ./configure --prefix=/development/m4-1.4.2
@@ -99,9 +99,9 @@ II. Setup:
 
        (2). Setup gmp-6.1.1
             - Step 1: download gmp-6.1.1.tar.gz
-            - Step 2: move gmp-6.1.1.tar.gz to thirparties
-               mv ~/Download/gmp-6.1.1.tar.gz /development/thirparties
-            - Step 3: cd /development/thirparties
+            - Step 2: move gmp-6.1.1.tar.gz to thirdparties
+               mv ~/Download/gmp-6.1.1.tar.gz /development/thirdparties
+            - Step 3: cd /development/thirdparties
             - Step 4: tar -xvf gmp-6.1.1.tar.gz
             - Step 5: cd gmp-6.1.1
             - Step 6: ./configure --prefix=/development/gmp-6.1.1
@@ -111,8 +111,8 @@ II. Setup:
        (3). Setup mpfr-3.1.4
             - Step 1: download mpfr-3.1.4.tar.gz
             - Step 2: move mpfr-3.1.4.tar.gz to thirpaties
-               mv ~/Download/mpfr-3.1.4.tar.gz /development/thirparties
-            - Step 3: cd /development/thirparties
+               mv ~/Download/mpfr-3.1.4.tar.gz /development/thirdparties
+            - Step 3: cd /development/thirdparties
             - Step 4: tar -xvf mpfr-3.1.4.tar.gz
             - Step 5: cd mpfr-3.1.4
             - Step 6: ./configure --with-gmp=/development/gmp-6.1.1 --prefix=/development/mpfr-3.1.4
@@ -121,9 +121,9 @@ II. Setup:
 
        (4). Setup mpc-1.0.2
             - Step 1: download mpc-1.0.2.tar.gz
-            - Step 2: move mpc-1.0.2.tar.gz to thirparties
-                     mv ~/Download/mpc-1.0.2.tar.gz /development/thirparties
-            - Step 3: cd /development/thirparties
+            - Step 2: move mpc-1.0.2.tar.gz to thirdparties
+                     mv ~/Download/mpc-1.0.2.tar.gz /development/thirdparties
+            - Step 3: cd /development/thirdparties
             - Step 4: tar -xvf mpc-1.0.2.tar.gz
             - Step 5: cd mpc-1.0.2
             - Step 6: ./configure --with-gmp=/development/gmp-6.1.1 --with-mpfr=/development/mpfr-3.1.4 --prefix=/development/mpc-1.0.2
@@ -132,9 +132,9 @@ II. Setup:
          
        (5). Setup gcc-5.4.0
             - Step 1: download gcc-5.4.0.tar.gz
-            - Step 2: move gcc-5.4.0.tar.gz to thirparties
-               mv ~/Download/gcc-5.4.0.tar.gz /development/thirparties
-            - Step 3: cd /development/thirparties
+            - Step 2: move gcc-5.4.0.tar.gz to thirdparties
+               mv ~/Download/gcc-5.4.0.tar.gz /development/thirdparties
+            - Step 3: cd /development/thirdparties
             - Step 4: tar -xvf gcc-5.4.0.tar.gz
             - Step 5: cd gcc-5.4.0
             - Step 6: sudo apt-get install gcc-multilib
@@ -154,9 +154,9 @@ II. Setup:
 
     c. Setup Python-3.5.2:
       - Step 1: download Python-3.5.2.tar.gz
-      - Step 2: move Python-3.5.2.tar.gz to thirparties
-               mv ~/Download/Python-3.5.2.tar.gz /development/thirparties
-      - Step 3: cd /development/thirparties
+      - Step 2: move Python-3.5.2.tar.gz to thirdparties
+               mv ~/Download/Python-3.5.2.tar.gz /development/thirdparties
+      - Step 3: cd /development/thirdparties
       - Step 4: tar -xvf Python-3.5.2.tar.gz
       - Step 5: cd Python-3.5.2
       - Step 6: export PATH=/development/gcc-5.4.0:$PATH
@@ -210,12 +210,12 @@ II. Setup:
 
     b. Setup boost_1_62_0:
       - Step 1: download boost_1_62_0.tar.gz
-      - Step 2: move boost_1_62_0.tar.gz to thirparties
-              mv ~/Download/boost_1_62_0.tar.gz /development/thirparties
+      - Step 2: move boost_1_62_0.tar.gz to thirdparties
+              mv ~/Download/boost_1_62_0.tar.gz /development/thirdparties
       - Step 3: cd /development/thirdparties
       - Step 4: tar -xvf boost_1_62_0.tar.gz
       - Step 5: move boost_1_62_0 to development
-                mv /development/thirparties/boost_1_62_0 /development
+                mv /development/thirdparties/boost_1_62_0 /development
       - Step 6: cd /development/boost_1_62_0
       - Step 7: ./bootstrap.sh --with-libraries=all --with-python=/development/python-3.5.2/bin/ --prefix=/development/boost_1_62_0
       - Step 8: ./b2 variant=release toolset=gcc link=shared threading=multi runtime-link=shared install
