@@ -159,21 +159,14 @@ void loop()
         /*!
          * Do a action
          */
-
-         /*!
-          * Define variable contain status of Relay
-          */
-          int statusRelay = digitalRead(RELAY);
-         if (strcmp(packetBuffer, "ACTIVE") == 0)
+         if (strcmp(packetBuffer, "ACTIVEVE"))
          {
-             statusRelay = HIGH;
-             Serial.println(statusRelay);
+             digitalWrite(RELAY, HIGHT);
          }
 
-         else if (strcmp(packetBuffer, "UNACTIVE") == 0)
+         else if (strcmp(packetBuffer, "UNACTIVE"))
          {
-             statusRelay = LOW;
-             Serial.println(statusRelay);
+             digitalWrite(RELAY, LOW);
          }
     }
     else
