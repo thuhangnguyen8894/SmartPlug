@@ -34,17 +34,16 @@ bool DBSmartDevice::insertToTableTimer(const SmartDeviceInfo& device)
 {
     MYSQL_DB_CONNECTION->setSchema(DATABASE);
     MYSQL_DB_CONNECTION->setAutoCommit(0);
-    std::cout << "Bao Khanh 01" << std::endl;
-    std::string sql("INSERT INTO Timer(idTimer, day, month, year, hour, min, sec) VALUE(?,?,?,?,?,?,?)");
+
+    std::string sql("INSERT INTO Timer(idTimer, daySD, monthSD, yearSD, hourSD, minuteSD, secondSD) VALUE(?,?,?,?,?,?,?)");
     this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
-    std::cout << "Bao Khanh 02" << std::endl;
+
     if (this->prep_stmt == NULL)
     {
         return false;
     }
     try
     {
-        std::cout << "Bao Khanh 03" << std::endl;
         (this->prep_stmt)->setString(1, device.timer.idTimer);
         (this->prep_stmt)->setInt(2, device.timer.daySD);
         (this->prep_stmt)->setInt(3, device.timer.monthSD);
@@ -52,24 +51,19 @@ bool DBSmartDevice::insertToTableTimer(const SmartDeviceInfo& device)
         (this->prep_stmt)->setInt(5, device.timer.hourSD);
         (this->prep_stmt)->setInt(6, device.timer.minSD);
         (this->prep_stmt)->setInt(7, device.timer.secSD);
-        std::cout << "Bao Khanh 04" << std::endl;
+
         int updateCount = prep_stmt->executeUpdate();
-        std::cout << "updateCount" << updateCount << std::endl;
         if(updateCount > 0)
         {
-            std::cout << "Bao Khanh 06" << std::endl;
             MYSQL_DB_CONNECTION->commit();
             return true;
         }
-        std::cout << "Bao Khanh 05" << std::endl;
     }
     catch(sql::SQLException& e)
     {
-        std::cout << "Bao Khanh 07" << std::endl;
         MYSQL_DB_CONNECTION->rollback();
         return false;
     }
-    std::cout << "Bao Khanh 08" << std::endl;
     this->closeConn();
 
     return false;

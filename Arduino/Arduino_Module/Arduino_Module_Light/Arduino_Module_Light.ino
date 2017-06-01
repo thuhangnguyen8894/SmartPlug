@@ -42,7 +42,7 @@ byte mac[] =
 /*!
  * Server's IP
  */
-IPAddress server(192, 168, 0, 100);
+IPAddress server(192, 168, 0, 104);
 
 /*!
  * Server's port
@@ -52,7 +52,7 @@ int serverPort = 8787;
 /*!
  * Ethernet Shield's IP
  */
-IPAddress ip(192, 168, 0, 104);
+IPAddress ip(192, 168, 0, 106);
 
 /*!
  * Ethernet Shield's port
@@ -160,19 +160,14 @@ void loop()
         /*!
          * Do a action
          */
-
-         /*!
-          * Define variable contain status of Relay
-          */
-          int statusRelay = digitalRead(RELAY);
-         if (strcmp(packetBuffer, "ACTIVE"))
+         if (strcmp(packetBuffer, "ACTIVEVE") == 0)
          {
-             statusRelay = HIGH;
+             digitalWrite(RELAY, HIGH);
          }
 
-         else if (strcmp(packetBuffer, "UNACTIVE"))
+         else if (strcmp(packetBuffer, "UNACTIVE") == 0)
          {
-             statusRelay = LOW;
+             digitalWrite(RELAY, LOW);
          }
     }
     else

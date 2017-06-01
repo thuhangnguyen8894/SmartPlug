@@ -41,7 +41,7 @@ byte mac[] =
 /*!
  * Server's IP
  */
-IPAddress server(192, 168, 0, 100);
+IPAddress server(192, 168, 0, 104);
 
 /*!
  * Server's port
@@ -141,15 +141,6 @@ void loop()
         Serial.println(packetSize);
         Serial.print("From ");
         IPAddress remote = udp.remoteIP();
-        
-        for (int i = 0; i < 4; i++)
-        {
-            Serial.print(remote[i], DEC);
-            if (i < 3)
-            {
-                Serial.print(".");
-            }
-        }
 
         Serial.print(", port ");
         Serial.println(udp.remotePort());
@@ -170,12 +161,12 @@ void loop()
          */
          if (strcmp(packetBuffer, "ACTIVEVE"))
          {
-             digitalWrite(RELAY) = HIGH;
+             digitalWrite(RELAY, HIGHT);
          }
 
          else if (strcmp(packetBuffer, "UNACTIVE"))
          {
-             digitalWrite(RELAY) = LOW;
+             digitalWrite(RELAY, LOW);
          }
     }
     else
