@@ -1,0 +1,3 @@
+step1: git reset --hard HEAD
+step2: modify merge code
+step3: git push -f origin WP01
