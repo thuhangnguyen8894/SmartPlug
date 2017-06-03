@@ -42,7 +42,7 @@ byte mac[] =
 /*!
  * Server's IP
  */
-IPAddress server(192, 168, 0, 104);
+IPAddress server(192, 168, 0, 100);
 
 /*!
  * Server's port
@@ -102,6 +102,11 @@ float minOnElectric = 0.0714;
 boolean status_before = false;
 boolean status_after = false;
 
+/*!
+ * Define variable contain status of Relay
+ */
+//int statusRelay = digitalRead(RELAY);
+
 void setup()
 {
     /*!
@@ -125,7 +130,7 @@ void loop()
     /*!
      * Turn on power of jackRelay
      */
-    digitalWrite(RELAY,HIGH);
+    //digitalWrite(RELAY,HIGH);
     
     int packetSize = udp.parsePacket();
 
@@ -158,16 +163,16 @@ void loop()
         Serial.println(packetBuffer);
         
         /*!
-         * Do a action
+         * Check status and remote device
          */
-         if (strcmp(packetBuffer, "ACTIVEVE") == 0)
+         if (strcmp(packetBuffer, "1") == 0)
          {
-             digitalWrite(RELAY, HIGH);
+            digitalWrite(RELAY, HIGH);
          }
 
-         else if (strcmp(packetBuffer, "UNACTIVE") == 0)
+         else if (strcmp(packetBuffer, "0") == 0)
          {
-             digitalWrite(RELAY, LOW);
+          digitalWrite(RELAY, LOW);
          }
     }
     else
@@ -273,8 +278,11 @@ void sendSmartPlugStatus()
          * Send the message
          */
         udp.beginPacket(server, serverPort);
+        Serial.println("send 1");
         udp.write(msg, strlen(msg) * sizeof(msg));
+        Serial.println("send 2");
         udp.endPacket();
+        Serial.println("send 3");
       }
 
       /*!
@@ -309,8 +317,11 @@ void sendSmartPlugStatus()
          * Send the message
          */
         udp.beginPacket(server, serverPort);
+        Serial.println("send 1");
         udp.write(msg, strlen(msg) * sizeof(msg));
+        Serial.println("send 2");
         udp.endPacket();
+        Serial.println("send 3");
       }
 
       /*!
@@ -373,3 +384,4 @@ double getAmpsRMS()
   return AmpsRMS;
   delay(20);
 }
+
