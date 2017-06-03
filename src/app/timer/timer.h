@@ -26,5 +26,6 @@
 #define MONTH 1
 
 char* timer();
+char* idTimer();
 
 #endif
