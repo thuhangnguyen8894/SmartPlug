@@ -35,7 +35,7 @@ bool DBSmartDevice::insertToTableTimer(const SmartDeviceInfo& device)
     MYSQL_DB_CONNECTION->setSchema(DATABASE);
     MYSQL_DB_CONNECTION->setAutoCommit(0);
 
-    std::string sql("INSERT INTO Timer(idTimer, daySD, monthSD, yearSD, hourSD, minuteSD, secondSD) VALUE(?,?,?,?,?,?,?)");
+    std::string sql("INSERT INTO Timer(idTimer, day, month, year, hour, min, sec) VALUE(?,?,?,?,?,?,?)");
     this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
 
     if (this->prep_stmt == NULL)
