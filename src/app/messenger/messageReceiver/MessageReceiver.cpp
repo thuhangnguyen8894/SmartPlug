@@ -108,7 +108,10 @@ void MessageReceiver::run()
                 if (isArduinoMessage(pBuffer))
                 {
                     char* datetime = timer();
-                    char* idTableTimerChar = idTableTimer();
+
+                    /*char* idTableTimerChar = idTableTimer();*/
+                    char* idTableTimerChar = idTimer();
+
                     /*!
                      * Appending IP of Sender to message
                      * Appending datetime of DatetimeSP to message
