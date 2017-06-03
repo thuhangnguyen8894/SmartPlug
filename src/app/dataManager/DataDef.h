@@ -66,7 +66,7 @@ typedef struct
 
 typedef struct
 {
-    char idTimer[10];
+    char idTimer[15];
     int secSD;
     int minSD;
     int hourSD;
@@ -84,7 +84,7 @@ typedef struct
 
 typedef struct
 {
-    char idTimer[10];
+    char idTimer[15];
     char idSmartDevice[10];
     char stateElectric[10];
     char stateRelay[10];
