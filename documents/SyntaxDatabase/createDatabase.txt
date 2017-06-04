@@ -2,7 +2,7 @@ CREATE DATABASE SMARTDEVICE;
 USE SMARTDEVICE;
 
 CREATE TABLE Timer(
-    idTimer CHAR(10),
+    idTimer CHAR(20),
     daySD INT,
     monthSD INT,
     yearSD INT,
@@ -22,7 +22,7 @@ CREATE TABLE SmartDevice(
     UNIQUE KEY(ip_port));
 
 CREATE TABLE Device_Timer(
-    idTimer CHAR(10),
+    idTimer CHAR(20),
     idSmartDevice CHAR(10),
     stateElectric CHAR(10),
     stateRelay CHAR(10),
