@@ -167,25 +167,3 @@ bool parseDataSmartDeviceJson(const std::string& jsonString,
     info.sender.port = std::stol(portStr);
     strcpy(info.sender.ip, ipStr.c_str());
 }
-
-/*
- * parse JSON to string topic
- */
-bool parseJsonToTopic(const std::string& jsonString, std::string& topic)
-{
-    boost::property_tree::ptree pTree;
-    
-    if (jsonString.compare("") == 0)
-    {
-        return false;
-    }
-
-    if (!convertJsonStrToPtree(jsonString, pTree))
-    {
-        return false;
-    }
-
-    topic = pTree.get<std::string>(ATTR_JSON_MESSAGE_TYPE);
-    std::cout << "Bao Khanh: parse json: " << topic << std::endl;
-    return true;
-}

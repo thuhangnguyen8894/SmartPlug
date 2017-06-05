@@ -40,14 +40,6 @@ void getJSONMessageTypeForC(const char* message, MESSAGE_TYPE* messageType);
  * param[in] message
  * return
  */
-bool convertMessageTypeToStrForC(const MESSAGE_TYPE* messageType,
-                                                    char** messageTypeStr);
-
-/*!
- * @brief
- * param[in] message
- * return
- */
 bool isSensorMessageForC(const char* message);
 
 #ifdef __cplusplus

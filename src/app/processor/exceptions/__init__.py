@@ -11,8 +11,20 @@ class InsertingTableTimerForCFailure(Exception):
     """
     pass
 
+class UpdatingTableSmartDevice(Exception):
+    """[summary]   
+    [description]
+    """
+    pass
+
 class SendMessageToArduinoFailure(Exception):
     """[summary]
     [description]
+    """
+    pass
+
+class ParseMessageFailure(Exception):
+    """
+    The error occurs when the message contains some invalid characters.
     """
     pass

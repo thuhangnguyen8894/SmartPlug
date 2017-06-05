@@ -35,9 +35,9 @@ bool sendMessageUDP(const std::string& message, const std::string& host,
     Poco::Net::SocketAddress socketAddress(host, port);
     sender.connect(socketAddress);
 
-    std::cout<<"message in MessageSender: "<<message<<std::endl;
-    std::cout<<"host in MessageSender: "<<host<<std::endl;
-    std::cout<<"port in MessageSender: "<<port<<std::endl;
+    // std::cout<<"message in MessageSender: "<<message<<std::endl;
+    // std::cout<<"host in MessageSender: "<<host<<std::endl;
+    // std::cout<<"port in MessageSender: "<<port<<std::endl;
 
     int sizePackage = sender.sendBytes(message.data(), message.size());
 

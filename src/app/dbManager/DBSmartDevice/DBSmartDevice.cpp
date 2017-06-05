@@ -35,7 +35,7 @@ bool DBSmartDevice::insertToTableTimer(const SmartDeviceInfo& device)
     MYSQL_DB_CONNECTION->setSchema(DATABASE);
     MYSQL_DB_CONNECTION->setAutoCommit(0);
 
-    std::string sql("INSERT INTO Timer(idTimer, day, month, year, hour, min, sec) VALUE(?,?,?,?,?,?,?)");
+    std::string sql("INSERT INTO Timer(idTimer, daySD, monthSD, yearSD, hourSD, minuteSD, secondSD) VALUE(?,?,?,?,?,?,?)");
     this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
 
     if (this->prep_stmt == NULL)
@@ -102,6 +102,57 @@ bool DBSmartDevice::insertToTableDeviceTimer(const SmartDeviceInfo& device)
     }
     catch(sql::SQLException& e)
     {
+        MYSQL_DB_CONNECTION->rollback();
+
+        std::cout << "rollback: " <<std::endl;
+        std::cout << "#ERR: " << e.what();
+        std::cout << " (MySQL error code: " << e.getErrorCode();
+        std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
+        return false;
+    }
+    this->closeConn();
+}
+
+/*!
+ * Function UPDATE field stateElectric, stateRelay from table SmartDevice
+ */
+bool DBSmartDevice::updateToTableSmartDevice(const SmartDeviceInfo& device)
+{
+    MYSQL_DB_CONNECTION->setSchema(DATABASE);
+    MYSQL_DB_CONNECTION->setAutoCommit(0);
+
+    std::cout<<"Here 1"<<std::endl;
+    
+    std::string sql("UPDATE SmartDevice SET stateElectric = ?, stateRelay = ? WHERE idSmartDevice = ?");
+    std::cout<<"Here 2"<<std::endl;
+    this->prep_stmt = MYSQL_DB_CONNECTION->prepareStatement(sql);
+
+    if (this->prep_stmt == NULL)
+    {
+        std::cout<<"Here 3"<<std::endl;
+        return false;
+    }
+
+    try
+    {
+        std::cout<<"Here 4"<<std::endl;
+        (this->prep_stmt)->setString(1, device.deviceTimer.stateElectric);
+        (this->prep_stmt)->setString(2, device.deviceTimer.stateRelay);
+        (this->prep_stmt)->setString(3, device.deviceTimer.idSmartDevice);
+        
+        int updateCount = prep_stmt->executeUpdate();
+
+        if(updateCount > 0)
+        {
+            std::cout<<"Here 5"<<std::endl;
+            MYSQL_DB_CONNECTION->commit();
+            return true;
+        }
+    }
+    catch(sql::SQLException& e)
+    {
+        std::cout<<"Here 6"<<std::endl;
         MYSQL_DB_CONNECTION->rollback();
 
         std::cout << "rollback: " <<std::endl;

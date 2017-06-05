@@ -35,6 +35,4 @@
 bool parseDataSmartDeviceJson(const std::string& jsonString,
                                                 SmartDeviceInfo& info);
 
-bool parseJsonToTopic(const std::string& jsonString, std::string& topic);
-
 #endif

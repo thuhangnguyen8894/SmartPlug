@@ -97,6 +97,7 @@ db_mgr_cffi.cdef("""
 
     bool insertToTableTimerForC(const SmartDeviceInfo* device);
     bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device);
+    bool updateToTableSmartDeviceForC(const SmartDeviceInfo* device);
     bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device);
 """)
 
