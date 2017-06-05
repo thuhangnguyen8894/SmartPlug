@@ -47,7 +47,7 @@ import com.nguyenthuhang.smartplug.api.ResponseData;
 
 public class MainActivity extends AppCompatActivity  implements APIService.ServiceListener{
 
-    Button btnOn, btnOff;
+    Button btnOn, btnOff, btnSel;
     TextView txtResult;
     //final  String httpPath = "http://www.edumobile.org/android/";
     ApplicationService applicationService;
@@ -73,6 +73,18 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
                 handleOff();
             }
         });
+        btnSel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleSel();
+            }
+        });
+    }
+
+    private void handleSel() {
+        String cmd = "SEL";
+        getRequest(cmd);
+        Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();
     }
 
     private void handleOff() {
@@ -92,6 +104,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     private void addControls() {
         btnOn = (Button) findViewById(R.id.btnOn);
         btnOff = (Button) findViewById(R.id.btnOff);
+        btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
     }
 
@@ -108,6 +121,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             //alert
             //txtResult.setText("That didn't work!");
             txtResult.setText("Response is: "+ respData.getValue());
+            System.out.print("JSON: " + respData.getValue());
         }
     }
 
