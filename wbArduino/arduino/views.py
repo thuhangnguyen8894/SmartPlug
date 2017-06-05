@@ -4,7 +4,7 @@ import pickle
 import MySQLdb
 import string
 
-from arduino import contants
+from arduino import constants
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -48,7 +48,7 @@ def arduino(request):
 def selectDevice(cmd):
     # cmd = request.GET['cmd']
     if cmd == 'SEL':
-        conn = MySQLdb.connect(host = contants.HOST, user = contants.USER, passwd = contants.PASSWORD, db = contants.DATABASE)
+        conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
         cur = conn.cursor()
         cur.execute("SELECT nameSmartDevice, stateElectric, stateRelay FROM SmartDevice;")
         json_array = []
@@ -56,9 +56,9 @@ def selectDevice(cmd):
         for r in cur:
             if not r is None:
                 json_dict={
-                    contants.ATTR_JSON_NAME_DEVICE : r[0],\
-                    contants.ATTR_JSON_ELECTRIC_STATUS_VALUE : r[1],\
-                    contants.ATTR_JSON_RELAY_STATUS_VALUE : r[2]
+                    constants.ATTR_JSON_NAME_DEVICE : r[0],\
+                    constants.ATTR_JSON_ELECTRIC_STATUS_VALUE : r[1],\
+                    constants.ATTR_JSON_RELAY_STATUS_VALUE : r[2]
                 }
                 json_array.append(json_dict)
         json_dict = {'hang' : json_array}       
@@ -99,21 +99,21 @@ def controlSmartPlug(cmd):
     # cmd = request.GET['cmd']
     json_dict_message = {}
     json_message_data = None
-    json_dict_message[contants.ATTR_JSON_MESSAGE_TYPE] = str(contants.ATTR_JSON_MOBILE_STATUS_VALUE)
+    json_dict_message[constants.ATTR_JSON_MESSAGE_TYPE] = str(constants.ATTR_JSON_MOBILE_STATUS_VALUE)
 
     json_message_data = { \
-        contants.ATTR_JSON_ID_DEVICE : str(contants.ATTR_JSON_ID_SD001_VALUE),\
-        contants.ATTR_JSON_NAME_DEVICE : str(contants.ATTR_JSON_NAME_DEVICE_LIGHT_VALUE),\
-        contants.ATTR_JSON_RELAY_STATUS_VALUE : str(contants.ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE),\
-        contants.ATTR_JSON_ID_ROOM : str(contants.ATTR_JSON_ID_ROOM_R001_VALUE)
+        constants.ATTR_JSON_ID_DEVICE : str(constants.ATTR_JSON_ID_SD001_VALUE),\
+        constants.ATTR_JSON_NAME_DEVICE : str(constants.ATTR_JSON_NAME_DEVICE_LIGHT_VALUE),\
+        constants.ATTR_JSON_RELAY_STATUS_VALUE : str(constants.ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE),\
+        constants.ATTR_JSON_ID_ROOM : str(constants.ATTR_JSON_ID_ROOM_R001_VALUE)
     }
      
     if cmd == 'OFF':
-        json_message_data[contants.ATTR_JSON_RELAY_STATUS_VALUE] = \
-                                    str(contants.ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE)
-    json_dict_message[contants.ATTR_JSON_DATA] = json_message_data
-    sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (contants.MESSAGE_RECEIVER_IP,\
-                                                        contants.MESSAGE_RECEIVER_PORT))
+        json_message_data[constants.ATTR_JSON_RELAY_STATUS_VALUE] = \
+                                    str(constants.ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE)
+    json_dict_message[constants.ATTR_JSON_DATA] = json_message_data
+    sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (constants.MESSAGE_RECEIVER_IP,\
+                                                        constants.MESSAGE_RECEIVER_PORT))
     
     # return JsonResponse({'SPState ':cmd})
 
