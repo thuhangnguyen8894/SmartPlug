@@ -20,6 +20,8 @@ bool insertToTableTimerForC(const SmartDeviceInfo* device);
 
 bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device);
 
+bool updateToTableSmartDeviceForC(const SmartDeviceInfo* device);
+
 bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device);
 
 #ifdef __cplusplus
