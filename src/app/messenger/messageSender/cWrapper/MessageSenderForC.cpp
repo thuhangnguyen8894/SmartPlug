@@ -30,9 +30,9 @@ bool sendMessageUDPForC(const char* data, const char* host,
     std::string message(data);
     std::string hostStr(host);
 
-    std::cout<<"message in MessageSender ForC: "<< message <<std::endl;
-    std::cout<<"hostStr in MessageSender ForC: "<< hostStr <<std::endl;
-    std::cout<<"port in MessageSender ForC: "<< port <<std::endl;
+    // std::cout<<"message in MessageSender ForC: "<< message <<std::endl;
+    // std::cout<<"hostStr in MessageSender ForC: "<< hostStr <<std::endl;
+    // std::cout<<"port in MessageSender ForC: "<< port <<std::endl;
 
     return sendMessageUDP(message, host, port);
 }
