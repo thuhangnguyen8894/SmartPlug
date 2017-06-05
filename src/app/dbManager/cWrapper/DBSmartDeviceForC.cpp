@@ -22,6 +22,12 @@ bool insertToTableDeviceTimerForC(const SmartDeviceInfo* device)
 	return status;
 }
 
+bool updateToTableSmartDeviceForC(const SmartDeviceInfo* device)
+{
+	bool status = db.updateToTableSmartDevice(*device);
+	return status;
+}
+
 bool selectIdTimerToTableTimerForC(SmartDeviceInfo* device)
 {
 	bool status = db.selectIdTimerToTableTimer(*device);
