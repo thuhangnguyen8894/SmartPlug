@@ -23,7 +23,7 @@
 #define CURRENT_SENSOR A0
 
 #define MESSAGE_TYPE "SMART_DEVICE_STATUS_VALUE"
-#define ID_DEVICE "SD002"
+#define ID_DEVICE "SD001"
 #define NAME_DEVICE "DEVICE_LIGHT"
 #define ID_ROOM "R0001"
 #define SEMICOLON_SPLITTER ";"
@@ -101,11 +101,6 @@ float minOnElectric = 0.0714;
  */
 boolean status_before = false;
 boolean status_after = false;
-
-/*!
- * Define variable contain status of Relay
- */
-//int statusRelay = digitalRead(RELAY);
 
 void setup()
 {
