@@ -130,9 +130,6 @@ void MessageReceiver::run()
                         std::cout << "buildJson ERROR" << std::endl;
                         continue;
                     }
-                    /*
-                    ----------------------------------------------------
-                     */
 
                     MESSAGE_TYPE messageType = getJSONMessageType(s_pBuffer);
 
@@ -140,7 +137,7 @@ void MessageReceiver::run()
                     s_sendmore (publisher, (char*)topic.c_str());
                     s_send(publisher, (char*)jsonString.c_str());
 
-                    std::cout << "send SUCCESSFULL string" << std::endl;
+                    std::cout << "send STRING done" << std::endl;
 
                     sleep (1);
                 }
@@ -152,16 +149,13 @@ void MessageReceiver::run()
                     std::string jsonMessage(pBuffer);
                     removeInvalidCharacter(jsonMessage);
                     std::string topicDjango;
-                    if(parseJsonToTopic(jsonMessage, topicDjango))
-                    {
-                        std::cout << "topicDjango: " << topicDjango << std::endl;
-                        s_sendmore (publisher, (char*)topicDjango.c_str());
-                        s_send(publisher, (char*)jsonMessage.c_str());
+                    std::cout << jsonMessage << std::endl;
 
-                        std::cout << "send SUCCESSFULL json" << std::endl;
+                    s_send(publisher, (char*)jsonMessage.c_str());
 
-                        sleep (1);
-                    }
+                    std::cout << "send JSON done" << std::endl;
+                    
+                    sleep (1);
                 }
 
                 if (pBuffer != NULL)
