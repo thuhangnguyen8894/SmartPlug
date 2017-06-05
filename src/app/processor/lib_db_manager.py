@@ -10,29 +10,31 @@ from cffi_interfaces.__cffi_messageSender import messageSender_c
 
 import error_messages
 import exceptions
+import constants
 
 class LibDBManager(object):
     def __init__(self):
         pass
 
     def message_sender(self, id_device, status_device):
-        if id_device == "SD001":
-            str1 = '192.168.0.106'
-            host = messageSender_cffi.new("char[]", bytes(str1, "utf-8"))
+        if id_device == constants.ATTR_SD001_VALUE:
+            host = messageSender_cffi.new("char[]", 
+                               bytes(constants.ATTR_HOST_LIGHT_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-        elif id_device == "SD002":
-            host = messageSender_cffi.new("char[]", bytes('192.168.0.103',"utf-8"))
+        elif id_device == constants.ATTR_SD002_VALUE:
+            host = messageSender_cffi.new("char[]", 
+                               bytes(constants.ATTR_HOST_PLUS_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-        
+            
         port = 5600
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
-        print("sendMessageUDPForC")
 
     def fomart_messageStr(self, status_device):
-        if status_device == "ACTIVE":
+        status_device = int(status_device)
+        if status_device == constants.ATTR_ACTIVE_VALUE:
             messageStr = messageSender_cffi.new("char[]", bytes('1', "utf-8"))
-        elif status_device == "UNACTIVE":
+        elif status_device == constants.ATTR_UNACTIVE_VALUE:
             messageStr = messageSender_cffi.new("char[]", bytes('0', "utf-8"))
         return messageStr
 
@@ -49,4 +51,10 @@ class LibDBManager(object):
                                                                 timing_data_ptr)
         if not result_insert_table_device_timer:
             raise exceptions.InsertingTableDeviceTimerForCFailure(\
-                        error_messages.ERROR_INSERT_INTO_TABLE_DEVICE_TIMER) 
+                        error_messages.ERROR_INSERT_INTO_TABLE_DEVICE_TIMER)
+
+        result_update_table_smartdevice = db_mgr_c.updateToTableSmartDeviceForC(\
+                                                                timing_data_ptr)
+        if not result_update_table_smartdevice:
+            raise exceptions.UpdatingTableSmartDevice(\
+                             error_messages.ERROR_UPDARE_TO_TABLE_SMARTDEVICE)
