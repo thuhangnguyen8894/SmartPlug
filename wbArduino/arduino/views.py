@@ -62,8 +62,4 @@ def controlSmartPlug(request):
     json_dict_message[ATTR_JSON_DATA] = json_message_data
     sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (MESSAGE_RECEIVER_IP,\
                                                         MESSAGE_RECEIVER_PORT))
-    
     return JsonResponse({'SPState ':cmd})
-
-def function():
-    pass
