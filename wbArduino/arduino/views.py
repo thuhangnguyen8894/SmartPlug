@@ -64,3 +64,6 @@ def controlSmartPlug(request):
                                                         MESSAGE_RECEIVER_PORT))
     
     return JsonResponse({'SPState ':cmd})
+
+def function():
+    pass
