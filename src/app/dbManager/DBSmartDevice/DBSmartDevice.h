@@ -38,6 +38,7 @@ public:
 
     bool insertToTableTimer(const SmartDeviceInfo& device);
     bool insertToTableDeviceTimer(const SmartDeviceInfo& device);
+    bool updateToTableSmartDevice(const SmartDeviceInfo& device);
     bool selectIdTimerToTableTimer(SmartDeviceInfo& device);
     bool selectDeviceToTableSmartDevice(std::vector<SmartDeviceInfo>& vectorSmartDeviceInfos);
 
