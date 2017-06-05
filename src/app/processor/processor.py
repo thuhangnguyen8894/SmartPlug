@@ -17,28 +17,8 @@ Modified History
 import sys
 import threading
 import zmq
-
 import time
-
-from timer import Timer
-from deviceTimer import DeviceTimer
-from smartDevice import SmartDevice
-
 import optionParser
-import message_handler
-
-from cffi_interfaces.__cffi_jsonCommon import jsonCommon_cffi
-from cffi_interfaces.__cffi_jsonCommon import jsonCommon_c
-
-from cffi_interfaces.__cffi_jsonParser import jsonParser_cffi
-from cffi_interfaces.__cffi_jsonParser import jsonParser_c
-
-from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_cffi
-from cffi_interfaces.__cffi_jsonBuilder import jsonBuilder_c
-
-from cffi_interfaces.__cffi_messageSender import messageSender_cffi
-from cffi_interfaces.__cffi_messageSender import messageSender_c
-
 import message_handler
 
 class Processor(threading.Thread):
@@ -66,40 +46,17 @@ class Processor(threading.Thread):
         else:    
             self.topic + topic
 
-    
-    def sendMessageToArduino(self, message, host, port):
-        messageStr = messageSender_cffi.new("char *")
-        host = messageSender_cffi.new("char *")
-        messageStr[0] = message
-        host[0] = host
-
-        messageSender_c.sendMessageUDPForC(messageStr, host, port)
-
-    '''
-       Function run
-    '''
     def run(self):
         print("Processor run on %s:%s" %(self.host, self.port))
-
-        # mylist = []
-        # smartplug = SmartDevice("SD001", "192.168.0.103:5600", \
-        #                                                 "R0001", mylist)
-        # smartlight = SmartDevice("SD002", "192.168.0.104:5600", \
-        #                                                 "R0001", mylist)
         
         while True:
-            topic = self.sock.recv(2, zmq.NOBLOCK)
-            message = self.sock.recv(2, zmq.NOBLOCK)
+            message = self.sock.recv()
             print("message ",message)
             msg_handler = message_handler.MessageHandler(topic, message)
             msg_handler.run()
-            print("Bao Khanh Processor")
             time.sleep(1)
         self.sock.close()
 
-'''
-    Main
-'''
 if __name__ == '__main__':
 
     if len(sys.argv) < 4:
