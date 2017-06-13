@@ -9,36 +9,6 @@ from arduino import constants
 from django.shortcuts import render
 from django.http import JsonResponse
 
-# #modified IP
-# MESSAGE_RECEIVER_IP = "192.168.0.100"
-# MESSAGE_RECEIVER_PORT = 8787
-
-# ATTR_JSON_MESSAGE_TYPE = "MESSAGE_TYPE"
-# ATTR_JSON_MOBILE_STATUS_VALUE = "MOBILE_STATUS"
-# ATTR_JSON_ID_DEVICE = "ID_DEVICE"
-# ATTR_JSON_NAME_DEVICE = "NAME_DEVICE"
-# ATTR_JSON_RELAY_STATUS_VALUE = "RELAY_STATUS_VALUE"
-# ATTR_JSON_ELECTRIC_STATUS_VALUE = "ELECTRIC_STATUS_VALUE"
-# ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE = 1
-# ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE = 0
-# ATTR_JSON_ID_ROOM = "ID_ROOM"
-# ATTR_JSON_DATA = "data"
-
-# ATTR_JSON_ID_SD001_VALUE = "SD001"
-# ATTR_JSON_ID_SD002_VALUE = "SD002"
-
-# ATTR_JSON_NAME_DEVICE_LIGHT_VALUE = "DEVICE_LIGHT"
-# ATTR_JSON_NAME_DEVICE_PLUS_VALUE = "DEVICE_PLUS"
-
-# ATTR_JSON_ID_ROOM_R001_VALUE = "R0001"
-# #end
-
-
-# HOST = 'localhost'
-# USER = 'root'
-# PASSWORD = 'root'
-# DATABASE = 'SMARTDEVICE'
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Create your views here.
@@ -50,21 +20,21 @@ def selectDevice(cmd):
     if cmd == 'SEL':
         conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
         cur = conn.cursor()
-        cur.execute("SELECT nameSmartDevice, stateElectric, stateRelay FROM SmartDevice;")
+        cur.execute("SELECT idSmartDevice, nameSmartDevice, stateElectric, stateRelay FROM SmartDevice;")
         json_array = []
-        json_dict = {}
         for r in cur:
             if not r is None:
                 json_dict={
-                    constants.ATTR_JSON_NAME_DEVICE : r[0],\
-                    constants.ATTR_JSON_ELECTRIC_STATUS_VALUE : r[1],\
-                    constants.ATTR_JSON_RELAY_STATUS_VALUE : r[2]
+                    constants.ATTR_JSON_ID_DEVICE : r[0],\
+                    constants.ATTR_JSON_NAME_DEVICE : r[1],\
+                    constants.ATTR_JSON_ELECTRIC_STATUS_VALUE : r[2],\
+                    constants.ATTR_JSON_RELAY_STATUS_VALUE : r[3]
                 }
-                json_array.append(json_dict)
-        json_dict = {'hang' : json_array}       
+                json_array.append(json_dict)   
+        print(json_array)  
         cur.close()
         conn.close()
-        return json_dict
+        return json_array
 
 def controlSmartPlug(cmd):
     # # cmd = request.GET['cmd']
@@ -117,17 +87,85 @@ def controlSmartPlug(cmd):
     
     # return JsonResponse({'SPState ':cmd})
 
+def controlSmartPlugSD001(cmd):
+    json_dict_message = {}
+    json_message_data = None
+    json_dict_message[constants.ATTR_JSON_MESSAGE_TYPE] = str(constants.ATTR_JSON_MOBILE_STATUS_VALUE)
+
+    json_message_data = { \
+        constants.ATTR_JSON_ID_DEVICE : str(constants.ATTR_JSON_ID_SD001_VALUE),\
+        constants.ATTR_JSON_NAME_DEVICE : str(constants.ATTR_JSON_NAME_DEVICE_LIGHT_VALUE),\
+        constants.ATTR_JSON_RELAY_STATUS_VALUE : str(constants.ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE),\
+        constants.ATTR_JSON_ID_ROOM : str(constants.ATTR_JSON_ID_ROOM_R001_VALUE)
+    }
+     
+    if cmd == 'OFFSD001':
+        json_message_data[constants.ATTR_JSON_RELAY_STATUS_VALUE] = \
+                                    str(constants.ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE)
+    json_dict_message[constants.ATTR_JSON_DATA] = json_message_data
+    sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (constants.MESSAGE_RECEIVER_IP,\
+                                                        constants.MESSAGE_RECEIVER_PORT))
+
+def controlSmartPlugSD002(cmd):
+    json_dict_message = {}
+    json_message_data = None
+    json_dict_message[constants.ATTR_JSON_MESSAGE_TYPE] = str(constants.ATTR_JSON_MOBILE_STATUS_VALUE)
+
+    json_message_data = { \
+        constants.ATTR_JSON_ID_DEVICE : str(constants.ATTR_JSON_ID_SD002_VALUE),\
+        constants.ATTR_JSON_NAME_DEVICE : str(constants.ATTR_JSON_NAME_DEVICE_PLUS_VALUE),\
+        constants.ATTR_JSON_RELAY_STATUS_VALUE : str(constants.ATTR_JSON_RELAY_STATUS_VALUE_ACTIVE),\
+        constants.ATTR_JSON_ID_ROOM : str(constants.ATTR_JSON_ID_ROOM_R001_VALUE)
+    }
+     
+    if cmd == 'OFFSD002':
+        json_message_data[constants.ATTR_JSON_RELAY_STATUS_VALUE] = \
+                                    str(constants.ATTR_JSON_RELAY_STATUS_VALUE_UNACTIVE)
+    json_dict_message[constants.ATTR_JSON_DATA] = json_message_data
+    sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (constants.MESSAGE_RECEIVER_IP,\
+                                                        constants.MESSAGE_RECEIVER_PORT))
+
 
 def serverDjango(request):
     cmd = request.GET['cmd']
     print("CMD0: ", cmd)
+
+    # Parse Json
+    # jsonStr = json.dumps(cmd)
+    # print("json_string 02: " , jsonStr)
+    # jsonParse = json.loads(jsonStr)
+    # print("parsed_json 02 : " , jsonParse)
+    # print("Hang 02: " , jsonParse['MESSAGE_STATUS_VALUE'])
+
     if cmd == 'ON' or cmd == 'OFF':
         print("CMD1: ", cmd)
         controlSmartPlug(cmd)
         return JsonResponse({'SPState ':cmd})
-    elif cmd == 'SEL':
+
+    # if cmd == 'SEL':
+    #     json_dict = selectDevice(cmd)
+    #     return JsonResponse({'JSON_SEL':json_dict})
+
+    # if jsonString['ID_DEVICE'] == ATTR_JSON_ID_SD001_VALUE
+    #     if jsonString['ELECTRIC_STATUS_VALUE']
+    #     print("CMD1: ", cmd)
+    #     controlSmartPlug(cmd)
+    #     return JsonResponse({'SPState ':cmd})
+
+    if cmd == 'ONSD001' or cmd == 'OFFSD001':
+        print("SD001: ", cmd)
+        controlSmartPlugSD001(cmd)
+        return JsonResponse({'SPState ':cmd})
+
+    if cmd == 'ONSD002' or cmd == 'OFFSD002':
+        print("SD002: ", cmd)
+        controlSmartPlugSD002(cmd)
+        return JsonResponse({'SPState ':cmd})
+
+    if cmd == 'SEL':
         json_dict = selectDevice(cmd)
-        return JsonResponse({'Test: ' : json_dict})
+        return JsonResponse({'JSON_SEL':json_dict})
+ 
 
 
 # def selectDevice(request):

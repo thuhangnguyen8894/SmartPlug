@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,17 +41,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.nguyenthuhang.smartplug.adapter.AdapterSmartDevice;
 import com.nguyenthuhang.smartplug.api.APIService;
 import com.nguyenthuhang.smartplug.api.ApplicationService;
 import com.nguyenthuhang.smartplug.api.ResponseData;
+import com.nguyenthuhang.smartplug.model.SmartDevice;
 
+import org.json.*;
 
 public class MainActivity extends AppCompatActivity  implements APIService.ServiceListener{
 
     Button btnOn, btnOff, btnSel;
     TextView txtResult;
-    //final  String httpPath = "http://www.edumobile.org/android/";
+
+    ListView lvSmartDevice;
+    ArrayList<SmartDevice> deviceArrayList;
+    AdapterSmartDevice adapterSmartDevice;
+
     ApplicationService applicationService;
+
+    final String ATTR_JSON_MESSAGE_STATUS_VALUE = "MESSAGE_STATUS_VALUE";
+    final String ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT = "SEL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +94,9 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
 
     private void handleSel() {
         String cmd = "SEL";
+        //String cmd = "{'" + ATTR_JSON_MESSAGE_STATUS_VALUE + "' : '" +  ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT + "'}";
         getRequest(cmd);
+        System.out.println("SELECT: " + cmd);
         Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();
     }
 
@@ -91,6 +104,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         String cmd = "OFF";
         getRequest(cmd);
         Toast.makeText(MainActivity.this, "Light Off", Toast.LENGTH_LONG).show();
+
     }
 
     private void handleOn() {
@@ -106,6 +120,12 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         btnOff = (Button) findViewById(R.id.btnOff);
         btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
+
+        lvSmartDevice = (ListView) findViewById(R.id.lvDevice);
+        deviceArrayList = new ArrayList<>();
+        adapterSmartDevice = new AdapterSmartDevice(MainActivity.this, R.layout.list_deceive, deviceArrayList);
+        lvSmartDevice.setAdapter(adapterSmartDevice);
+
     }
 
     private void getRequest(String val){
@@ -121,7 +141,38 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             //alert
             //txtResult.setText("That didn't work!");
             txtResult.setText("Response is: "+ respData.getValue());
-            System.out.print("JSON: " + respData.getValue());
+            String json = respData.getValue();
+
+            try {
+                JSONObject object = new JSONObject(json);
+
+                JSONArray jsonArray = object.getJSONArray("JSON_SEL");
+
+                for(int i =0; i < jsonArray.length(); i++){
+
+                    SmartDevice smartDevice = new SmartDevice();
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    String ID_DEVICE = jsonObject.getString("ID_DEVICE");
+                    smartDevice.setIdSmartDevice(ID_DEVICE);
+
+                    String NAME_DEVICE = jsonObject.getString("NAME_DEVICE");
+                    smartDevice.setNameSmartDevice(NAME_DEVICE);
+
+                    String RELAY_STATUS_VALUE = jsonObject.getString("RELAY_STATUS_VALUE");
+                    smartDevice.setStateRelay(RELAY_STATUS_VALUE);
+
+                    String ELECTRIC_STATUS_VALUE = jsonObject.getString("ELECTRIC_STATUS_VALUE");
+                    smartDevice.setStateElectric(ELECTRIC_STATUS_VALUE);
+
+                    deviceArrayList.add(smartDevice);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                System.out.println("JSON error");
+            }
         }
     }
 
