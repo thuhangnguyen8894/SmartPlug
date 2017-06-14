@@ -22,6 +22,9 @@ import com.nguyenthuhang.smartplug.api.ApplicationService;
 import com.nguyenthuhang.smartplug.api.ResponseData;
 import com.nguyenthuhang.smartplug.model.SmartDevice;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -33,12 +36,17 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
     int resource;
     List<SmartDevice> objects;
     ApplicationService applicationService;
+    
     final String ATTR_JSON_ID_DEVICE = "ID_DEVICE";
     final String ATTR_JSON_ELECTRIC_STATUS_VALUE = "ELECTRIC_STATUS_VALUE";
-    final String ATTR_JSON_ELECTRIC_STATUS_VALUE_ON = "ON";
-    final String ATTR_JSON_ELECTRIC_STATUS_VALUE_OFF = "OFF";
+    final int ATTR_JSON_ELECTRIC_STATUS_VALUE_ACTIVE = 1;
+    final int ATTR_JSON_ELECTRIC_STATUS_VALUE_UNACTIVE = 0;
     final String ATTR_JSON_MESSAGE_STATUS_VALUE = "MESSAGE_STATUS_VALUE";
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE = "ON_OFF";
+    final String ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE = "ON_OFF_DEVICE";
+
+    final String ATTR_JSON_NAME_DEVICE_LIGHT_VALUE = "DEVICE_LIGHT";
+    final String ATTR_JSON_NAME_DEVICE_PLUS_VALUE = "DEVICE_PLUS_";
+    final String ATTR_JSON_NAME_DEVICE = "NAME_DEVICE";
 
     public AdapterSmartDevice(Activity context, int resource, List<SmartDevice> objects) {
         super(context, resource, objects);
@@ -63,41 +71,65 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
         Switch btnSwitchElectric = (Switch) item.findViewById(R.id.btnSwitchElectric);
         TextView txtIDDeceive = (TextView) item.findViewById(R.id.txtIDDeceive);
         TextView txtNameDeceive = (TextView) item.findViewById(R.id.txtNameDeceive);
-        TextView txtRelay = (TextView) item.findViewById(R.id.txtRelay);
 
         final  SmartDevice smartDevice = this.objects.get(position);
         txtIDDeceive.setText(smartDevice.getIdSmartDevice());
         txtNameDeceive.setText(smartDevice.getNameSmartDevice());
-        txtRelay.setText(smartDevice.getStateRelay());
 
-        if(smartDevice.getStateElectric().equals("ON")==true){
+        if(smartDevice.getStateRelay().equals("ACTIVE")==true){
             btnSwitchElectric.setChecked(true);
         }else {
             btnSwitchElectric.setChecked(false);
         }
 
         final String idSmartDevice = smartDevice.getIdSmartDevice();
+        System.out.println("idSmartDevice: " + idSmartDevice);
         btnSwitchElectric.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-/*
                 if(b){
-                    String cmd = "{'" + ATTR_JSON_MESSAGE_STATUS_VALUE + "' : '" +  ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE + "', "+
-                            "'"+ ATTR_JSON_ID_DEVICE +"' : '" + idSmartDevice + "', '" +
-                            ATTR_JSON_ELECTRIC_STATUS_VALUE +"' : '"+ ATTR_JSON_ELECTRIC_STATUS_VALUE_ON +"'}";
-                    System.out.println("Hang 01:" + cmd);
-                    getRequest(cmd);
-                    System.out.println("Hang 02:");
+                    String cmd = "";
+                    System.out.println("Hang 01:");
+
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put(ATTR_JSON_MESSAGE_STATUS_VALUE, ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE);
+                        object.put(ATTR_JSON_ID_DEVICE, idSmartDevice);
+                        if(idSmartDevice.equals("SD001")==true){
+                            object.put(ATTR_JSON_NAME_DEVICE, ATTR_JSON_NAME_DEVICE_LIGHT_VALUE);
+                        }else if(idSmartDevice.equals("SD002")==true){
+                            object.put(ATTR_JSON_NAME_DEVICE, ATTR_JSON_NAME_DEVICE_PLUS_VALUE);
+                        }
+                        object.put(ATTR_JSON_ELECTRIC_STATUS_VALUE,ATTR_JSON_ELECTRIC_STATUS_VALUE_ACTIVE);
+                        cmd = object.toString();
+                        System.out.println("Hang 02:" + cmd);
+                        getRequest(cmd);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("JSON error");
+                    }
                 }else {
-                    String cmd = "{'" + ATTR_JSON_MESSAGE_STATUS_VALUE + "' : '" +  ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE + "', "+
-                            "'"+ ATTR_JSON_ID_DEVICE +"' : '" + idSmartDevice + "', '" +
-                            ATTR_JSON_ELECTRIC_STATUS_VALUE +"' : '"+ ATTR_JSON_ELECTRIC_STATUS_VALUE_OFF +"'}";
-                    System.out.println("Hang 03:" + cmd);
-                    getRequest(cmd);
-                    System.out.println("Hang 04:");
+                    String cmd = "";
+                    System.out.println("Hang 03:");
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put(ATTR_JSON_MESSAGE_STATUS_VALUE, ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE);
+                        object.put(ATTR_JSON_ID_DEVICE, idSmartDevice);
+                        if(idSmartDevice.equals("SD001")==true){
+                            object.put(ATTR_JSON_NAME_DEVICE, ATTR_JSON_NAME_DEVICE_LIGHT_VALUE);
+                        }else if(idSmartDevice.equals("SD002")==true){
+                            object.put(ATTR_JSON_NAME_DEVICE, ATTR_JSON_NAME_DEVICE_PLUS_VALUE);
+                        }
+                        object.put(ATTR_JSON_ELECTRIC_STATUS_VALUE,ATTR_JSON_ELECTRIC_STATUS_VALUE_UNACTIVE);
+                        cmd = object.toString();
+                        System.out.println("Hang 04:" + cmd);
+                        getRequest(cmd);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("JSON error");
+                    }
                 }
-*/
-                if(b){
+                /*if(b){
                     if(idSmartDevice.equals("SD001")==true){
                         String cmd = "ONSD001";
                         getRequest(cmd);
@@ -116,7 +148,8 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
                         String cmd = "OFFSD002";
                         getRequest(cmd);
                     }
-                }
+                }*/
+
             }
         });
 

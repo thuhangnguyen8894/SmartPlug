@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     ApplicationService applicationService;
 
     final String ATTR_JSON_MESSAGE_STATUS_VALUE = "MESSAGE_STATUS_VALUE";
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT = "SEL";
+    final String ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT = "SELECT_DEVICE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +94,20 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     }
 
     private void handleSel() {
-        String cmd = "SEL";
-        //String cmd = "{'" + ATTR_JSON_MESSAGE_STATUS_VALUE + "' : '" +  ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT + "'}";
-        getRequest(cmd);
-        System.out.println("SELECT: " + cmd);
-        Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();
+        //String cmd = "SEL";
+        String cmd = "";
+        JSONObject object = new JSONObject();
+        try {
+            object.put(ATTR_JSON_MESSAGE_STATUS_VALUE, ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT);
+            cmd = object.toString();
+            getRequest(cmd);
+            System.out.println("SELECT: " + cmd);
+            Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("JSON error");
+        }
+
     }
 
     private void handleOff() {
@@ -142,7 +152,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             //txtResult.setText("That didn't work!");
             txtResult.setText("Response is: "+ respData.getValue());
             String json = respData.getValue();
-
+            System.out.println("Hang 01: " + json);
             try {
                 JSONObject object = new JSONObject(json);
 
@@ -182,6 +192,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         if(respData.getApiID() == 100){
             //alert
             txtResult.setText("That didn't work!" + respData.getValue());
+            Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_LONG).show();
         }
     }
 }

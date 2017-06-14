@@ -10,20 +10,15 @@
     android:paddingTop="10dp">
 
     <LinearLayout
-        android:layout_width="10dp"
-        android:layout_height="30dp">
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="270dp"
         android:layout_height="30dp"
         android:layout_weight="0.92"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@android:color/holo_red_light">
 
         <TextView
-            android:layout_width="86dp"
+            android:layout_width="124dp"
             android:layout_height="30dp"
             android:id="@+id/txtIDDeceive"
             android:layout_weight="0.42"
@@ -31,31 +26,26 @@
             android:background="@color/colorAccent"/>
 
         <TextView
-            android:layout_width="86dp"
+            android:layout_width="124dp"
             android:layout_height="30dp"
             android:id="@+id/txtNameDeceive"
             android:layout_weight="0.42"
             android:textAlignment="center"
             android:background="@color/colorPrimaryDark"/>
 
-        <TextView
-            android:layout_width="88dp"
-            android:layout_height="30dp"
-            android:id="@+id/txtRelay"
-            android:layout_weight="0.40"
-            android:textAlignment="center"
-            android:background="@color/colorAccent"/>
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="88dp"
+        android:layout_width="90dp"
         android:layout_height="30dp"
         android:gravity="center">
+
         <Switch
-            android:layout_width="88dp"
+            android:id="@+id/btnSwitchElectric"
+            android:layout_width="66dp"
             android:layout_height="wrap_content"
-            android:id="@+id/btnSwitchElectric"/>
+            android:layout_gravity="center_vertical|center"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
