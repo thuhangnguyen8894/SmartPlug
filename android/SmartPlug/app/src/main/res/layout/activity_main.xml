@@ -24,30 +24,27 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="10dp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="246dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtUser"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLogout"
+            android:text="Log out"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtResult"/>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center">
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnOn"
-            android:text="On"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnOff"
-            android:text="Off"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
