@@ -1,5 +1,10 @@
 package com.nguyenthuhang.smartplug;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,10 +55,14 @@ import com.nguyenthuhang.smartplug.model.SmartDevice;
 
 import org.json.*;
 
+import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
+
 public class MainActivity extends AppCompatActivity  implements APIService.ServiceListener{
 
-    Button btnOn, btnOff, btnSel;
+    Button btnSel;
+    Button btnLogout;
     TextView txtResult;
+    TextView txtUser;
 
     ListView lvSmartDevice;
     ArrayList<SmartDevice> deviceArrayList;
@@ -61,44 +70,81 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
 
     ApplicationService applicationService;
 
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE = "MESSAGE_STATUS_VALUE";
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT = "SELECT_DEVICE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         addControls();
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String user = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
+        txtUser.setText("Current User: " + user);
         addEvents();
+        handleSel();
     }
 
     private void addEvents() {
-        btnOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleOn();
-            }
-        });
-
-        btnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleOff();
-            }
-        });
         btnSel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleSel();
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doLogout();
+            }
+        });
+    }
+
+    private void doLogout() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Getting out sharedpreferences
+                SharedPreferences preferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                //Getting editor
+                SharedPreferences.Editor editor = preferences.edit();
+
+                //Puting the value false for loggedin
+                editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, false);
+
+                //Putting blank value to user
+                editor.putString(Config.USER_SHARED_PREF, "");
+
+                //Saving the sharedpreferences
+                editor.commit();
+
+                //Starting login activity
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void handleSel() {
-        //String cmd = "SEL";
         String cmd = "";
         JSONObject object = new JSONObject();
         try {
-            object.put(ATTR_JSON_MESSAGE_STATUS_VALUE, ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT);
+            object.put(Constants.ATTR_JSON_MESSAGE_STATUS_VALUE, Constants.ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT);
             cmd = object.toString();
             getRequest(cmd);
             System.out.println("SELECT: " + cmd);
@@ -110,26 +156,11 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
 
     }
 
-    private void handleOff() {
-        String cmd = "OFF";
-        getRequest(cmd);
-        Toast.makeText(MainActivity.this, "Light Off", Toast.LENGTH_LONG).show();
-
-    }
-
-    private void handleOn() {
-        String cmd = "ON";
-        getRequest(cmd);
-        Toast.makeText(MainActivity.this, "Light On", Toast.LENGTH_LONG).show();
-
-
-    }
-
     private void addControls() {
-        btnOn = (Button) findViewById(R.id.btnOn);
-        btnOff = (Button) findViewById(R.id.btnOff);
         btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+        txtUser = (TextView) findViewById(R.id.txtUser);
 
         lvSmartDevice = (ListView) findViewById(R.id.lvDevice);
         deviceArrayList = new ArrayList<>();
@@ -149,15 +180,18 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         //dismiss popup
         if(respData.getApiID() == 100){
             //alert
-            //txtResult.setText("That didn't work!");
-            txtResult.setText("Response is: "+ respData.getValue());
+            txtResult.setText("That didn't work!");
             String json = respData.getValue();
+            txtResult.setText(respData.getValue());
+
             System.out.println("Hang 01: " + json);
             try {
+                System.out.println("Hang 02");
                 JSONObject object = new JSONObject(json);
 
                 JSONArray jsonArray = object.getJSONArray("JSON_SEL");
 
+                deviceArrayList.clear();
                 for(int i =0; i < jsonArray.length(); i++){
 
                     SmartDevice smartDevice = new SmartDevice();
@@ -166,23 +200,30 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
 
                     String ID_DEVICE = jsonObject.getString("ID_DEVICE");
                     smartDevice.setIdSmartDevice(ID_DEVICE);
+                    System.out.println("ID_DEVICE " + ID_DEVICE);
 
                     String NAME_DEVICE = jsonObject.getString("NAME_DEVICE");
                     smartDevice.setNameSmartDevice(NAME_DEVICE);
+                    System.out.println("NAME_DEVICE " + NAME_DEVICE);
 
                     String RELAY_STATUS_VALUE = jsonObject.getString("RELAY_STATUS_VALUE");
                     smartDevice.setStateRelay(RELAY_STATUS_VALUE);
+                    System.out.println("RELAY_STATUS_VALUE " + RELAY_STATUS_VALUE);
 
                     String ELECTRIC_STATUS_VALUE = jsonObject.getString("ELECTRIC_STATUS_VALUE");
                     smartDevice.setStateElectric(ELECTRIC_STATUS_VALUE);
+                    System.out.println("ELECTRIC_STATUS_VALUE " + ELECTRIC_STATUS_VALUE);
 
                     deviceArrayList.add(smartDevice);
 
+                    System.out.println("Size array: " + deviceArrayList.size());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 System.out.println("JSON error");
             }
+
+            System.out.println("The end.");
         }
     }
 
@@ -191,7 +232,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         //dismiss popup
         if(respData.getApiID() == 100){
             //alert
-            txtResult.setText("That didn't work!" + respData.getValue());
+            //txtResult.setText("That didn't work!" + respData.getValue());
             Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_LONG).show();
         }
     }
