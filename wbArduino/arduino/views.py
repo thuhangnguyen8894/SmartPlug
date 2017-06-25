@@ -51,8 +51,8 @@ def loginUser(cmd, json_user_name, json_password):
                     print("json_password success", json_password)
                     print("r[0] success ", r[0])
                     print("r[1] success", r[1])
+                    print("r[2] sucess", r[2])
                     json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL}
-                    # return json_dict
                 elif r[2] == 'UNACTIVE':
                     json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_ERROR_UNACTIVE}
                 print("USER ACTIVE UNACTIVE", json_dict)
@@ -136,7 +136,7 @@ def registerUser(json_user_name, json_password, json_email):
             cur = conn.cursor()
             print("db 02")
             try: 
-                cur.execute("INSERT INTO User VALUES (%s,%s,%s,%s,%s)", (iduser, json_user_name, json_password, json_email, 'UNACTIVE'))
+                cur.execute("INSERT INTO User VALUES (%s,%s,%s,%s,%s,%s)", (iduser, json_user_name, json_password, json_email, 'UNACTIVE', 0))
                 print("db 03")
                 conn.commit()
                 json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_SUCCESSFUL}
@@ -144,7 +144,7 @@ def registerUser(json_user_name, json_password, json_email):
             except:
                 conn.rollback()
                 json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_ERROR}
-                print("Register Successful: " , json_dict_register)
+                print("Register error: " , json_dict_register)
             conn.close()
         else:
             json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_EMAIL_EXIST}
@@ -221,11 +221,11 @@ def serverDjango(request):
         print("Register: " , json_mes)
 
         json_user_name = str(json_parse['USER_NAME'])
-        print("1: " + json_user_name)
+        print("1: " , json_user_name)
         json_password = str(json_parse['PASSWORD'])
-        print("2: " + json_password)
+        print("2: " , json_password)
         json_email = str(json_parse['EMAIL'])
-        print("3: " + json_email)
+        print("3: " , json_email)
 
         json_dict_register = registerUser(json_user_name, json_password, json_email)
         print("4: "  , json_dict_register)
