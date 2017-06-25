@@ -31,12 +31,12 @@ CREATE TABLE Device_Timer(
 CREATE TABLE Room( idRoom CHAR(10), nameRoom CHAR(20), PRIMARY KEY(idRoom));
 
 CREATE TABLE User(
-    idUser CHAR(10),
-    nameUser CHAR(20),
-    password CHAR(20),
+    idUser CHAR(16),
+    userName CHAR(40),
+    password CHAR(50),
+    email CHAR(50),
     stateUser CHAR(10),
-    nameUserStyle CHAR(20),
-    nameUserGuide CHAR(20),
+    userStyle INT,
     PRIMARY KEY(idUser),
     UNIQUE KEY(nameUser));
 
