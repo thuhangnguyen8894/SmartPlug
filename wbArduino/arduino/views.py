@@ -38,11 +38,61 @@ def selectDevice(cmd):
         conn.close()
         return json_array
 
+def selectListUsers():
+    print("Welcome to selectListUsers")
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    cur.execute("SELECT userName, email, stateUser, userStyle FROM User;")
+    json_array = []
+    for r in cur:
+        json_dict={
+            constants.ATTR_JSON_USER_NAME_IN_USERS : r[0],\
+            constants.ATTR_JSON_EMAIL_IN_USERS : r[1],\
+            constants.ATTR_JSON_STATE_USER_IN_USERS : r[2],\
+            constants.ATTR_JSON_USER_STYLE_IN_USERS : r[3]
+        }
+        json_array.append(json_dict)
+        print(json_array)
+    cur.close()
+    conn.close()
+    return json_array
+
+def selectHistory():
+    print("Welcome to selectHistory")
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    # query = "SELECT SmartDevice.idSmartDevice, SmartDevice.nameSmartDevice, SmartDevice.stateElectric, SmartDevice.stateRelay" +\
+    # "Timer.monthSD, Timer.daySD, Timer.yearSD, Timer.hourSD, Timer.minuteSD, Timer.secondSD" +\
+    # "FROM SmartDevice join (Timer join Device_Timer on Timer.idTimer=Device_Timer.idTimer)"+\
+    # " on SmartDevice.idSmartDevice = Device_Timer.idSmartDevice"
+    cur.execute("""SELECT SmartDevice.idSmartDevice, SmartDevice.nameSmartDevice, Device_Timer.stateElectric, Device_Timer.stateRelay, Timer.monthSD, Timer.daySD, Timer.yearSD, Timer.hourSD, Timer.minuteSD, Timer.secondSD FROM SmartDevice join (Timer join Device_Timer on Timer.idTimer=Device_Timer.idTimer) on SmartDevice.idSmartDevice = Device_Timer.idSmartDevice""")
+    json_array = []
+    for r in cur:
+        json_dict={
+            constants.ATTR_JSON_ID_DEVICE : r[0],\
+            constants.ATTR_JSON_NAME_DEVICE : r[1],\
+            constants.ATTR_JSON_RELAY_STATUS_VALUE : r[3],\
+            constants.ATTR_JSON_ELECTRIC_STATUS_VALUE : r[2],\
+            constants.ATTR_JSON_MONTHSD : r[4],\
+            constants.ATTR_JSON_DAYSD : r[5],\
+            constants.ATTR_JSON_YEARSD : r[6],\
+            constants.ATTR_JSON_HOURSD : r[7],\
+            constants.ATTR_JSON_MINUTESD : r[8],\
+            constants.ATTR_JSON_SECONDSD : r[9]
+        }
+        
+        json_array.append(json_dict)
+        print("json history: ", json_array)
+    cur.close()
+    conn.close()
+    return json_array
+
+
 def loginUser(cmd, json_user_name, json_password):
     if cmd == 'LOGIN_DEVICE':
         conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
         cur = conn.cursor()
-        cur.execute("SELECT userName, password, stateUser FROM User")
+        cur.execute("SELECT userName, password, stateUser, userStyle FROM User")
         json_dict = {}
         for r in cur:
             if r[0] == json_user_name and r[1] == json_password:
@@ -51,8 +101,15 @@ def loginUser(cmd, json_user_name, json_password):
                     print("json_password success", json_password)
                     print("r[0] success ", r[0])
                     print("r[1] success", r[1])
-                    print("r[2] sucess", r[2])
-                    json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL}
+                    print("r[2] success", r[2])
+                    if r[3] == 1:
+                        print("r[3] success admin: ", r[3])
+                        json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_ADMIN}
+                    elif r[3] == 0:
+                        print("r[3] success user: ", r[3])
+                        json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_USER}
+                    else:
+                        print("userStyle error")
                 elif r[2] == 'UNACTIVE':
                     json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_ERROR_UNACTIVE}
                 print("USER ACTIVE UNACTIVE", json_dict)
@@ -136,24 +193,87 @@ def registerUser(json_user_name, json_password, json_email):
             cur = conn.cursor()
             print("db 02")
             try: 
-                cur.execute("INSERT INTO User VALUES (%s,%s,%s,%s,%s,%s)", (iduser, json_user_name, json_password, json_email, 'UNACTIVE', 0))
+                cur.execute("INSERT INTO User VALUES (%s,%s,%s,%s,%s,%s)", \
+                                    (iduser, json_user_name, json_password, json_email, 'UNACTIVE', 0))
                 print("db 03")
                 conn.commit()
-                json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_SUCCESSFUL}
+                json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                            constants.ATTR_JSON_REGISTER_SUCCESSFUL}
                 print("Register Successful: " , json_dict_register)
             except:
                 conn.rollback()
-                json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_ERROR}
+                json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                            constants.ATTR_JSON_REGISTER_ERROR}
                 print("Register error: " , json_dict_register)
             conn.close()
         else:
-            json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_EMAIL_EXIST}
+            json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                            constants.ATTR_JSON_REGISTER_EMAIL_EXIST}
             print("Email exist " , json_dict_register)
     else:
-        json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_REGISTER_USERNAME_EXIST}
+        json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                            constants.ATTR_JSON_REGISTER_USERNAME_EXIST}
         print("Username exist" , json_dict_register)  
     return json_dict_register      
 
+def updateStateUser(json_user_name, json_status_users):
+    json_dict_update = {}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try: 
+        cur.execute("""UPDATE SMARTDEVICE.User SET stateUser = %s WHERE userName = %s;""",\
+                                            (json_status_users,json_user_name))
+        print("db 03")
+        conn.commit()
+        json_dict_update = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_UPDATE_SUCCESSFUL_STATE_USER}
+        print("updateStateUser Successful: " , json_dict_update)
+    except:
+        conn.rollback()
+        json_dict_update = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_UPDATE_ERROR_STATE_USER}
+        print("updateStateUser error: " , json_dict_update)
+    conn.close()
+    return json_dict_update
+
+def updateUserStyle(json_user_name, json_users_style):
+    json_dict_update ={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try: 
+        cur.execute("""UPDATE SMARTDEVICE.User SET userStyle = %s WHERE userName = %s;""",\
+                                            (json_users_style, json_user_name))
+        print("db 03")
+        conn.commit()
+        json_dict_update = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_UPDATE_SUCCESSFUL_USER_STYLE}
+        print("updateUserStyle Successful: " , json_dict_update)
+    except:
+        conn.rollback()
+        json_dict_update = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_UPDATE_ERROR_USER_STYLE}
+        print("updateUserStyle error: " , json_dict_update)
+    conn.close()
+    return json_dict_update
+
+def deleteUser(json_user_name):
+    json_dict_delete ={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try:
+        cur.execute("""DELETE FROM SMARTDEVICE.User WHERE userName = %s;""", json_user_name)
+        print("db 03")
+        conn.commit()
+        json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_DELETE_STATUS_VALUE_USER_SUCCESSFUL}
+        print("deleteUser Successful: " , json_dict_delete)
+    except:
+        conn.rollback()
+        json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_UPDATE_ERROR_USER_STYLE}
+        print("deleteUser error: " , json_dict_update)
+    conn.close()
+    return json_dict_delete
 
 def controlSmartPlug(cmd,json_id_device,json_name_device):
     json_dict_message = {}
@@ -184,7 +304,7 @@ def serverDjango(request):
     print("CMD0: ", cmd)
 
     json_parse = json.loads(cmd)
-    print("parsed_json : " , json_parse)
+    # print("parsed_json : " , json_parse)
 
     json_mes = str(json_parse['MESSAGE_STATUS_VALUE'])
 
@@ -230,3 +350,42 @@ def serverDjango(request):
         json_dict_register = registerUser(json_user_name, json_password, json_email)
         print("4: "  , json_dict_register)
         return JsonResponse(json_dict_register)
+
+    elif json_mes == 'SELECT_LIST_USERS':
+        json_select_users = selectListUsers()
+        print("Select list users: ", json_mes)
+        json_dict = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                            constants.ATTR_JSON_MESSAGE_STATUS_VALUE_SELECT_LIST_USERS, \
+                        'SEL_USERS' : json_select_users }
+        # return JsonResponse({ 'SEL_USERS' : json_select_users })
+        return JsonResponse(json_dict)
+
+    elif json_mes == "SELECT_HISTORY":
+        json_history = selectHistory()
+        print("SELECT_HISTORY: ", json_mes)
+        json_dict = {constants.ATTR_JSON_STATUS_VALUE_SELECT_HISTORY: json_history}
+        return JsonResponse(json_dict)
+
+    elif json_mes == 'STATE_USERS_ACTIVE_UNACTIVE':
+        print("STATE_USERS_ACTIVE_UNACTIVE: ", json_mes)
+        json_user_name = str(json_parse['USER_NAME'])
+        json_status_users = str(json_parse['USER_STATUS_VALUE'])
+        json_dict_state = updateStateUser(json_user_name, json_status_users)
+        print("Hang 01", json_dict_state)
+        return JsonResponse(json_dict_state)
+
+    elif json_mes == 'USER_STYLE_ACTIVE_UNACTIVE':
+        print("USER_STYLE_ACTIVE_UNACTIVE: ", json_mes)
+        json_user_name = str(json_parse['USER_NAME'])
+        json_users_style = int(json_parse['USER_STYLE_STATUS_VALUE'])
+        json_dict_style = updateUserStyle(json_user_name, json_users_style)
+        print("Hang 02", json_dict_style)
+        return JsonResponse(json_dict_style)
+
+    elif json_mes == "DELETE_USER":
+        json_user_name = str(json_parse['USER_NAME'])
+        json_delete = deleteUser(json_user_name)
+        print("json_delete: ", json_delete)
+        return JsonResponse(json_delete)
+
+    
