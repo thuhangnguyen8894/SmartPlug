@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
 
 
         addControls();
+
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String user = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
         txtUser.setText("Current User: " + user);
@@ -180,9 +181,9 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         //dismiss popup
         if(respData.getApiID() == 100){
             //alert
-            txtResult.setText("That didn't work!");
+            //txtResult.setText("That didn't work!");
             String json = respData.getValue();
-            txtResult.setText(respData.getValue());
+            //txtResult.setText(respData.getValue());
 
             System.out.println("Hang 01: " + json);
             try {

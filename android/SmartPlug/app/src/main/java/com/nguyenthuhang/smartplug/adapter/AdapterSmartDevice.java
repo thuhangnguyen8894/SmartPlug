@@ -1,9 +1,6 @@
 package com.nguyenthuhang.smartplug.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,10 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nguyenthuhang.smartplug.Constants;
-import com.nguyenthuhang.smartplug.MainActivity;
 import com.nguyenthuhang.smartplug.R;
 import com.nguyenthuhang.smartplug.api.APIService;
 import com.nguyenthuhang.smartplug.api.ApplicationService;
@@ -37,17 +32,6 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
     int resource;
     List<SmartDevice> objects;
     ApplicationService applicationService;
-
-    /*final String ATTR_JSON_ID_DEVICE = "ID_DEVICE";
-    final String ATTR_JSON_ELECTRIC_STATUS_VALUE = "ELECTRIC_STATUS_VALUE";
-    final int ATTR_JSON_ELECTRIC_STATUS_VALUE_ACTIVE = 1;
-    final int ATTR_JSON_ELECTRIC_STATUS_VALUE_UNACTIVE = 0;
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE = "MESSAGE_STATUS_VALUE";
-    final String ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE = "ON_OFF_DEVICE";
-
-    final String ATTR_JSON_NAME_DEVICE_LIGHT_VALUE = "DEVICE_LIGHT";
-    final String ATTR_JSON_NAME_DEVICE_PLUS_VALUE = "DEVICE_PLUS_";
-    final String ATTR_JSON_NAME_DEVICE = "NAME_DEVICE";*/
 
     public AdapterSmartDevice(Activity context, int resource, List<SmartDevice> objects) {
         super(context, resource, objects);

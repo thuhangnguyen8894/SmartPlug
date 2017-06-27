@@ -23,7 +23,8 @@
             android:id="@+id/txtIDDeceive"
             android:layout_weight="0.42"
             android:textAlignment="center"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="124dp"
@@ -31,7 +32,8 @@
             android:id="@+id/txtNameDeceive"
             android:layout_weight="0.42"
             android:textAlignment="center"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"/>
 
     </LinearLayout>
 

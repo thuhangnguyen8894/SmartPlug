@@ -35,6 +35,7 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
     //đặt tên cho tập tin lưu trạng thái
 
     private boolean loggedIn = false;
+    private boolean userStyle = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +109,7 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
     /**
      * hàm đăng nhập hệ thống
      */
-    public void doLogin()
+    public void doLoginUser()
     {
 
         final String user = edituser.getText().toString().trim();
@@ -120,11 +121,35 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
 
         editor.putString(Config.USER_SHARED_PREF, user);
         editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
+        //get status userStyle == fasle - user
+        editor.putBoolean(Config.LOGGEDIN_USERSTYLE, false);
         System.out.println("User: " + Config.USER_SHARED_PREF + " " + user);
+        System.out.println("User style: " + Config.LOGGEDIN_USERSTYLE + " " + user);
         System.out.println("Boolean: " + Config.LOGGEDIN_SHARED_PREF);
         editor.commit();
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void doLoginAdmin() {
+        final String user = edituser.getText().toString().trim();
+
+        SharedPreferences sharedPreferences =
+                LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Config.USER_SHARED_PREF, user);
+        editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
+        //get status userStyle == true - admin
+        editor.putBoolean(Config.LOGGEDIN_USERSTYLE, true);
+        System.out.println("User: " + Config.USER_SHARED_PREF + " " + user);
+        System.out.println("User style: " + Config.LOGGEDIN_USERSTYLE + " " + user);
+        System.out.println("Boolean: " + Config.LOGGEDIN_SHARED_PREF);
+        editor.commit();
+
+        Intent intent = new Intent(LoginActivity.this, LoginAdminActivity.class);
         startActivity(intent);
     }
 
@@ -136,16 +161,24 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
 
         //Fetching the boolean value form sharedpreferences
         loggedIn = sharedPreferences.getBoolean(Config.LOGGEDIN_SHARED_PREF, false);
+        userStyle = sharedPreferences.getBoolean(Config.LOGGEDIN_USERSTYLE, false);
 
         //If we will get true
         if(loggedIn){
             //We will start the Profile Activity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            if(userStyle == true){
+                Intent intent = new Intent(LoginActivity.this, LoginAdminActivity.class);
+                startActivity(intent);
+            }else if(userStyle == false){
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
         }
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -170,9 +203,14 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
                 JSONObject object = new JSONObject(jsonString);
                 String topic = object.getString("MESSAGE_TYPE");
                 System.out.println("topic: " + topic);
-                if(topic.equals(Constants.ATTR_JSON_LOGIN_SUCCESSFUL)){
-                    doLogin();
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                if(topic.equals(Constants.ATTR_JSON_LOGIN_SUCCESSFUL_ADMIN)){
+                    //userStyle = true;
+                    doLoginAdmin();
+                    Toast.makeText(LoginActivity.this, "Login admin successful", Toast.LENGTH_LONG).show();
+                } else if(topic.equals(Constants.ATTR_JSON_LOGIN_SUCCESSFUL_USER)){
+                    //userStyle = false;
+                    doLoginUser();
+                    Toast.makeText(LoginActivity.this, "Login user successful", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_LOGIN_ERROR)){
                     Toast.makeText(LoginActivity.this, "Username or Password incorrect", Toast.LENGTH_LONG).show();
                 }else  if(topic.equals(Constants.ATTR_JSON_LOGIN_ERROR_UNACTIVE)){
@@ -185,6 +223,8 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
         }
 
     }
+
+
 
     @Override
     public void onReceivedResponseFail(ResponseData respData) {

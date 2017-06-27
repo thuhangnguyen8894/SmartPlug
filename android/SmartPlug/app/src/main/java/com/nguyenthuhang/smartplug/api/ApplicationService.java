@@ -13,10 +13,9 @@ public class ApplicationService extends APIService implements
 		RestClient.RestClientListener {
 
 	private ServiceListener serviceListener;
-	
 
-
-	private final String url_getRequest = "http://192.168.0.102:8000/controlSmartPlug/";
+	//private final String url_getRequest = "http://192.168.100.14:8000/serverDjango/";
+	private final String url_getRequest = "http://192.168.0.100:8000/serverDjango/";
 	
 	//upload_file
 	

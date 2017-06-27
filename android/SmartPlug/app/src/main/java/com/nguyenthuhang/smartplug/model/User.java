@@ -5,11 +5,36 @@ package com.nguyenthuhang.smartplug.model;
  */
 
 public class User {
-    /*private String idUser;*/
+    private String idUser;
     private String userName;
     private String password;
     private String email;
     private String stateUser;
+    private int userStyle;
+
+    public User(String idUser, String userName, String password, String email, String stateUser, int userStyle) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.stateUser = stateUser;
+        this.userStyle = userStyle;
+    }
+
+    public User() {
+        this.userName = "";
+        this.email = "";
+        this.stateUser = "";
+        this.userStyle = 0;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public String getUserName() {
         return userName;
@@ -43,17 +68,11 @@ public class User {
         this.stateUser = stateUser;
     }
 
-    public User(String userName, String password, String email, String stateUser) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.stateUser = stateUser;
+    public int getUserStyle() {
+        return userStyle;
     }
 
-    public User() {
-        this.userName = "";
-        this.password = "";
-        this.email = "";
-        this.stateUser = "UNACTIVE";
+    public void setUserStyle(int userStyle) {
+        this.userStyle = userStyle;
     }
 }
