@@ -16,4 +16,8 @@ public class Config {
     public static final String LOGGEDIN_SHARED_PREF = "loggedin";
 
     public static final String LOGGEDIN_USERSTYLE = "userstyle";
+
+    public static final void saveStatus(){
+
+    }
 }

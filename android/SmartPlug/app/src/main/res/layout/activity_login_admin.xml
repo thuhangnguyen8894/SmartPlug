@@ -21,11 +21,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtAdmin"/>
 
-        <Button
+        <!--<Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnLogoutAdmin"
-            android:text="Log out"/>
+            android:text="Log out"/>-->
     </LinearLayout>
 
     <LinearLayout

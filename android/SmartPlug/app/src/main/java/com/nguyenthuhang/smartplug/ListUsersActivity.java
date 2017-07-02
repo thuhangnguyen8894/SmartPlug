@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,9 +33,8 @@ import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 public class ListUsersActivity extends AppCompatActivity implements APIService.ServiceListener{
     ApplicationService applicationService;
     TextView txtAdminListUsers;
-    Button btnLogoutAdminListUsers;
-
-
+    //Button btnLogoutAdminListUsers;
+    
     ListView lvListUsers;
     ArrayList<User> usersArrayList;
     AdapterUser adapterUser;
@@ -42,11 +43,10 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_users);
-
         addControls();
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        /*SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        txtAdminListUsers.setText("Current admin: " + admin);
+        txtAdminListUsers.setText("Current admin: " + admin);*/
         selectListUsers();
         addEvents();
     }
@@ -134,12 +134,12 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }
 
     private void addEvents() {
-        btnLogoutAdminListUsers.setOnClickListener(new View.OnClickListener() {
+        /*btnLogoutAdminListUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLogout();
             }
-        });
+        });*/
 
         lvListUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -165,7 +165,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
 
     private void addControls() {
         txtAdminListUsers = (TextView) findViewById(R.id.txtAdminListUsers);
-        btnLogoutAdminListUsers = (Button) findViewById(R.id.btnLogoutAdminListUsers);
+        //btnLogoutAdminListUsers = (Button) findViewById(R.id.btnLogoutAdminListUsers);
 
         lvListUsers = (ListView) findViewById(R.id.lvListUsers);
         usersArrayList = new ArrayList<>();
@@ -226,5 +226,25 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
             //txtResult.setText("That didn't work!" + respData.getValue());
             Toast.makeText(ListUsersActivity.this, "Check Connection", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.account, menu);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        mnuAdmin.setTitle(admin);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mnuLogout:
+                doLogout();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

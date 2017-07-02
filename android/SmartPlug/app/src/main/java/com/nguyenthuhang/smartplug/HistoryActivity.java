@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,10 +31,10 @@ import java.util.ArrayList;
 
 import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 
-public class HistoryActivity extends Activity implements APIService.ServiceListener{
+public class HistoryActivity extends AppCompatActivity implements APIService.ServiceListener{
 
     TextView txtAdminHistory;
-    Button btnLogoutAdminHistory;
+    //Button btnLogoutAdminHistory;
 
     ListView lvHistory;
     ArrayList<History> historysArrayList;
@@ -45,9 +47,9 @@ public class HistoryActivity extends Activity implements APIService.ServiceListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         addControls();
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        /*SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        txtAdminHistory.setText("Current admin: " + admin);
+        txtAdminHistory.setText("Current admin: " + admin);*/
         selectHistory();
         addEvents();
     }
@@ -75,12 +77,12 @@ public class HistoryActivity extends Activity implements APIService.ServiceListe
     }
 
     private void addEvents() {
-        btnLogoutAdminHistory.setOnClickListener(new View.OnClickListener() {
+        /*btnLogoutAdminHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLogout();
             }
-        });
+        });*/
         lvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,7 +93,7 @@ public class HistoryActivity extends Activity implements APIService.ServiceListe
 
     private void addControls() {
         txtAdminHistory = (TextView) findViewById(R.id.txtAdminHistory);
-        btnLogoutAdminHistory = (Button) findViewById(R.id.btnLogoutAdminHistory);
+        //btnLogoutAdminHistory = (Button) findViewById(R.id.btnLogoutAdminHistory);
 
         lvHistory = (ListView) findViewById(R.id.lvHistory);
 
@@ -223,5 +225,25 @@ public class HistoryActivity extends Activity implements APIService.ServiceListe
             //txtResult.setText("That didn't work!" + respData.getValue());
             Toast.makeText(HistoryActivity.this, "Check Connection", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.account, menu);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        mnuAdmin.setTitle(admin);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mnuLogout:
+                doLogout();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

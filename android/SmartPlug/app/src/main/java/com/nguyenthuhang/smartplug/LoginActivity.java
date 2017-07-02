@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 
-public class LoginActivity extends Activity implements APIService.ServiceListener{
+public class LoginActivity extends AppCompatActivity implements APIService.ServiceListener{
 
     ApplicationService applicationService;
 
@@ -48,7 +48,6 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
         btnLogin = (Button) findViewById(R.id.btnLogin);
         edituser = (EditText) findViewById(R.id.editUser);
         editpassword = (EditText) findViewById(R.id.editPassword);
-
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
     }
 
@@ -178,14 +177,12 @@ public class LoginActivity extends Activity implements APIService.ServiceListene
 
     }
 
-
-
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login, menu);
         return true;
-    }
+    }*/
 
     private void getRequest(String val){
         // pop up notify loading

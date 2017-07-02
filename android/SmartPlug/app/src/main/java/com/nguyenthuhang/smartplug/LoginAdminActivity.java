@@ -23,7 +23,7 @@ import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 public class LoginAdminActivity extends AppCompatActivity{
 
     TextView txtAdmin;
-    Button btnLogoutAdmin;
+    //Button btnLogoutAdmin;
 
     Button btnListUser;
     Button btnHistory;
@@ -33,13 +33,12 @@ public class LoginAdminActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_admin);
         addControls();
-
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        /*SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        txtAdmin.setText("Current admin: " + admin);
-
+        txtAdmin.setText("Current admin: " + admin);*/
         addEvents();
     }
+
 
     private void doLogout() {
 
@@ -82,12 +81,12 @@ public class LoginAdminActivity extends AppCompatActivity{
     }
 
     private void addEvents() {
-        btnLogoutAdmin.setOnClickListener(new View.OnClickListener() {
+        /*btnLogoutAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLogout();
             }
-        });
+        });*/
 
         btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +108,7 @@ public class LoginAdminActivity extends AppCompatActivity{
 
     private void addControls() {
         txtAdmin = (TextView) findViewById(R.id.txtAdmin);
-        btnLogoutAdmin = (Button) findViewById(R.id.btnLogoutAdmin);
+        //btnLogoutAdmin = (Button) findViewById(R.id.btnLogoutAdmin);
 
         btnListUser = (Button) findViewById(R.id.btnListUser);
         btnHistory = (Button) findViewById(R.id.btnHistory);
@@ -117,10 +116,13 @@ public class LoginAdminActivity extends AppCompatActivity{
 
 
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.account, menu);
+        getMenuInflater().inflate(R.menu.account, menu);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        mnuAdmin.setTitle(admin);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -129,10 +131,8 @@ public class LoginAdminActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.mnuLogout:
                 doLogout();
-                *//*Intent intent = new Intent(LoginAdminActivity.this, LoginActivity.class);
-                startActivity(intent);*//*
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 }

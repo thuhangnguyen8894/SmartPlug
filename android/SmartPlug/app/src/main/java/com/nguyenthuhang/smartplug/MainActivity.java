@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -60,7 +62,7 @@ import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 public class MainActivity extends AppCompatActivity  implements APIService.ServiceListener{
 
     Button btnSel;
-    Button btnLogout;
+    //Button btnLogout;
     TextView txtResult;
     TextView txtUser;
 
@@ -74,13 +76,10 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         addControls();
-
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        /*SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String user = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        txtUser.setText("Current User: " + user);
+        txtUser.setText("Current User: " + user);*/
         addEvents();
         handleSel();
     }
@@ -93,12 +92,12 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        /*btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLogout();
             }
-        });
+        });*/
     }
 
     private void doLogout() {
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     private void addControls() {
         btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        //btnLogout = (Button) findViewById(R.id.btnLogout);
         txtUser = (TextView) findViewById(R.id.txtUser);
 
         lvSmartDevice = (ListView) findViewById(R.id.lvDevice);
@@ -236,6 +235,26 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             //txtResult.setText("That didn't work!" + respData.getValue());
             Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.account, menu);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        mnuAdmin.setTitle(admin);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mnuLogout:
+                doLogout();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

@@ -34,11 +34,11 @@
             android:layout_height="match_parent"
             android:id="@+id/txtUser"/>
 
-        <Button
+        <!--<Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnLogout"
-            android:text="Log out"/>
+            android:text="Log out"/>-->
     </LinearLayout>
 
     <TextView
