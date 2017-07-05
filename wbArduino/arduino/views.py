@@ -105,15 +105,23 @@ def loginUser(cmd, json_user_name, json_password):
                     if r[3] == 1:
                         print("r[3] success admin: ", r[3])
                         json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_ADMIN}
+                        return json_dict
                     elif r[3] == 0:
                         print("r[3] success user: ", r[3])
                         json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_USER}
+                        return json_dict
                     else:
                         print("userStyle error")
                 elif r[2] == 'UNACTIVE':
+                    print("json_user_name unactive ", json_user_name)
+                    print("json_password unactive", json_password)
+                    print("r[0] unactive ", r[0])
+                    print("r[1] unactive ", r[1])
+                    print("r[2] unactive ", r[2])
                     json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_ERROR_UNACTIVE}
-                print("USER ACTIVE UNACTIVE", json_dict)
-                return json_dict
+                    print("USER UNACTIVE", json_dict)
+                    return json_dict
+                # return json_dict
             else:
                 print("json_user_name error", json_user_name)
                 print("json_password error", json_password)
