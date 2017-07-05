@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:orientation="vertical"
+    android:background="@drawable/grdnt"
     tools:context="com.nguyenthuhang.smartplug.MainActivity">
     
     <TextView
@@ -16,16 +15,15 @@
         android:layout_height="wrap_content" 
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"
         android:textSize="24dp"
-        android:text="CONTROLS SMARTPLUG"
+        android:text="CONTROL SMARTDEVICE"
         android:textColor="@android:color/background_light" />
     
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="10dp" />-->
     
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -34,27 +32,27 @@
             android:layout_height="match_parent"
             android:id="@+id/txtUser"/>
 
-        <!--<Button
+        <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnLogout"
-            android:text="Log out"/>-->
-    </LinearLayout>
+            android:text="Log out"/>
+    </LinearLayout>-->
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="10dp"
         android:id="@+id/txtResult"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/btnSel"
-            android:text="Select"/>
+            android:text="Select"/>-->
     </LinearLayout>
 
 
@@ -67,37 +65,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_purple"
             android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:text="ID Device"
                 android:textAlignment="center"
-                android:textColor="@android:color/black" />
+                android:textColor="#fff" />
 
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:text="Name Device"
                 android:textAlignment="center"
-                android:textColor="@android:color/black" />
+                android:textColor="#fff"/>
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:text="Control Device"
                 android:textAlignment="center"
-                android:textColor="@android:color/black" />
+                android:textColor="#fff" />
 
         </LinearLayout>
 

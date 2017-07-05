@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,7 @@ import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 
 public class HistoryActivity extends AppCompatActivity implements APIService.ServiceListener{
 
-    TextView txtAdminHistory;
+    //TextView txtAdminHistory;
     //Button btnLogoutAdminHistory;
 
     ListView lvHistory;
@@ -57,7 +58,7 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     private boolean deleteUser(int position){
         final int pos = position;
         AlertDialog.Builder alDialogBuilder = new AlertDialog.Builder(HistoryActivity.this);
-        alDialogBuilder.setMessage("Are you sure you want to logout?");
+        alDialogBuilder.setMessage("Are you sure you want to delete?");
         alDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -92,7 +93,7 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     }
 
     private void addControls() {
-        txtAdminHistory = (TextView) findViewById(R.id.txtAdminHistory);
+        //txtAdminHistory = (TextView) findViewById(R.id.txtAdminHistory);
         //btnLogoutAdminHistory = (Button) findViewById(R.id.btnLogoutAdminHistory);
 
         lvHistory = (ListView) findViewById(R.id.lvHistory);
@@ -126,7 +127,7 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     private void doLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -161,6 +162,11 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
+        alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
+
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
     }
 
     @Override

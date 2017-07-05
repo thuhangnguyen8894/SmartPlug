@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements APIService.Servi
     Button btnLogin;
     EditText edituser,editpassword;
     TextView tvRegisterLink;
+    TextView tvLogin;
 
     //đặt tên cho tập tin lưu trạng thái
 
@@ -45,14 +46,22 @@ public class LoginActivity extends AppCompatActivity implements APIService.Servi
     }
 
     private void addControls() {
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        //btnLogin = (Button) findViewById(R.id.btnLogin);
         edituser = (EditText) findViewById(R.id.editUser);
         editpassword = (EditText) findViewById(R.id.editPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
+        tvLogin = (TextView) findViewById(R.id.tvLogin);
     }
 
     private void addEvents() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        /*btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doLoginJson();
+            }
+        });*/
+
+        tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLoginJson();

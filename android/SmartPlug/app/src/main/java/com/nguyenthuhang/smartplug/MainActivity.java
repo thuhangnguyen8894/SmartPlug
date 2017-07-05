@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,6 +62,7 @@ import org.json.*;
 
 import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 
+
 public class MainActivity extends AppCompatActivity  implements APIService.ServiceListener{
 
     Button btnSel;
@@ -85,12 +89,12 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     }
 
     private void addEvents() {
-        btnSel.setOnClickListener(new View.OnClickListener() {
+        /*btnSel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleSel();
             }
-        });
+        });*/
 
         /*btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,10 +104,11 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         });*/
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void doLogout() {
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+
+        alertDialogBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -136,8 +141,16 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             }
         });
 
+
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
+        //Background AlertDialog
+        alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
+
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
+
     }
 
     private void handleSel() {
@@ -157,10 +170,10 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     }
 
     private void addControls() {
-        btnSel = (Button) findViewById(R.id.btnSel);
+        //btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
         //btnLogout = (Button) findViewById(R.id.btnLogout);
-        txtUser = (TextView) findViewById(R.id.txtUser);
+        //txtUser = (TextView) findViewById(R.id.txtUser);
 
         lvSmartDevice = (ListView) findViewById(R.id.lvDevice);
         deviceArrayList = new ArrayList<>();

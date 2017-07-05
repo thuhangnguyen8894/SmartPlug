@@ -6,13 +6,18 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent" />
+
+    <TextView
         android:id="@+id/txtIDDeceiveH"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorAccent"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtNameDeceiveH"
@@ -21,7 +26,8 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtStateRelayH"
@@ -30,7 +36,8 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorAccent"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtStateElectricH"
@@ -39,7 +46,8 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtMonth"
@@ -48,7 +56,8 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorAccent"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +65,8 @@
         android:text="/"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtDay"
@@ -65,14 +75,16 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/txtYear"
@@ -81,14 +93,16 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorAccent"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#fff"/>
     <TextView
         android:id="@+id/txtHour"
         android:layout_width="22dp"
@@ -96,14 +110,16 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=":"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#fff"/>
     <TextView
         android:id="@+id/txtMinute"
         android:layout_width="23dp"
@@ -111,14 +127,16 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorAccent"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=":"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="#fff"/>
     <TextView
         android:id="@+id/txtSecond"
         android:layout_width="23dp"
@@ -126,6 +144,7 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"/>
+        android:textSize="10dp"
+        android:textColor="#fff"/>
 
 </LinearLayout>

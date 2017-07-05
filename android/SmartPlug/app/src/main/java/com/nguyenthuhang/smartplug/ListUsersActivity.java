@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +61,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     private void doLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -95,6 +96,11 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
+        alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
+
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
     }
 
     private boolean deleteUser(int position){
@@ -164,7 +170,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }
 
     private void addControls() {
-        txtAdminListUsers = (TextView) findViewById(R.id.txtAdminListUsers);
+        //txtAdminListUsers = (TextView) findViewById(R.id.txtAdminListUsers);
         //btnLogoutAdminListUsers = (Button) findViewById(R.id.btnLogoutAdminListUsers);
 
         lvListUsers = (ListView) findViewById(R.id.lvListUsers);

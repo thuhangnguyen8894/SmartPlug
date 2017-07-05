@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,51 +11,47 @@
     android:paddingTop="10dp">
 
     <LinearLayout
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_weight="0.92"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:background="@android:color/holo_red_light">
+        android:weightSum="1">
 
         <TextView
-            android:layout_width="124dp"
+            android:layout_width="120dp"
             android:layout_height="30dp"
             android:id="@+id/txtIDDeceive"
-            android:layout_weight="0.42"
             android:textAlignment="center"
-            android:background="@color/colorAccent"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="#fff"/>
 
         <TextView
-            android:layout_width="124dp"
+            android:layout_width="120dp"
             android:layout_height="30dp"
             android:id="@+id/txtNameDeceive"
-            android:layout_weight="0.42"
             android:textAlignment="center"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="#fff"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="90dp"
-        android:layout_height="30dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <Switch
             android:id="@+id/btnSwitchElectric"
-            android:layout_width="66dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textAlignment="center"
+            app:theme="@style/AppTheme"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="10dp"
-        android:layout_height="30dp"
-        android:layout_gravity="right">
-
+        android:layout_height="match_parent">
     </LinearLayout>
 
 </LinearLayout>

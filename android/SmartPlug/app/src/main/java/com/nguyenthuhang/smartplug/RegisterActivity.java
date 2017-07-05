@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nguyenthuhang.smartplug.api.APIService;
@@ -21,7 +22,8 @@ public class RegisterActivity extends AppCompatActivity implements APIService.Se
     EditText editEmailRegister;
     EditText editUsernameRegister;
     EditText editPasswordRegister;
-
+    TextView tvRegister;
+    TextView tvAlready;
     ApplicationService applicationService;
 
     @Override
@@ -32,11 +34,34 @@ public class RegisterActivity extends AppCompatActivity implements APIService.Se
         addEvents();
     }
 
+    private void addControls() {
+        //btnRegister = (Button) findViewById(R.id.btnRegister);
+        editEmailRegister = (EditText) findViewById(R.id.editEmailRegister);
+        editUsernameRegister = (EditText) findViewById(R.id.editUsernameRegister);
+        editPasswordRegister = (EditText) findViewById(R.id.editPasswordRegister);
+        tvRegister = (TextView) findViewById(R.id.tvRegister);
+        tvAlready = (TextView) findViewById(R.id.tvAlready);
+    }
+
     private void addEvents() {
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        /*btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handlerRegister();
+            }
+        });*/
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlerRegister();
+            }
+        });
+
+        tvAlready.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -86,13 +111,6 @@ public class RegisterActivity extends AppCompatActivity implements APIService.Se
         }
 
 
-    }
-
-    private void addControls() {
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        editEmailRegister = (EditText) findViewById(R.id.editEmailRegister);
-        editUsernameRegister = (EditText) findViewById(R.id.editUsernameRegister);
-        editPasswordRegister = (EditText) findViewById(R.id.editPasswordRegister);
     }
 
     private void getRequest(String val){

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import static com.nguyenthuhang.smartplug.Config.USER_SHARED_PREF;
 
 public class LoginAdminActivity extends AppCompatActivity{
 
-    TextView txtAdmin;
+    //TextView txtAdmin;
     //Button btnLogoutAdmin;
 
     Button btnListUser;
@@ -43,7 +44,7 @@ public class LoginAdminActivity extends AppCompatActivity{
     private void doLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -78,6 +79,9 @@ public class LoginAdminActivity extends AppCompatActivity{
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
     }
 
     private void addEvents() {
@@ -107,7 +111,7 @@ public class LoginAdminActivity extends AppCompatActivity{
     }
 
     private void addControls() {
-        txtAdmin = (TextView) findViewById(R.id.txtAdmin);
+        //txtAdmin = (TextView) findViewById(R.id.txtAdmin);
         //btnLogoutAdmin = (Button) findViewById(R.id.btnLogoutAdmin);
 
         btnListUser = (Button) findViewById(R.id.btnListUser);
