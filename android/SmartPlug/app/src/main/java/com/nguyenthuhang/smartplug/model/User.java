@@ -9,10 +9,10 @@ public class User {
     private String userName;
     private String password;
     private String email;
-    private String stateUser;
+    private int stateUser;
     private int userStyle;
 
-    public User(String idUser, String userName, String password, String email, String stateUser, int userStyle) {
+    public User(String idUser, String userName, String password, String email, int stateUser, int userStyle) {
         this.idUser = idUser;
         this.userName = userName;
         this.password = password;
@@ -24,7 +24,7 @@ public class User {
     public User() {
         this.userName = "";
         this.email = "";
-        this.stateUser = "";
+        this.stateUser = 0;
         this.userStyle = 0;
     }
 
@@ -60,11 +60,11 @@ public class User {
         this.email = email;
     }
 
-    public String getStateUser() {
+    public int getStateUser() {
         return stateUser;
     }
 
-    public void setStateUser(String stateUser) {
+    public void setStateUser(int stateUser) {
         this.stateUser = stateUser;
     }
 

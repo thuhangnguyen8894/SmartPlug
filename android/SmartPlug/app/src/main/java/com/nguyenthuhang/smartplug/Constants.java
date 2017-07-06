@@ -46,8 +46,10 @@ public class Constants {
     public static final String ATTR_JSON_LOGIN_SUCCESSFUL_ADMIN = "LOGIN_SUCCESSFUL_ADMIN";
 
     public static final String ATTR_JSON_USER_STATUS_VALUE = "USER_STATUS_VALUE";
-    public static final String ATTR_JSON_USER_STATUS_VALUE_STATE_USER_ACTIVE = "ACTIVE";
-    public static final String ATTR_JSON_USER_STATUS_VALUE_STATE_USER_UNACTIVE = "UNATIVE";
+
+    //modified @ July 5th
+    public static final int ATTR_JSON_USER_STATUS_VALUE_STATE_USER_ACTIVE = 1;
+    public static final int ATTR_JSON_USER_STATUS_VALUE_STATE_USER_UNACTIVE = 0;
 
     public static final String ATTR_JSON_USER_STYLE_STATUS_VALUE = "USER_STYLE_STATUS_VALUE";
     public static final int ATTR_JSON_USER_STYLE_STATUS_VALUE_ACTIVE = 1;

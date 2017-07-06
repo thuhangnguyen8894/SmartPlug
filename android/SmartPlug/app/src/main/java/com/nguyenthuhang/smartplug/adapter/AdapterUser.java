@@ -57,7 +57,8 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
         txtUserName.setText(user.getUserName());
         txtEmail.setText(user.getEmail());
 
-        if(user.getStateUser().equals("ACTIVE") == true){
+        //modified
+        if(user.getStateUser() == 1){
             chkStateUSer.setChecked(true);
         }else {
             chkStateUSer.setChecked(false);
@@ -95,7 +96,7 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         object.put(Constants.ATTR_JSON_USER_STATUS_VALUE, Constants.ATTR_JSON_USER_STATUS_VALUE_STATE_USER_UNACTIVE);
                         cmd = object.toString();
                         getRequest(cmd);
-                        System.out.println("ACTIVE:" + cmd);
+                        System.out.println("UNACTIVE:" + cmd);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

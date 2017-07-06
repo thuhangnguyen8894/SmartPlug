@@ -96,7 +96,7 @@ def loginUser(cmd, json_user_name, json_password):
         json_dict = {}
         for r in cur:
             if r[0] == json_user_name and r[1] == json_password:
-                if r[2] == 'ACTIVE':
+                if r[2] == 1:
                     print("json_user_name success ", json_user_name)
                     print("json_password success", json_password)
                     print("r[0] success ", r[0])
@@ -112,7 +112,7 @@ def loginUser(cmd, json_user_name, json_password):
                         return json_dict
                     else:
                         print("userStyle error")
-                elif r[2] == 'UNACTIVE':
+                elif r[2] == 0:
                     print("json_user_name unactive ", json_user_name)
                     print("json_password unactive", json_password)
                     print("r[0] unactive ", r[0])
@@ -202,7 +202,7 @@ def registerUser(json_user_name, json_password, json_email):
             print("db 02")
             try: 
                 cur.execute("INSERT INTO User VALUES (%s,%s,%s,%s,%s,%s)", \
-                                    (iduser, json_user_name, json_password, json_email, 'UNACTIVE', 0))
+                                    (iduser, json_user_name, json_password, json_email, 0, 0))
                 print("db 03")
                 conn.commit()
                 json_dict_register = {constants.ATTR_JSON_MESSAGE_TYPE: \
@@ -377,7 +377,8 @@ def serverDjango(request):
     elif json_mes == 'STATE_USERS_ACTIVE_UNACTIVE':
         print("STATE_USERS_ACTIVE_UNACTIVE: ", json_mes)
         json_user_name = str(json_parse['USER_NAME'])
-        json_status_users = str(json_parse['USER_STATUS_VALUE'])
+        # modified @ July 5th
+        json_status_users = int(json_parse['USER_STATUS_VALUE'])
         json_dict_state = updateStateUser(json_user_name, json_status_users)
         print("Hang 01", json_dict_state)
         return JsonResponse(json_dict_state)

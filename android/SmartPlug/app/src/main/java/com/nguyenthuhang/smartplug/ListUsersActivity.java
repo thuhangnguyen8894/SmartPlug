@@ -207,7 +207,12 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
                         user.setEmail(email);
                         System.out.println("Email: " + email);
 
-                        String stateUser = jsonObject.getString("STATE_USER");
+                        //modified
+                        /*String stateUser = jsonObject.getString("STATE_USER");
+                        user.setStateUser(stateUser);
+                        System.out.println("State user: " + stateUser);*/
+
+                        int stateUser = jsonObject.getInt("STATE_USER");
                         user.setStateUser(stateUser);
                         System.out.println("State user: " + stateUser);
 
