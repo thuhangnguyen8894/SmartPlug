@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -99,15 +100,15 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
 
         alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
 
-        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
-        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#46bdbf"));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#46bdbf"));
     }
 
-    private boolean deleteUser(int position){
+    /*private boolean deleteUser(int position){
         final String username = usersArrayList.get(position).getUserName();
         final int pos = position;
         AlertDialog.Builder alDialogBuilder = new AlertDialog.Builder(ListUsersActivity.this);
-        alDialogBuilder.setMessage("Are you sure you want to logout?");
+        alDialogBuilder.setMessage("Are you sure you want to delete?");
         alDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -137,7 +138,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
         AlertDialog alertDialog = alDialogBuilder.create();
         alertDialog.show();
         return true;
-    }
+    }*/
 
     private void addEvents() {
         /*btnLogoutAdminListUsers.setOnClickListener(new View.OnClickListener() {
@@ -147,12 +148,12 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
             }
         });*/
 
-        lvListUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*lvListUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 return deleteUser(i);
             }
-        });
+        });*/
     }
 
     private void selectListUsers() {
@@ -170,9 +171,6 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }
 
     private void addControls() {
-        //txtAdminListUsers = (TextView) findViewById(R.id.txtAdminListUsers);
-        //btnLogoutAdminListUsers = (Button) findViewById(R.id.btnLogoutAdminListUsers);
-
         lvListUsers = (ListView) findViewById(R.id.lvListUsers);
         usersArrayList = new ArrayList<>();
         adapterUser = new AdapterUser(ListUsersActivity.this, R.layout.list_users, usersArrayList);
@@ -183,7 +181,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     public void onReceivedResponseSuccess(ResponseData respData) {
         if(respData.getApiID() == 100){
             String json = respData.getValue();
-            System.out.println("respData.getValue(): " + json);
+            System.out.println("JSON: " + json);
             try {
                 JSONObject object = new JSONObject(json);
                 System.out.println("jsonObject: " + object);
@@ -206,11 +204,6 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
                         String email = jsonObject.getString("EMAIL");
                         user.setEmail(email);
                         System.out.println("Email: " + email);
-
-                        //modified
-                        /*String stateUser = jsonObject.getString("STATE_USER");
-                        user.setStateUser(stateUser);
-                        System.out.println("State user: " + stateUser);*/
 
                         int stateUser = jsonObject.getInt("STATE_USER");
                         user.setStateUser(stateUser);

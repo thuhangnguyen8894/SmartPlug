@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         });*/
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void doLogout() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         //Background AlertDialog
         alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
 
-        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
-        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#46bdbf"));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#46bdbf"));
 
     }
 

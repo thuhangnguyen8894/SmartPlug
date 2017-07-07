@@ -105,10 +105,16 @@ def loginUser(cmd, json_user_name, json_password):
                     if r[3] == 1:
                         print("r[3] success admin: ", r[3])
                         json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_ADMIN}
+                        print("json_dict ", json_dict)
+                        cur.close()
+                        conn.close()
                         return json_dict
                     elif r[3] == 0:
                         print("r[3] success user: ", r[3])
                         json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_SUCCESSFUL_USER}
+                        print("json_dict ", json_dict)
+                        cur.close()
+                        conn.close()                        
                         return json_dict
                     else:
                         print("userStyle error")
@@ -119,7 +125,9 @@ def loginUser(cmd, json_user_name, json_password):
                     print("r[1] unactive ", r[1])
                     print("r[2] unactive ", r[2])
                     json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_ERROR_UNACTIVE}
-                    print("USER UNACTIVE", json_dict)
+                    print("json_dict ", json_dict)
+                    cur.close()
+                    conn.close()
                     return json_dict
                 # return json_dict
             else:
@@ -128,6 +136,7 @@ def loginUser(cmd, json_user_name, json_password):
                 print("r[0] error ", r[0])
                 print("r[1] error", r[1])
                 json_dict = { constants.ATTR_JSON_MESSAGE_TYPE: constants.ATTR_JSON_LOGIN_ERROR}
+                print("json_dict ", json_dict)
         cur.close()
         conn.close()
         return json_dict
@@ -269,8 +278,7 @@ def deleteUser(json_user_name):
     conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
     cur = conn.cursor()
     try:
-        cur.execute("""DELETE FROM SMARTDEVICE.User WHERE userName = %s;""", json_user_name)
-        print("db 03")
+        cur.execute("""DELETE FROM SMARTDEVICE.User WHERE userName = %s;""", (json_user_name,))
         conn.commit()
         json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
                                     constants.ATTR_JSON_DELETE_STATUS_VALUE_USER_SUCCESSFUL}
@@ -278,7 +286,7 @@ def deleteUser(json_user_name):
     except:
         conn.rollback()
         json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
-                                    constants.ATTR_JSON_UPDATE_ERROR_USER_STYLE}
+                                    constants.ATTR_JSON_DELETE_STATUS_VALUE_USER_ERROR}
         print("deleteUser error: " , json_dict_update)
     conn.close()
     return json_dict_delete
@@ -315,6 +323,7 @@ def serverDjango(request):
     # print("parsed_json : " , json_parse)
 
     json_mes = str(json_parse['MESSAGE_STATUS_VALUE'])
+    print("json_mes : " , json_mes)
 
     if json_mes == 'SELECT_DEVICE':
         print("SELECT_DEVICE:", json_mes)
@@ -393,8 +402,8 @@ def serverDjango(request):
 
     elif json_mes == "DELETE_USER":
         json_user_name = str(json_parse['USER_NAME'])
+        print("json_user_name", json_user_name)
         json_delete = deleteUser(json_user_name)
-        print("json_delete: ", json_delete)
         return JsonResponse(json_delete)
 
     

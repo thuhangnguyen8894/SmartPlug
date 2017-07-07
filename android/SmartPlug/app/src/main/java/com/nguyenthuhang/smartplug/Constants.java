@@ -65,6 +65,10 @@ public class Constants {
 
     public static final String ATTR_JSON_STATUS_VALUE_SELECT_HISTORY = "SELECT_HISTORY";
 
+    public static final String ATTR_JSON_DELETE_STATUS_VALUE_USER_SUCCESSFUL = "DELETE_USER_SUCCESSFUL";
+    public static final String ATTR_JSON_DELETE_STATUS_VALUE_USER_ERROR = "DELETE_USER_ERROR";
+
+
 
     public static final String ATTR_JSON_MONTHSD = "MONTHSD";
     public static final String ATTR_JSON_DAYSD = "DAYSD";
@@ -72,6 +76,8 @@ public class Constants {
     public static final String ATTR_JSON_HOURSD = "HOURSD";
     public static final String ATTR_JSON_MINUTESD = "MINUTESD";
     public static final String ATTR_JSON_SECONDSD = "SECONDSD";
+
+
 
 
     public static boolean usernameValidationLength(String s){

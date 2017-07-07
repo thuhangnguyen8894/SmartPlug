@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -165,8 +166,8 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
 
         alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
 
-        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.colorControlActivated));
-        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorControlActivated));
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#46bdbf"));
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#46bdbf"));
     }
 
     @Override
