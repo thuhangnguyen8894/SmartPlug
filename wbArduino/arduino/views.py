@@ -4,6 +4,7 @@ import pickle
 import MySQLdb
 import string
 import datetime
+import base64
 
 from arduino import constants
 
@@ -86,21 +87,57 @@ def selectHistory():
     cur.close()
     conn.close()
     return json_array
+# >>> h = "123@456hang"
+# >>> b = bytes(h,'utf-8')
+# >>> 
+# >>> 
+# >>> 
+# >>> encoded_data = base64.b64encode(b)
+# >>> 
+# >>> 
+# >>> print(encoded_data)
+# b'MTIzQDQ1Nmhhbmc='
+# >>> 
+# >>> 
+# >>> 
+# >>> trang = b"MTIzQDQ1Nmhhbmc="
+# >>> decoded_data = base64.b64decode(trang)
+# >>> print(decoded_data)
+# b'123@456hang'
+
+# >>> van = "MTIzQDQ1Nmhhbmc="
+# >>> decoded_data = base64.b64decode(van)
+# >>> print(decoded_data)
+# b'123@456hang'
+# >>> 
 
 
 def loginUser(cmd, json_user_name, json_password):
+    print("welcome login")
     if cmd == 'LOGIN_DEVICE':
         conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
         cur = conn.cursor()
         cur.execute("SELECT userName, password, stateUser, userStyle FROM User")
         json_dict = {}
         for r in cur:
-            if r[0] == json_user_name and r[1] == json_password:
+            print("password chua ma hoa", r[1])
+            passdecode = base64.b64decode(r[1])
+            print("password chua ma hoa 02", passdecode)
+            passdecode = passdecode.decode('utf-8')
+            print("decode password ", passdecode)
+
+            # print("json_password 01: ", json_password)
+            # json_password = bytes(json_password, 'utf-8')
+            # print("json_password 02: ", json_password)
+            # json_password = base64.b64encode(json_password)
+            # print("json_password 03: ", json_password)
+
+            if r[0] == json_user_name and passdecode == json_password:
                 if r[2] == 1:
                     print("json_user_name success ", json_user_name)
                     print("json_password success", json_password)
                     print("r[0] success ", r[0])
-                    print("r[1] success", r[1])
+                    print("r[1] success", passdecode)
                     print("r[2] success", r[2])
                     if r[3] == 1:
                         print("r[3] success admin: ", r[3])
@@ -199,8 +236,15 @@ def registerUser(json_user_name, json_password, json_email):
     json_dict_register = {}
     b_username = existUsername(json_user_name)
     b_email = existEmail(json_email)
+
     print("b_username: ", b_username)
     print("b_email: ", b_email)
+
+    print("json_password 01: ", json_password)
+    json_password = bytes(json_password, 'utf-8')
+    print("json_password 02: ", json_password)
+    json_password = base64.b64encode(json_password)
+    print("json_password 03: ", json_password)
 
     if b_username == False: 
         if b_email == False:
