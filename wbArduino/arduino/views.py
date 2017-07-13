@@ -91,8 +91,11 @@ def selectHistory():
 def loginUser(cmd, json_user_name, json_password):
     print("welcome login")
     if cmd == 'LOGIN_DEVICE':
+        print("welcome login 01")
         conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+        print("welcome login 02")
         cur = conn.cursor()
+        print("welcome login 03")
         cur.execute("SELECT userName, password, stateUser, userStyle FROM User")
         json_dict = {}
         for r in cur:
