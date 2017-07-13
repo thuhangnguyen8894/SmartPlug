@@ -21,12 +21,12 @@ class LibDBManager(object):
             host = messageSender_cffi.new("char[]", 
                                bytes(constants.ATTR_HOST_LIGHT_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-            port = ATTR_PORT_LIGHT_VALUE
+            port = constants.ATTR_PORT_LIGHT_VALUE
         elif id_device == constants.ATTR_SD001_VALUE:
             host = messageSender_cffi.new("char[]", 
                                bytes(constants.ATTR_HOST_PLUS_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-            port = ATTR_PORT_PLUS_VALUE
+            port = constants.ATTR_PORT_PLUS_VALUE
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 
