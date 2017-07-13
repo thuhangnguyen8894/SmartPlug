@@ -17,16 +17,16 @@ class LibDBManager(object):
         pass
 
     def message_sender(self, id_device, status_device):
-        if id_device == constants.ATTR_SD001_VALUE:
+        if id_device == constants.ATTR_SD002_VALUE:
             host = messageSender_cffi.new("char[]", 
                                bytes(constants.ATTR_HOST_LIGHT_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-        elif id_device == constants.ATTR_SD002_VALUE:
+            port = ATTR_PORT_LIGHT_VALUE
+        elif id_device == constants.ATTR_SD001_VALUE:
             host = messageSender_cffi.new("char[]", 
                                bytes(constants.ATTR_HOST_PLUS_VALUE,"utf-8"))
             messageStr = self.fomart_messageStr(status_device)
-            
-        port = 5600
+            port = ATTR_PORT_PLUS_VALUE
 
         messageSender_c.sendMessageUDPForC(messageStr, host, port)
 

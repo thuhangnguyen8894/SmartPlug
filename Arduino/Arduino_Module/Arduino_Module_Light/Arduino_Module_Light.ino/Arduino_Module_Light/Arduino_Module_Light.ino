@@ -1,5 +1,5 @@
-  /*
-   * @file Arduino_Module_Light.ino
+   /*
+   * @file Arduino_Module_Plus.ino
    * @brief Handle send and receive analog.
    *
    * Copyright (c) 2017 Trang Tran
@@ -23,9 +23,9 @@
 #define CURRENT_SENSOR A0
 
 #define MESSAGE_TYPE "SMART_DEVICE_STATUS_VALUE"
-#define ID_DEVICE "SD001"
-#define NAME_DEVICE "DEVICE_LIGHT"
+#define ID_DEVICE "SD002"
 #define ID_ROOM "R0001"
+#define NAME_DEVICE "DEVICE_LIGHT"
 #define SEMICOLON_SPLITTER ";"
 #define COLON_SPLITTER ":"
 #define STATUS_RELAY_ACTIVE "ACTIVE"
@@ -52,12 +52,12 @@ int serverPort = 8787;
 /*!
  * Ethernet Shield's IP
  */
-IPAddress ip(192, 168, 0, 106);
+IPAddress ip(192, 168, 0, 107);
 
 /*!
  * Ethernet Shield's port
  */
-int internalPort = 5600;
+int internalPort = 5700;
 
 /*!
  * Received buffer
@@ -90,9 +90,9 @@ double AmpsRMS = 0;
 /*!
  * Paremeters analog electric when use or don't use
  */
-float minOffElectric = 0.0514;
-float maxOffElectric = 0.0714;
-float minOnElectric = 0.0714;
+float minOffElectric = 0.2614;
+float maxOffElectric = 0.3214;
+float minOnElectric = 0.3514;
 
 /*!
  * Paremeters quality control current electric when send message
@@ -215,7 +215,7 @@ void sendSmartPlugStatus()
      * Hasn't electric: from 0.0514 to 0.0714
      * Has electric: from 0.3714 to 1.9914 
      */  
-    if(currentElectric >= minOffElectric && currentElectric <= maxOffElectric)
+    if(currentElectric <= maxOffElectric)
     {
       status_after = false;
     }
@@ -241,7 +241,6 @@ void sendSmartPlugStatus()
     strcat(msg, COLON_SPLITTER);
     strcat(msg, NAME_DEVICE);
     strcat(msg, COLON_SPLITTER);
-
     /*!
      * Define variable contain status of Relay
      */
@@ -273,11 +272,8 @@ void sendSmartPlugStatus()
          * Send the message
          */
         udp.beginPacket(server, serverPort);
-        Serial.println("send 1");
         udp.write(msg, strlen(msg) * sizeof(msg));
-        Serial.println("send 2");
         udp.endPacket();
-        Serial.println("send 3");
       }
 
       /*!
@@ -312,11 +308,8 @@ void sendSmartPlugStatus()
          * Send the message
          */
         udp.beginPacket(server, serverPort);
-        Serial.println("send 1");
         udp.write(msg, strlen(msg) * sizeof(msg));
-        Serial.println("send 2");
         udp.endPacket();
-        Serial.println("send 3");
       }
 
       /*!
@@ -379,4 +372,3 @@ double getAmpsRMS()
   return AmpsRMS;
   delay(20);
 }
-
