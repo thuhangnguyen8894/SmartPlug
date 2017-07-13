@@ -80,9 +80,9 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
                     try {
                         object.put(Constants.ATTR_JSON_MESSAGE_STATUS_VALUE, Constants.ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE);
                         object.put(Constants.ATTR_JSON_ID_DEVICE, idSmartDevice);
-                        if(idSmartDevice.equals("SD001")==true){
+                        if(idSmartDevice.equals("SD002")==true){//modified SD001 -> SD002 @ July 13th
                             object.put(Constants.ATTR_JSON_NAME_DEVICE, Constants.ATTR_JSON_NAME_DEVICE_LIGHT_VALUE);
-                        }else if(idSmartDevice.equals("SD002")==true){
+                        }else if(idSmartDevice.equals("SD001")==true){//modified SD002 -> SD001 @ July 13th
                             object.put(Constants.ATTR_JSON_NAME_DEVICE, Constants.ATTR_JSON_NAME_DEVICE_PLUS_VALUE);
                         }
                         object.put(Constants.ATTR_JSON_ELECTRIC_STATUS_VALUE,Constants.ATTR_JSON_ELECTRIC_STATUS_VALUE_ACTIVE);
@@ -100,9 +100,9 @@ public class AdapterSmartDevice extends ArrayAdapter<SmartDevice> implements API
                     try {
                         object.put(Constants.ATTR_JSON_MESSAGE_STATUS_VALUE, Constants.ATTR_JSON_MESSAGE_STATUS_VALUE_DEVICE);
                         object.put(Constants.ATTR_JSON_ID_DEVICE, idSmartDevice);
-                        if(idSmartDevice.equals("SD001")==true){
+                        if(idSmartDevice.equals("SD002")==true){//modified SD001 -> SD002 @ July 13th
                             object.put(Constants.ATTR_JSON_NAME_DEVICE, Constants.ATTR_JSON_NAME_DEVICE_LIGHT_VALUE);
-                        }else if(idSmartDevice.equals("SD002")==true){
+                        }else if(idSmartDevice.equals("SD001")==true){//modified SD001 -> SD002 @ July 13th
                             object.put(Constants.ATTR_JSON_NAME_DEVICE, Constants.ATTR_JSON_NAME_DEVICE_PLUS_VALUE);
                         }
                         object.put(Constants.ATTR_JSON_ELECTRIC_STATUS_VALUE, Constants.ATTR_JSON_ELECTRIC_STATUS_VALUE_UNACTIVE);
