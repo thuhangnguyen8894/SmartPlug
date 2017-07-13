@@ -35,10 +35,10 @@ CREATE TABLE User(
     userName CHAR(40),
     password CHAR(50),
     email CHAR(50),
-    stateUser CHAR(10),
+    stateUser INT,
     userStyle INT,
     PRIMARY KEY(idUser),
-    UNIQUE KEY(nameUser));
+    CONSTRAINT UNQ_User UNIQUE KEY(userName,email));
 
 CREATE TABLE Room_User(idRoom CHAR(10), idUser CHAR(16), PRIMARY KEY(idRoom,idUser));
 
@@ -51,14 +51,3 @@ ALTER TABLE SmartDevice ADD CONSTRAINT fk_Room FOREIGN KEY (idRoom) REFERENCES R
 ALTER TABLE Room_User ADD CONSTRAINT fk_Room_User FOREIGN KEY (idRoom) REFERENCES Room(idRoom);
 
 ALTER TABLE Room_User ADD CONSTRAINT fk_User FOREIGN KEY (idUser) REFERENCES User(idUser);
-
-ALTER TABLE User drop nameUser;
-ALTER TABLE User drop nameUserStyle;
-ALTER TABLE User drop nameUserGuide;
-ALTER TABLE User drop password;
-ALTER TABLE User drop stateUser;
-
-ALTER TABLE User ADD userName CHAR(100);
-ALTER TABLE User ADD password CHAR(50);
-ALTER TABLE User ADD fullName CHAR(50);
-ALTER TABLE User ADD stateUser CHAR(10);
