@@ -2,7 +2,9 @@ package com.nguyenthuhang.smartplug.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +44,13 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
     List<User> objects;
 
     private int pos = -1;
+    private boolean status = true;
+    private boolean style = true;
+
+    Handler mHandler;
+
+    /*CheckBox chkStateUSer;
+    CheckBox chkUserStyle;*/
 
     ApplicationService applicationService;
 
@@ -60,8 +69,12 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
 
         TextView txtUserName = (TextView) item.findViewById(R.id.txtUserName);
         TextView txtEmail = (TextView) item.findViewById(R.id.txtEmail);
-        CheckBox chkStateUSer = (CheckBox) item.findViewById(R.id.chkStatusUser);
-        CheckBox chkUserStyle = (CheckBox) item.findViewById(R.id.chkUserStyle);
+        final CheckBox chkStateUSer = (CheckBox) item.findViewById(R.id.chkStatusUser);
+        final CheckBox chkUserStyle = (CheckBox) item.findViewById(R.id.chkUserStyle);
+
+        /*chkStateUSer = (CheckBox) item.findViewById(R.id.chkStatusUser);
+        chkUserStyle = (CheckBox) item.findViewById(R.id.chkUserStyle);*/
+
         ImageButton ibDelete = (ImageButton) item.findViewById(R.id.ibDelete);
 
         final  User user = this.objects.get(position);
@@ -80,6 +93,7 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
         }else {
             chkUserStyle.setChecked(false);
         }
+
         final String username = user.getUserName();
         System.out.println("username 01: " + username);
         chkStateUSer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -94,7 +108,11 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         object.put(Constants.ATTR_JSON_USER_STATUS_VALUE, Constants.ATTR_JSON_USER_STATUS_VALUE_STATE_USER_ACTIVE);
                         cmd = object.toString();
                         getRequest(cmd);
+                        //status = true;
+                        //chkStateUSer.setChecked(true);
+                        //AdapterUser.this.notifyDataSetChanged();
                         System.out.println("ACTIVE:" + cmd);
+                        System.out.println("Status: " + status);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -107,13 +125,18 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         object.put(Constants.ATTR_JSON_USER_STATUS_VALUE, Constants.ATTR_JSON_USER_STATUS_VALUE_STATE_USER_UNACTIVE);
                         cmd = object.toString();
                         getRequest(cmd);
+                        //status = false;
+                        //chkStateUSer.setChecked(false);
+                        //AdapterUser.this.notifyDataSetChanged();
                         System.out.println("UNACTIVE:" + cmd);
+                        System.out.println("Status: " + status);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+
 
         chkUserStyle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -127,7 +150,12 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         object.put(Constants.ATTR_JSON_USER_STYLE_STATUS_VALUE, Constants.ATTR_JSON_USER_STYLE_STATUS_VALUE_ACTIVE);
                         cmd = object.toString();
                         getRequest(cmd);
+                        //style = true;
+                        //chkUserStyle.setChecked(true);
+
+                        //AdapterUser.this.notifyDataSetChanged();
                         System.out.println("ACTIVE:" + cmd);
+                        System.out.println("Style: " + style);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -140,13 +168,18 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         object.put(Constants.ATTR_JSON_USER_STYLE_STATUS_VALUE, Constants.ATTR_JSON_USER_STYLE_STATUS_VALUE_UNACTIVE);
                         cmd = object.toString();
                         getRequest(cmd);
+                        //style = false;
+                        //chkUserStyle.setChecked(false);
+                        //AdapterUser.this.notifyDataSetChanged();
                         System.out.println("ACTIVE:" + cmd);
+                        System.out.println("Style: " + style);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+
 
         ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,10 +197,8 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                             cmd = object.toString();
                             getRequest(cmd);
                             pos = position;
-
-                            //objects.remove(position);
-                            //AdapterUser.this.notifyDataSetChanged();
-
+                            /*objects.remove(position);
+                            AdapterUser.this.notifyDataSetChanged();*/
                             System.out.println("Delete user: " + cmd);
                             System.out.println("position " + position);
                         } catch (JSONException e) {
@@ -176,41 +207,19 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                         }
                     }
                 });
-
                 alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
                 });
-
                 AlertDialog alertDialog = alertBuilder.create();
                 alertDialog.show();
                 alertDialog.getWindow().setBackgroundDrawableResource(R.color.colorWhite);
-
                 alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#46bdbf"));
                 alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#46bdbf"));
-                /*String cmd = "";
-                JSONObject object = new JSONObject();
-                try {
-                    object.put(Constants.ATTR_JSON_MESSAGE_STATUS_VALUE, Constants.ATTR_JSON_DELETE_STATUS_VALUE_USER);
-                    object.put(Constants.ATTR_JSON_USER_NAME, username);
-                    cmd = object.toString();
-                    getRequest(cmd);
-                    pos = position;
-
-                    //objects.remove(position);
-                    //AdapterUser.this.notifyDataSetChanged();
-
-                    System.out.println("Delete user: " + cmd);
-                    System.out.println("position " + p);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("JSON error deleteUser()");
-                }*/
             }
         });
-
         return item;
     }
 
@@ -235,17 +244,31 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
                     //notifyDataSetChanged();
                     objects.remove(pos);
                     AdapterUser.this.notifyDataSetChanged();
-
                     Toast.makeText(context, "Delete user successful", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_UPDATE_SUCCESSFUL_STATE_USER )){
+                   /* if(status == true){
+
+                    }else if(status == false){
+                        chkStateUSer.setChecked(false);
+                    }*/
+                    //AdapterUser.this.notifyDataSetChanged();
                     Toast.makeText(context, "Update status user successful", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_UPDATE_SUCCESSFUL_USER_STYLE)){
+                    /*if(style == true){
+                        chkUserStyle.setChecked(true);
+                    }else if(style == false){
+                        chkUserStyle.setChecked(false);
+                    }*/
+                    //AdapterUser.this.notifyDataSetChanged();
                     Toast.makeText(context, "Update user style successful", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_UPDATE_ERROR_STATE_USER)){
+                    //AdapterUser.this.notifyDataSetChanged();
                     Toast.makeText(context, "Update status user error", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_UPDATE_ERROR_USER_STYLE)){
+                    //AdapterUser.this.notifyDataSetChanged();
                     Toast.makeText(context, "Update user style error", Toast.LENGTH_LONG).show();
                 }else if(topic.equals(Constants.ATTR_JSON_DELETE_STATUS_VALUE_USER_ERROR)){
+                    //AdapterUser.this.notifyDataSetChanged();
                     Toast.makeText(context, "Delete user error", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

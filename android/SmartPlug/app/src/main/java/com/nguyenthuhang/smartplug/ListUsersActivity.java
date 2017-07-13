@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,15 +42,28 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     ListView lvListUsers;
     ArrayList<User> usersArrayList;
     AdapterUser adapterUser;
+    ImageButton ibReload;
+
+    Handler mHandler;
+
+    private final Runnable m_Runnable = new Runnable() {
+        public void run() {
+            selectListUsers();
+            //Toast.makeText(ListUsersActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
+            /*Intent intent = new Intent(ListUsersActivity.this, ListUsersActivity.class);
+            startActivity(intent);*/
+            ListUsersActivity.this.mHandler.postDelayed(m_Runnable, 5000);
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_users);
+        this.mHandler = new Handler();
+        this.mHandler.postDelayed(m_Runnable, 5000);
         addControls();
-        /*SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        txtAdminListUsers.setText("Current admin: " + admin);*/
         selectListUsers();
         addEvents();
     }
@@ -60,7 +75,6 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }
 
     private void doLogout() {
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -141,12 +155,13 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }*/
 
     private void addEvents() {
-        /*btnLogoutAdminListUsers.setOnClickListener(new View.OnClickListener() {
+        ibReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doLogout();
+                Intent intent = new Intent(ListUsersActivity.this, ListUsersActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
 
         /*lvListUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -171,6 +186,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     }
 
     private void addControls() {
+        ibReload = (ImageButton) findViewById(R.id.ibReload);
         lvListUsers = (ListView) findViewById(R.id.lvListUsers);
         usersArrayList = new ArrayList<>();
         adapterUser = new AdapterUser(ListUsersActivity.this, R.layout.list_users, usersArrayList);
@@ -222,6 +238,7 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
             }
         }
     }
+
 
     @Override
     public void onReceivedResponseFail(ResponseData respData) {

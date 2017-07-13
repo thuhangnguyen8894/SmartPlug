@@ -87,30 +87,6 @@ def selectHistory():
     cur.close()
     conn.close()
     return json_array
-# >>> h = "123@456hang"
-# >>> b = bytes(h,'utf-8')
-# >>> 
-# >>> 
-# >>> 
-# >>> encoded_data = base64.b64encode(b)
-# >>> 
-# >>> 
-# >>> print(encoded_data)
-# b'MTIzQDQ1Nmhhbmc='
-# >>> 
-# >>> 
-# >>> 
-# >>> trang = b"MTIzQDQ1Nmhhbmc="
-# >>> decoded_data = base64.b64decode(trang)
-# >>> print(decoded_data)
-# b'123@456hang'
-
-# >>> van = "MTIzQDQ1Nmhhbmc="
-# >>> decoded_data = base64.b64decode(van)
-# >>> print(decoded_data)
-# b'123@456hang'
-# >>> 
-
 
 def loginUser(cmd, json_user_name, json_password):
     print("welcome login")
@@ -120,11 +96,11 @@ def loginUser(cmd, json_user_name, json_password):
         cur.execute("SELECT userName, password, stateUser, userStyle FROM User")
         json_dict = {}
         for r in cur:
-            print("password chua ma hoa", r[1])
+            # print("password chua ma hoa", r[1])
             passdecode = base64.b64decode(r[1])
-            print("password chua ma hoa 02", passdecode)
+            # print("password chua ma hoa 02", passdecode)
             passdecode = passdecode.decode('utf-8')
-            print("decode password ", passdecode)
+            # print("decode password ", passdecode)
 
             # print("json_password 01: ", json_password)
             # json_password = bytes(json_password, 'utf-8')

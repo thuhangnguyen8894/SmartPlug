@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     AdapterHistory adapterHistory;
 
     ApplicationService applicationService;
+
+    ImageButton ibReloadH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +82,11 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     }
 
     private void addEvents() {
-        /*btnLogoutAdminHistory.setOnClickListener(new View.OnClickListener() {
+        ibReloadH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doLogout();
-            }
-        });*/
-        lvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                return deleteUser(i);
+                Intent intent = new Intent(HistoryActivity.this, HistoryActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -96,6 +94,7 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     private void addControls() {
         //txtAdminHistory = (TextView) findViewById(R.id.txtAdminHistory);
         //btnLogoutAdminHistory = (Button) findViewById(R.id.btnLogoutAdminHistory);
+        ibReloadH = (ImageButton) findViewById(R.id.ibReloadH);
 
         lvHistory = (ListView) findViewById(R.id.lvHistory);
 

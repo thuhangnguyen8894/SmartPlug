@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
     //Button btnLogout;
     TextView txtResult;
     TextView txtUser;
+    ImageButton ibReloadC;
 
     ListView lvSmartDevice;
     ArrayList<SmartDevice> deviceArrayList;
@@ -89,20 +91,15 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
         handleSel();
     }
 
-    private void addEvents() {
-        /*btnSel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleSel();
-            }
-        });*/
 
-        /*btnLogout.setOnClickListener(new View.OnClickListener() {
+    private void addEvents() {
+        ibReloadC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doLogout();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
     }
 
     private void doLogout() {
@@ -161,17 +158,17 @@ public class MainActivity extends AppCompatActivity  implements APIService.Servi
             cmd = object.toString();
             getRequest(cmd);
             System.out.println("SELECT: " + cmd);
-            Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();
+            /*Toast.makeText(MainActivity.this, "Select List", Toast.LENGTH_LONG).show();*/
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("JSON error");
         }
-
     }
 
     private void addControls() {
         //btnSel = (Button) findViewById(R.id.btnSel);
         txtResult = (TextView) findViewById(R.id.txtResult);
+        ibReloadC = (ImageButton) findViewById(R.id.ibReloadC);
         //btnLogout = (Button) findViewById(R.id.btnLogout);
         //txtUser = (TextView) findViewById(R.id.txtUser);
 

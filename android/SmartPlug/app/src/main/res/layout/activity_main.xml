@@ -9,35 +9,6 @@
     android:orientation="vertical"
     android:background="@drawable/grdnt"
     tools:context="com.nguyenthuhang.smartplug.MainActivity">
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="24dp"
-        android:text="CONTROL SMARTDEVICE"
-        android:textColor="@android:color/background_light" />
-    
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />-->
-    
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="246dp"
-            android:layout_height="match_parent"
-            android:id="@+id/txtUser"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnLogout"
-            android:text="Log out"/>
-    </LinearLayout>-->
 
     <TextView
         android:layout_width="match_parent"
@@ -47,12 +18,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
-        <!--<Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/btnSel"
-            android:text="Select"/>-->
+        android:paddingBottom="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:text="  CONTROL SMARTDEVICE"
+            android:textColor="@android:color/background_light" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:background="@drawable/reload"
+            android:id="@+id/ibReloadC"
+            android:layout_marginRight="5dp"/>
+
     </LinearLayout>
 
 

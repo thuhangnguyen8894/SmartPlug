@@ -10,32 +10,32 @@
     android:background="@drawable/grdnt"
     tools:context="com.nguyenthuhang.smartplug.HistoryActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="24dp"
-        android:text="HISTORY"
-        android:textColor="@android:color/background_light" />
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
-
-
-        <!--<TextView
-            android:layout_width="246dp"
+        android:paddingBottom="10dp"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:id="@+id/txtAdminHistory"/>-->
+            android:gravity="center"
+            android:textSize="24dp"
+            android:text="        HISTORY"
+            android:textColor="@android:color/background_light" />
 
-        <!--<Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnLogoutAdminHistory"
-            android:text="Log out"/>-->
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:background="@drawable/reload"
+            android:id="@+id/ibReloadH"
+            android:layout_marginRight="5dp"/>
+
     </LinearLayout>
 
     <LinearLayout
