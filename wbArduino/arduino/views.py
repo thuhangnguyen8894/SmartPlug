@@ -400,7 +400,7 @@ def serverDjango(request):
         # return JsonResponse({ 'SEL_USERS' : json_select_users })
         return JsonResponse(json_dict)
 
-    elif json_mes == "SELECT_HISTORY":
+    elif json_mes == 'SELECT_HISTORY':
         json_history = selectHistory()
         print("SELECT_HISTORY: ", json_mes)
         json_dict = {constants.ATTR_JSON_STATUS_VALUE_SELECT_HISTORY: json_history}
