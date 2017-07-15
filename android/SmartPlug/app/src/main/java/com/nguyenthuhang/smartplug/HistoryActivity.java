@@ -235,10 +235,10 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.account, menu);
+        getMenuInflater().inflate(R.menu.account_list, menu);
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdminList);
         mnuAdmin.setTitle(admin);
         return super.onCreateOptionsMenu(menu);
     }
@@ -246,8 +246,13 @@ public class HistoryActivity extends AppCompatActivity implements APIService.Ser
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.mnuLogout:
+            case R.id.mnuLogoutList:
                 doLogout();
+                break;
+
+            case R.id.mnuList:
+                Intent intent = new Intent(HistoryActivity.this, ListUsersActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

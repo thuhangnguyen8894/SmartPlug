@@ -185,7 +185,7 @@ public class AdapterUser extends ArrayAdapter<User> implements APIService.Servic
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                alertBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to logout?</font>"));
+                alertBuilder.setMessage(Html.fromHtml("<font color='#46bdbf'>Are you sure you want to delete?</font>"));
                 alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

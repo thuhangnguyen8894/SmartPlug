@@ -251,10 +251,10 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.account, menu);
+        getMenuInflater().inflate(R.menu.account_history, menu);
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String admin = sharedPreferences.getString(USER_SHARED_PREF, "Not Available");
-        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdmin);
+        MenuItem mnuAdmin = menu.findItem(R.id.mnuAdminHistory);
         mnuAdmin.setTitle(admin);
         return super.onCreateOptionsMenu(menu);
     }
@@ -262,8 +262,12 @@ public class ListUsersActivity extends AppCompatActivity implements APIService.S
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.mnuLogout:
+            case R.id.mnuLogoutHistory:
                 doLogout();
+                break;
+            case R.id.mnuHistory:
+                Intent intent = new Intent(ListUsersActivity.this, HistoryActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

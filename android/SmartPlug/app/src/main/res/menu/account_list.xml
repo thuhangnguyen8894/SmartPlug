@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnuAdminList"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/mnuList"
+        android:title="List Users" />
+
+    <item
+        android:id="@+id/mnuLogoutList"
+        android:title="Log out" />
+
+</menu>
