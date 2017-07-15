@@ -338,7 +338,7 @@ def controlSmartPlug(cmd,json_id_device,json_name_device):
                                                         constants.MESSAGE_RECEIVER_PORT))    
 
 """Trang Modified"""
-def insertRoom(cmd, json_idRoom, json_nameRoom):
+def insertRoom(json_idRoom, json_nameRoom):
     json_dict_insert={}
     conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
     cur = conn.cursor()
@@ -358,7 +358,7 @@ def insertRoom(cmd, json_idRoom, json_nameRoom):
     return json_dict_insert
 
 """Trang Modified"""
-def deleteRoom(cmd, json_idRoom):
+def deleteRoom(json_idRoom):
     json_dict_delete={}
     conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
     cur = conn.cursor()
@@ -487,20 +487,20 @@ def serverDjango(request):
         return JsonResponse(json_delete)
 
     elif json_mes == 'INSERT_ROOM':
-        json_idRoom = str(json_parse['ROOM_USER'])
+        json_idRoom = str(json_parse['ID_ROOM'])
         json_nameRoom = str(json_parse['NAME_ROOM'])
         print("json_idRoom", json_idRoom)
         print("json_nameRoom", json_nameRoom)
         json_insert_room = insertRoom(json_idRoom, json_nameRoom)
         return JsonResponse(json_insert_room)
 
-    elif json_mes = 'DELETE_ROOM':
-        json_idRoom = str(json_parse['ROOM_USER'])
+    elif json_mes == 'DELETE_ROOM':
+        json_idRoom = str(json_parse['ID_ROOM'])
         print("json_idRoom", json_idRoom)
         json_delete_room = deleteRoom(json_idRoom)
         return JsonResponse(json_delete_room)
 
-    elif json_mes = 'SELECT_ROOM':
+    elif json_mes == 'SELECT_ROOM':
         json_room = selectRoom()
         print("SELECT_ROOM: ", json_mes)
         json_dict = {constants.ATTR_JSON_SELECT_ROOM: json_room}
