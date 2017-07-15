@@ -337,6 +337,63 @@ def controlSmartPlug(cmd,json_id_device,json_name_device):
     sock.sendto(json.dumps(json_dict_message).encode('utf-8'), (constants.MESSAGE_RECEIVER_IP,\
                                                         constants.MESSAGE_RECEIVER_PORT))    
 
+"""Trang Modified"""
+def insertRoom(cmd, json_idRoom, json_nameRoom):
+    json_dict_insert={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try:
+        cur.execute("""INSERT INTO SMARTDEVICE.Room(idRoom, nameRoom) VALUES('%s', '%s');""" \
+                                                                 (json_idRoom, json_nameRoom))
+        conn.commit()
+        json_dict_insert = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_INSERT_ROOM_SUCCESSFUL}
+        print("insertRoom Successful: " , json_dict_insert)
+    except:
+        conn.rollback()
+        json_dict_insert = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_INSERT_ROOM_ERROR}
+        print("insertRoom error: " , json_dict_insert)
+    conn.close()
+    return json_dict_insert
+
+"""Trang Modified"""
+def deleteRoom(cmd, json_idRoom):
+    json_dict_delete={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try:
+        cur.execute("""DELETE FROM SMARTDEVICE.Room WHERE idRoom = %s;""", (json_idRoom,))
+        conn.commit()
+        json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_DELETE_ROOM_SUCCESSFUL}
+        print("deleteRoom Successful: " , json_dict_delete)
+    except:
+        conn.rollback()
+        json_dict_delete = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_DELETE_ROOM_ERROR}
+        print("deleteRoom error: " , json_dict_delete)
+    conn.close()
+
+"""Trang Modified"""
+def selectRoom():
+    print("Welcome to selectRoom")
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+
+    cur.execute("""SELECT idRoom, nameRoom FROM Room""")
+    json_array = []
+    for r in cur:
+        json_dict={
+            constants.ATTR_JSON_ID_ROOM : r[0],\
+            constants.ATTR_JSON_NAME_ROOM : r[1],\
+        }
+        
+        json_array.append(json_dict)
+        print("json history: ", json_array)
+    cur.close()
+    conn.close()
+    return json_array
 
 def serverDjango(request):
     cmd = request.GET['cmd']
@@ -429,4 +486,22 @@ def serverDjango(request):
         json_delete = deleteUser(json_user_name)
         return JsonResponse(json_delete)
 
-    
+    elif json_mes == 'INSERT_ROOM':
+        json_idRoom = str(json_parse['ROOM_USER'])
+        json_nameRoom = str(json_parse['NAME_ROOM'])
+        print("json_idRoom", json_idRoom)
+        print("json_nameRoom", json_nameRoom)
+        json_insert_room = insertRoom(json_idRoom, json_nameRoom)
+        return JsonResponse(json_insert_room)
+
+    elif json_mes = 'DELETE_ROOM':
+        json_idRoom = str(json_parse['ROOM_USER'])
+        print("json_idRoom", json_idRoom)
+        json_delete_room = deleteRoom(json_idRoom)
+        return JsonResponse(json_delete_room)
+
+    elif json_mes = 'SELECT_ROOM':
+        json_room = selectRoom()
+        print("SELECT_ROOM: ", json_mes)
+        json_dict = {constants.ATTR_JSON_SELECT_ROOM: json_room}
+        return JsonResponse(json_dict)
