@@ -343,7 +343,7 @@ def insertRoom(json_idRoom, json_nameRoom):
     conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
     cur = conn.cursor()
     try:
-        cur.execute("""INSERT INTO SMARTDEVICE.Room(idRoom, nameRoom) VALUES('%s', '%s');""" \
+        cur.execute("""INSERT INTO SMARTDEVICE.Room VALUES(%s, %s);""",f \
                                                                  (json_idRoom, json_nameRoom))
         conn.commit()
         json_dict_insert = {constants.ATTR_JSON_MESSAGE_TYPE: \
@@ -394,6 +394,59 @@ def selectRoom():
     cur.close()
     conn.close()
     return json_array
+
+def selectIdUser():
+    print("Welcome to selectIdUser")
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+
+    cur.execute("""SELECT idUser FROM User""")
+    json_array = []
+    for r in cur:
+        json_dict={
+            constants.ATTR_JSON_ID_USER : r[0],\
+        }
+        
+        json_array.append(json_dict)
+        print("json history: ", json_array)
+    cur.close()
+    conn.close()
+    return json_array
+
+del findIdUser(json_nameUser):
+    json_dict={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    cur.execute("""SELECT idUser FROM User WHERE userName = %s;""", (json_nameUser,))
+    
+    for r in cur:
+        json_dict={
+            constants.ATTR_JSON_ID_USER : r[0],\
+        }
+        print("json history: ", json_dict)
+    cur.close()
+    conn.close()
+    return json_dict 
+
+def inserRoomUser(json_idRoom, json_nameUser):
+    json_id_user =  findIdUser(json_nameUser)
+    json_dict_insert={}
+    conn = MySQLdb.connect(host = constants.HOST, user = constants.USER, passwd = constants.PASSWORD, db = constants.DATABASE)
+    cur = conn.cursor()
+    try:
+        cur.execute("""INSERT INTO SMARTDEVICE.Room_User VALUES(%s, %s);""", \
+                                                                 (json_idRoom, json_id_user))
+        conn.commit()
+        json_dict_insert = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_INSERT_ROOM_USER_SUCCESSFUL}
+        print("insertRoom Successful: " , json_dict_insert)
+    except:
+        conn.rollback()
+        json_dict_insert = {constants.ATTR_JSON_MESSAGE_TYPE: \
+                                    constants.ATTR_JSON_INSERT_ROOM_USER_ERROR}
+        print("insertRoom error: " , json_dict_insert)
+    conn.close()
+    return json_dict_insert
 
 def serverDjango(request):
     cmd = request.GET['cmd']
@@ -480,6 +533,7 @@ def serverDjango(request):
         print("Hang 02", json_dict_style)
         return JsonResponse(json_dict_style)
 
+    """Trang Modified"""
     elif json_mes == "DELETE_USER":
         json_user_name = str(json_parse['USER_NAME'])
         print("json_user_name", json_user_name)
@@ -492,6 +546,9 @@ def serverDjango(request):
         print("json_idRoom", json_idRoom)
         print("json_nameRoom", json_nameRoom)
         json_insert_room = insertRoom(json_idRoom, json_nameRoom)
+
+        json_nameUser = str(json_parse['NAME_USER'])
+        json_insert_room_user = inserRoomUser(json_idRoom, json_nameUser)
         return JsonResponse(json_insert_room)
 
     elif json_mes == 'DELETE_ROOM':
@@ -504,4 +561,9 @@ def serverDjango(request):
         json_room = selectRoom()
         print("SELECT_ROOM: ", json_mes)
         json_dict = {constants.ATTR_JSON_SELECT_ROOM: json_room}
+        return JsonResponse(json_dict)
+
+    elif json_mes == 'SELECT_ID_USER'
+        json_id_user = selectIdUser()
+        json_dict = {constants.ATTR_JSON_SELECT_ID_USER: json_id_user}
         return JsonResponse(json_dict)
